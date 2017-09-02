@@ -1,0 +1,22 @@
+.w_1{
+	margin-top: 5em;
+}
+#w-bor{
+	border: 1px white solid;
+	border-radius: 50%;
+}
+#w-bor:hover{
+	-moz-animation: mymove 0.7s;
+	-webkit-animation: mymove 0.7s;
+	border: 0.5em groove lightblue;
+}
+@-moz-keyframes mymove {
+    50% {border: 2em groove lightblue;}
+}
+@-webkit-keyframes mymove {
+    50% {border: 2em groove lightblue;}
+}
+@keyframes mymove {
+    50% {border: 2em groove lightblue;}
+}
+
