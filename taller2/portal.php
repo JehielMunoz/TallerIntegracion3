@@ -27,23 +27,17 @@
   <div class='collapse navbar-collapse' id='Tg-w02'>
     <ul class='navbar-nav mr-auto mt-2 mt-md-0'>
       <li class='nav-item active'>
-        <a class='nav-link' href='#'>Home</a>
-      </li>
-      <li class='nav-item'>
-        <a class='nav-link' href='#'>Link</a>
-      </li>
-      <li class='nav-item'>
-        <a class='nav-link disabled' href='#'>Disabled</a>
+        <a class='nav-link' href='#'></a>
       </li>
     </ul>
 
     <div class='form-inline my-2 my-lg-0'>
       <div class='dropdown'>
-        <button class='btn btn-secondary dropdown-toggle bg-success' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+        <button class='btn btn-outline-success dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
           Usuario Ingresado
         </button>
         <div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
-          <a class='dropdown-item' href='#'>Cerrar Sesion</a>
+          <a class='dropdown-item' href='./index.php'>Cerrar Sesion</a>
           <a class='dropdown-item' href='#'>Cambiar Contraseña</a>
           <a class='dropdown-item' href='#'>Otra cosa</a>
         </div>
@@ -76,7 +70,6 @@
   </div>
 
 
-  <script src="./assets/js/jquery/jquery-3.1.1.min.js"></script>
-  <script src="./assets/js/bootstrap/bootstrap.min.js"></script>
+  <script src="./assets/bootstrap.min.js"></script>
 </body>
 </html>

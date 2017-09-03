@@ -45,7 +45,7 @@
     </div>
     <div class='form-inline my-2 my-lg-0'>
       <div class='dropdown'>
-        <a class="btn btn-outline-success" href="./portal.php" role="button">
+        <a class="btn btn-outline-success" href="./login.php" role="button">
         	Ingresar
         </a>
       </div>
@@ -86,7 +86,7 @@
   <footer class='container-fluid bg-inverse py-3 mt-2'>
     <div class='row'>
       <div class=' col-lg-8 col-lg-offset-2'>
-        <div class='col-sm-4'>
+        <div class='col-sm-6'>
           <div class='footer-col-item'>
             <kbd><h4>Contactanos:</h4>
             <address>
