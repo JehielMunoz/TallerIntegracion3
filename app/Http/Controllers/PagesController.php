@@ -10,14 +10,14 @@ class PagesController extends Controller
 {
     //
     public function home(){
-    	return view('dashboard');
+    	return view('login');
     }
 
     public function about(){
-    	return view('about');
+    	return view('welcome');
     }
     
     public function contact(){
-    	return view('contact');
+    	return view('dashboard');
     }
 }
