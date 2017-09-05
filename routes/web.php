@@ -19,3 +19,12 @@ Route::get('liquidaciones', function(){
     return view('liquidaciones');
 });
 
+// Prueba controlador
+
+Route::get('prueba', function(){
+    $persona = DB::table('tEmpleados')->where('Rut',"=","136287826")->get();
+    return $persona[0]->Sueldo_base;
+});
+    
+
+
