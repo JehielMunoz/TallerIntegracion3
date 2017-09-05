@@ -10,7 +10,7 @@ class PagesController extends Controller
 {
     //
     public function home(){
-    	return view('login');
+    	return view('home');
     }
 
     public function about(){
