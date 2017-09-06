@@ -36,7 +36,7 @@ if(!empty($_POST['id_prestamo'])){
 $dbServer = 'localhost';
 $dbUser = 'postgres';
 $dbPass = 'wii360';
-$dbName = 'prueba';
+$dbName = 'educadmindb';
 $dbPort = '5432';
 $conn_string =("host=$dbServer port=$dbPort dbname=$dbName user=$dbUser password=$dbPass ");
 $dbconn = pg_connect($conn_string); 

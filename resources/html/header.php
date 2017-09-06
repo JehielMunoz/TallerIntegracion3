@@ -83,7 +83,7 @@
             var rut2 = rut1.replace(".","");
             var rut3 = rut2.replace("-","");
             // Tuve que hacer unos cambios para que funcionara. lo voy a explicar en la descripción del comit.
-            objAjax1.open("POST","./html/tabs/Gratificaciones_Ajax.php");
+            objAjax1.open("POST","../resources/html/tabs/Gratificaciones_Ajax.php");
 			objAjax1.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
             if(num2=='0'){
                 objAjax1.send("id_rut1="+rut3+"&num1="+num+"&num2="+num2);		
@@ -115,7 +115,7 @@
             var rut1 = rut.replace(".","");
             var rut2 = rut1.replace(".","");
             var rut3 = rut2.replace("-","");
- 			objAjax2.open("POST","./html/tabs/Descuentos_Ajax.php");
+ 			objAjax2.open("POST","../resources/html/tabs/Descuentos_Ajax.php");
 			objAjax2.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
             
             if(num2=='7'){

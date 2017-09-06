@@ -88,7 +88,7 @@
 			<button class="boton_toggle" id="ModificarPlanilla">Modificar Planilla</button>
 		<div id="m_Planilla" style="display:none">
 		<h1>Modificar informacion empleado </h1>
-		<form action="../resources/php/Modificar_datos.php" method="post">
+		<form action="../resources/php/Modificar_Datos.php" method="post">
 				<table>
 					<tr><th colspan="2">Datos empleado</th></tr>
 					<tr>

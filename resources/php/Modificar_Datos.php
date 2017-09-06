@@ -1,5 +1,6 @@
 <?php 
-    print __DIR__;
+
+
     session_start();
         if(!empty($_SESSION['Rut']))
         {
@@ -36,17 +37,19 @@
                     Liquido_Alcansado();
                     gastos_extras();
 
-                    Route::get('liquidaciones', function(){
-                        return view('liquidaciones');
-                    });
+               
+                    header('Location: ' . $_SERVER['HTTP_REFERER']);
+                    exit;
+                    
 
                 }              
             }
             else
             {
-                Route::get('liquidaciones', function(){
-                    return view('liquidaciones');
-                });
+                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                exit;
+                
+                
             }                 
         }
     
