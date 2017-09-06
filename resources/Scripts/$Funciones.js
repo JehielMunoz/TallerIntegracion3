@@ -45,7 +45,7 @@ $(function() {
 
     });
     $("#tab-5").click(function() { // Esto maneja el ajax. Cuando hago click en el boton para buscar. Hace una consulta por post y remplaza la planilla con la respuesta del pust.
-        var url = "./html/tabs/Vista_Previa_ajax.php";
+        var url = "../resources/html/tabs/Vista_Previa_ajax.php";
         $.ajax({
             type: "POST",
             url: url,
