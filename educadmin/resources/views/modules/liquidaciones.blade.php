@@ -3,7 +3,9 @@
 
 @endsection
 @section('navbar')
-	<ul class="nav nav-pills flex-column">
+<nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar" style="margin-top: -7em;">
+
+  <ul class="nav nav-pills flex-column">
             <li class="nav-item">
               <a class="nav-link active" href="#">Agregar Nuevo Empleado <span class="sr-only">(current)</span></a>
             </li>
@@ -30,21 +32,10 @@
               <a class="nav-link" href="#"></a>
             </li>
           </ul>
-          <!--
-          <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Nav item again</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">One more nav</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Another nav item</a>
-            </li>
-          </ul>
-          -->
+        </nav>
 @endsection
 @section('content')
+<main class="col-sm-8 ml-sm-auto col-md-10 pt-3" role="main"  style="margin-top: -20em;">
 <h2>Ejemplo de CRUD: Liquidaciones</h2>
           <div class="table-responsive">
             <table class="table table-striped">
@@ -173,4 +164,5 @@
               </tbody>
             </table>
           </div>
+    </main>
 @endsection
