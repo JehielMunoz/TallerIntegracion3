@@ -3,41 +3,46 @@
 
 @endsection
 @section('navbar')
-<nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar" style="margin-top: -7em;">
-
-  <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Agregar Nuevo Empleado <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Planilla Liquidación</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Licencias</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">AFP</a>
-            </li>
-          
-            <li class="nav-item">
-              <a class="nav-link" href="#">IPS</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contacto</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Impuesto Único a la Renta</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"></a>
-            </li>
-          </ul>
-        </nav>
+<nav class="col-sm-3 col-md-2 d-none d-sm-block sidebar" style="position:fixed;padding-top:-10em">
+  <ul class="nav nav-pills flex-column navbar navbar-light" style="background-color: #e3f2fd;border-radius: 1em;">
+    <li class="nav-item">
+      <a class="nav-link" href="#">Agregar Nuevo Empleado <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Planilla Liquidación</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Licencias</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">AFP</a>
+    </li>
+  
+    <li class="nav-item">
+      <a class="nav-link" href="#">IPS</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Contacto</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Impuesto Único a la Renta</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#"></a>
+    </li>
+  </ul>
+</nav>
 @endsection
 @section('content')
-<main class="col-sm-8 ml-sm-auto col-md-10 pt-3" role="main"  style="margin-top: -20em;">
+<div class="pull-right" style="margin-top:-1em;">
+  <form class="form-inline">
+    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</div>
+<main class="col-sm-8 ml-sm-auto col-md-10 pt-3" role="main"  style="margin-top: -3em;">
 <h2>Ejemplo de CRUD: Liquidaciones</h2>
-          <div class="table-responsive">
+          <div class="table-responsive" >
             <table class="table table-striped">
               <thead>
                 <tr>
