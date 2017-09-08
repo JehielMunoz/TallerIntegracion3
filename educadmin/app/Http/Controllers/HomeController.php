@@ -30,4 +30,14 @@ class HomeController extends Controller
     {
         return view('modules.liquidaciones');
     }
+    public function matriculas()
+    {
+        return view('modules.matriculas');
+    }
+    public function recursos_humanos(){
+        return view('modules.recursos_humanos');
+    }
+    public function notas(){
+        return view('modules.notas');
+    }
 }

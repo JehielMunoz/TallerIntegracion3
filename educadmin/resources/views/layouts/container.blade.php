@@ -42,7 +42,7 @@
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>-->
         <ul class="nav navbar-nav navbar-right">
-<<<<<<< HEAD
+
             <!-- Authentication Links -->
           @guest
             <li><a href="{{ route('login') }}">Login</a></li>
@@ -70,9 +70,7 @@
             </li>
           @endguest
         </ul>
-=======
-         
->>>>>>> 314197f11975d5263aa26841d610c7e396b556f9
+
       </div>
     </nav>
    <div class="container-fluid" style="margin-top: 5em;">
@@ -88,22 +86,33 @@
        
           <section class="row text-center placeholders">
             <div class="col-6 col-sm-3 placeholder">
-              <a href="{{ url('/liquidaciones') }}"><img src="{{ asset('images/liquidaciones.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Liquidaciones de sueldo"></a>
+              <a href="{{ url('/liquidaciones') }}">
+                <img src="{{ asset('images/liquidaciones.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Liquidaciones de sueldo">
+              </a>
               <h4>Liquidaciones</h4>
               <div class="text-muted">Modulo 1</div>
             </div>
+
             <div class="col-6 col-sm-3 placeholder">
-              <img src="{{ asset('images/matriculas.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración de matrículas">
+              <a href="{{ url('/matriculas') }}">
+                <img src="{{ asset('images/matriculas.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración de matrículas">
+              </a>
               <h4>Matrículas</h4>
               <span class="text-muted">Modulo 2</span>
             </div>
+
             <div class="col-6 col-sm-3 placeholder">
-              <img src="{{ asset('images/rrhh.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración de recursos humanos">
+              <a href="{{url('recursos-humanos')}}">
+                <img src="{{ asset('images/rrhh.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración de recursos humanos">
+              </a>
               <h4>RR.HH</h4>
               <span class="text-muted">Modulo 3</span>
             </div>
+
             <div class="col-6 col-sm-3 placeholder">
-              <img src="{{ asset('images/notas.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración notas alumnado">
+              <a href="{{ url('/notas') }}">  
+                <img src="{{ asset('images/notas.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración notas alumnado">
+              </a>
               <h4>Notas</h4>
               <span class="text-muted">Modulo 4</span>
             </div>

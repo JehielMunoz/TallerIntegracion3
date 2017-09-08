@@ -16,6 +16,11 @@ Route::get('/', function () {
 });
 
 Route::get('/liquidaciones','HomeController@liquidaciones');
+Route::get('/matriculas','HomeController@matriculas');
+Route::get('/recursos-humanos','HomeController@recursos_humanos');
+Route::get('/notas','HomeController@notas');
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
