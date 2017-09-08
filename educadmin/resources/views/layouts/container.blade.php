@@ -64,44 +64,63 @@
 
       </div>
     </nav>
-   <div class="container-fluid" style="margin-top: 5em;">
+   <div class="container-fluid w-75" style="margin-top: 5em;">
         
         @yield('navbar')
         @section('panel') 
           <h1>Panel de administración</h1>
-       
+
           <section class="row text-center placeholders">
-            <div class="col-6 col-sm-3 placeholder">
+          <?php if (Auth::user()->rol == '1'){ ?>
+            
+            <div class="col-sm-6">
+            <div class="card card-block">
               <a href="{{ url('/liquidaciones') }}">
-                <img src="{{ asset('images/liquidaciones.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Liquidaciones de sueldo">
+                <img src="{{ asset('images/liquidaciones.png') }}" width="224" height="200" class="img-fluid rounded-circle" alt="Liquidaciones de sueldo">
               </a>
               <h4>Liquidaciones</h4>
               <div class="text-muted">Modulo 1</div>
             </div>
-
-            <div class="col-6 col-sm-3 placeholder">
-              <a href="{{ url('/matriculas') }}">
-                <img src="{{ asset('images/matriculas.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración de matrículas">
-              </a>
-              <h4>Matrículas</h4>
-              <span class="text-muted">Modulo 2</span>
             </div>
 
-            <div class="col-6 col-sm-3 placeholder">
+            <div class="col-sm-6">
+            <div class="card card-block">
               <a href="{{url('recursos-humanos')}}">
                 <img src="{{ asset('images/rrhh.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración de recursos humanos">
               </a>
               <h4>RR.HH</h4>
               <span class="text-muted">Modulo 3</span>
             </div>
+            </div>
+            <h3>Area supervisor</h3>
+            <?php } ?>
 
-            <div class="col-6 col-sm-3 placeholder">
+
+            <?php if (Auth::user()->rol == '2'){ ?>
+            <div class="col-sm-6">
+            <div class="card card-block">
+              <a href="{{ url('/matriculas') }}">
+                <img src="{{ asset('images/matriculas.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración de matrículas">
+              </a>
+              <h4>Matrículas</h4>
+              <span class="text-muted">Modulo 2</span>
+            </div>
+            </div>
+            <h3>Area Administrador</h3>
+            <?php } ?>
+
+            <?php if (Auth::user()->rol == '3'){ ?>
+            <div class="col-sm-6">
+            <div class="card card-block">
               <a href="{{ url('/notas') }}">  
                 <img src="{{ asset('images/notas.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración notas alumnado">
               </a>
               <h4>Notas</h4>
               <span class="text-muted">Modulo 4</span>
             </div>
+            </div>
+            <h3>Area profesor</h3>
+            <?php } ?>
           </section>
         @show
         @yield('content')
