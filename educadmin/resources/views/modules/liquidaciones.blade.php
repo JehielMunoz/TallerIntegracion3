@@ -41,7 +41,7 @@
   </form>
 </div>
 <main class="col-sm-8 ml-sm-auto col-md-10 pt-3" role="main"  style="margin-top: -3em;">
-<h2>Ejemplo de CRUD: Liquidaciones</h2>
+<h2>Listado de Liquidaciones.-</h2>
           <div class="table-responsive" >
             <table class="table table-striped">
               <thead>

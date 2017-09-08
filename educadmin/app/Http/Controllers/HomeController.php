@@ -40,4 +40,7 @@ class HomeController extends Controller
     public function notas(){
         return view('modules.notas');
     }
+    public function formulario_matricula(){
+        return view('contents.formulario_matricula');
+    }
 }
