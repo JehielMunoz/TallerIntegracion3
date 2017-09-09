@@ -1,0 +1,12 @@
+importante antes de usar
+
+cargar la base de datos matriculas_db.sql
+
+La cuenta por defecto es 
+usuario: admin
+Contraseña: admin
+
+en caso de problemas con la conexion a la base de ir funciones/conexiones.inc 
+hay configurar la base de dato en caso de no cargar la que trae
+y la contraseña que tiene uno por defecto en mysql
+
