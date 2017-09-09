@@ -74,7 +74,7 @@
 
       </div>
     </nav>
-   <div id="DivVisual" class="anim container-fluid w-75" style="margin-top: 5em;">
+   <div class="anim container-fluid w-75" style="margin-top: 5em;">
         
         @yield('navbar')
         @section('panel') 
