@@ -14,6 +14,16 @@
     <link href="{{ asset('css/container.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+      .anim {display:none;}
+    </style>
+    <script>
+    $( document ).ready(function() {
+      $( ".anim" ).fadeIn( "slow" );
+    });
+    </script>
 </head>
 
 <body>
@@ -64,7 +74,7 @@
 
       </div>
     </nav>
-   <div class="container-fluid w-75" style="margin-top: 5em;">
+   <div id="DivVisual" class="anim container-fluid w-75" style="margin-top: 5em;">
         
         @yield('navbar')
         @section('panel') 
@@ -135,9 +145,9 @@
   
     <!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- Placed at the end of the document so the pages load faster 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../../public/js/jquery.min.js"><\/script>')</script>
+    <script>window.jQuery || document.write('<script src="../../../public/js/jquery.min.js"><\/script>')</script>-->
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
  
