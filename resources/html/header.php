@@ -2,20 +2,20 @@
 <html lang="es">
 <head>
 	<title>Liquidaciones</title> <!-- arreglar -->
-	<link type="text/css" rel="stylesheet" href="TallerIntegracion3resources/Style/estilo.css"/>
-	<link type="text/css" rel="stylesheet" href="TallerIntegracion3resources/Style/tabs_style.css">
-	<link type="text/css" rel="stylesheet" href="TallerIntegracion3resources/Style/tabs_style02.css">
-    <link type="text/css" rel="stylesheet" href="TallerIntegracion3resources/Style/estilo_tabla.css">
-    <link type="text/css" rel="stylesheet" href="TallerIntegracion3resources/Style/imprimir.css">
+	<link type="text/css" rel="stylesheet" href="../resources/Style/estilo.css"/>
+	<link type="text/css" rel="stylesheet" href="../resources/Style/tabs_style.css">
+	<link type="text/css" rel="stylesheet" href="../resources/Style/tabs_style02.css">
+    <link type="text/css" rel="stylesheet" href="../resources/Style/estilo_tabla.css">
+    <link type="text/css" rel="stylesheet" href="../resources/Style/imprimir.css">
     <meta charset='utf-8'>
-    <script src="TallerIntegracion3resources/Scripts/scripts.js"></script>
-	<script src="TallerIntegracion3resources/Scripts/tabsO.js"></script>
-	<script src="TallerIntegracion3resources/Scripts/tabs.js"></script>
-    <script src="TallerIntegracion3resources/Scripts/$Funciones.js"></script>   
+    <script src="../resources/Scripts/scripts.js"></script>
+	<script src="../resources/Scripts/tabsO.js"></script>
+	<script src="../resources/Scripts/tabs.js"></script>
+    <script src="../resources/Scripts/$Funciones.js"></script>   
 
 	<script>
             function Imprimir_tabla(){
-            var cabezera="<!DOCTYPE html><html lang='es'><head><link type='text/css' rel='stylesheet' href='TallerIntegracion3resources/Style/estilo_tabla.css'></head><body>"
+            var cabezera="<!DOCTYPE html><html lang='es'><head><link type='text/css' rel='stylesheet' href='../resources/Style/estilo_tabla.css'></head><body>"
             var objeto=document.getElementById("tabla_vista_previa");  //obtenemos el objeto a imprimir
             var ventana=window.open('','_blank');  //abrimos una ventana vacía nueva
             var footer="</body></html>"

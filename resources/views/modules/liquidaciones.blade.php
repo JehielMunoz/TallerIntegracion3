@@ -1,6 +1,5 @@
 <?php
-
-$BaseHtml =  $_SERVER["DOCUMENT_ROOT"]."TallerIntegracion3resources/";
+$BaseHtml =  $_SERVER["DOCUMENT_ROOT"]."/TallerIntegracion3/resources/";
 include $BaseHtml."php/funciones.php";
 
 $_SESSION['Usuario'] = "admin";
