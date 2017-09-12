@@ -12,19 +12,16 @@
 */
 
 Route::get('/', function () {
-    return view('welcome'); 
+    return view('welcome');
 });
 
-Route::get('liquidaciones', function(){
-    return view('liquidaciones');
-});
-
-// Prueba controlador
-
-Route::get('prueba', function(){
-    $persona = DB::table('tEmpleados')->where('Rut',"=","136287826")->get();
-    return $persona[0]->Sueldo_base;
-});
-    
+Route::get('/liquidaciones','HomeController@liquidaciones');
+Route::get('/matriculas','HomeController@matriculas');
+Route::get('/recursos-humanos','HomeController@recursos_humanos');
+Route::get('/notas','HomeController@notas');
+Route::get('/formulario_matricula','HomeController@formulario_matricula');
 
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

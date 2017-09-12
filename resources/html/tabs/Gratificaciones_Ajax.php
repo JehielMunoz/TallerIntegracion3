@@ -22,7 +22,7 @@ else
 $dbServer = 'localhost';
 $dbUser = 'postgres';
 $dbPass = 'wii360';
-$dbName = 'prueba';
+$dbName = 'educadmindb';
 $dbPort = '5432';
 echo"<div class =\"divplanilla\">";
 echo"<form>";
