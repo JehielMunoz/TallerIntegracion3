@@ -22,7 +22,7 @@ else
 $dbServer = 'localhost';
 $dbUser = 'postgres';
 $dbPass = 'wii360';
-$dbName = 'educadmindb';
+$dbName = 'prueba';
 $dbPort = '5432';
 echo"<div class =\"divplanilla\">";
 echo"<form>";
@@ -79,7 +79,7 @@ if(!empty($_SESSION['Tipo']))
                 }
                 else{
                     $Nombre_Bono = get_Bono($num);
-                    Escribir_Reporte("Se agrego una gratificacion de ".$Nombre_Bono." con un monto de $monto al empleado $rut.");
+                    #Escribir_Reporte("Se agrego una gratificacion de ".$Nombre_Bono." con un monto de $monto al empleado $rut.");
                 }
                 pg_free_result($query);
             }
@@ -93,18 +93,18 @@ if(!empty($_SESSION['Tipo']))
                     exit;
                 }
                 else{
-                    Escribir_Reporte("Se le quito una gratificacion de ".$Nombre_Bono." al empleado $rut.");
+                    #Escribir_Reporte("Se le quito una gratificacion de ".$Nombre_Bono." al empleado $rut.");
                 }
                 pg_free_result($query);
             }
             if($num!='0' && $num2==3){
                 if($tipo=='Imponible'){
                     $query = pg_query("insert into \"tBonos\"(\"Bono\",\"Imponible\",\"Activo\") values('$nombre','t','t');"); 
-                    Escribir_Reporte("Se creo una gratificacion de ".$nombre." de tipo imponible.");
+                    #Escribir_Reporte("Se creo una gratificacion de ".$nombre." de tipo imponible.");
                 }
                 else{
                     $query = pg_query("insert into \"tBonos\"(\"Bono\",\"Imponible\",\"Activo\") values('$nombre','f','t');");
-                    Escribir_Reporte("Se creo una gratificacion de ".$nombre." de tipo no imponible.");
+                    #Escribir_Reporte("Se creo una gratificacion de ".$nombre." de tipo no imponible.");
                 }
 
 

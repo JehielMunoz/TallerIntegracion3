@@ -18,7 +18,7 @@ if(!empty($_POST)){
         $id+=1;
     }
     
-    Escribir_Reporte("Se han hecho cambios en la tabla de Impuesto unico a la renta.");
+    #Escribir_Reporte("Se han hecho cambios en la tabla de Impuesto unico a la renta.");
     
     header('location: ../html/impuesto_unico.php');             
 }

@@ -303,4 +303,4 @@
                     </table>    
                 </td></tr>
             </table>
-<input type="button" name="imprimir" value="Imprimir" onclick="window.print();<?php Escribir_Reporte("Se imprimio la liquidacion del Empleado con rut: ".$_SESSION['Rut'])."."?>">
+<input type="button" name="imprimir" value="Imprimir" onclick="window.print();<?php #Escribir_Reporte("Se imprimio la liquidacion del Empleado con rut: ".$_SESSION['Rut'])."."?>">

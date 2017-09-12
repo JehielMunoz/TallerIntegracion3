@@ -36,7 +36,7 @@ if(!empty($_POST['id_prestamo'])){
 $dbServer = 'localhost';
 $dbUser = 'postgres';
 $dbPass = 'wii360';
-$dbName = 'educadmindb';
+$dbName = 'prueba';
 $dbPort = '5432';
 $conn_string =("host=$dbServer port=$dbPort dbname=$dbName user=$dbUser password=$dbPass ");
 $dbconn = pg_connect($conn_string); 
@@ -87,7 +87,7 @@ if(!empty($_SESSION['Tipo']))
                 }
                 else
                 {
-                    Escribir_Reporte("Se modifico el Prestamo/Credito  X . Nuevo Monto  : ".$_POST['monto']. " para el empleado".$_SESSION['Rut']); // Quizas el nombre del credito
+                    #Escribir_Reporte("Se modifico el Prestamo/Credito  X . Nuevo Monto  : ".$_POST['monto']. " para el empleado".$_SESSION['Rut']); // Quizas el nombre del credito
                  }   
             }         
             
@@ -100,7 +100,7 @@ if(!empty($_SESSION['Tipo']))
                 }
                 else
                 {
-                    Escribir_Reporte("Se modifico el descuento X . Nuevo Monto  : ".$_POST['monto']. " para el empleado".$_SESSION['Rut']); // Quizas el nombre del DEscuento
+                    #Escribir_Reporte("Se modifico el descuento X . Nuevo Monto  : ".$_POST['monto']. " para el empleado".$_SESSION['Rut']); // Quizas el nombre del DEscuento
                  }   
             }
 
@@ -115,7 +115,7 @@ if(!empty($_SESSION['Tipo']))
                 }
                 else
                 {
-                    Escribir_Reporte("Se agrego un credito llamado  ".$_POST['Nombre']." Por un Monto mensual: ".$_POST['Monto']. " para el empleado ".$_SESSION['Rut']); // Quizas agregar fecha
+                    #Escribir_Reporte("Se agrego un credito llamado  ".$_POST['Nombre']." Por un Monto mensual: ".$_POST['Monto']. " para el empleado ".$_SESSION['Rut']); // Quizas agregar fecha
                  }   
             }
              if($num!='0' && $num2==5){
@@ -129,7 +129,7 @@ if(!empty($_SESSION['Tipo']))
                 }
                 else
                 {
-                    Escribir_Reporte("Se creo una licencia de ". diferencia_Fecha($_POST['Inicio_l'],$_POST['Final_l']) ." días para el empleado: ".$_SESSION['Rut'].".");
+                    #Escribir_Reporte("Se creo una licencia de ". diferencia_Fecha($_POST['Inicio_l'],$_POST['Final_l']) ." días para el empleado: ".$_SESSION['Rut'].".");
                 }
             }
             
@@ -144,7 +144,7 @@ if(!empty($_SESSION['Tipo']))
                 else
                 {
                     $Nombre_Descuento = get_Descuento($num);
-                    Escribir_Reporte("Se agrego un descuento de ".$Nombre_Descuento." con un monto de $monto al empleado $rut.");
+                    #Escribir_Reporte("Se agrego un descuento de ".$Nombre_Descuento." con un monto de $monto al empleado $rut.");
                 }
             }
             if($num!='0' && $num2==2){
@@ -157,7 +157,7 @@ if(!empty($_SESSION['Tipo']))
                     exit;
                 }
                 else{
-                    Escribir_Reporte("Se borro un descuento de ".$Nombre_Descuento." del empleado $rut.");
+                    #Escribir_Reporte("Se borro un descuento de ".$Nombre_Descuento." del empleado $rut.");
                 }
                 pg_free_result($query);
             }
@@ -165,12 +165,12 @@ if(!empty($_SESSION['Tipo']))
                 if($tipo=='Legal'){
                     $sql="insert into \"tDescuentos\"(\"Descuento\",\"Tipo\",\"Activo\") values('$nombre','legal','t');";
                     $query = pg_query($dbconn,$sql);
-                    Escribir_Reporte("Se creo un descuento de ".$nombre." de tipo legal.");
+                    #Escribir_Reporte("Se creo un descuento de ".$nombre." de tipo legal.");
                 }
                 else{
                     $sql = "insert into \"tDescuentos\"(\"Descuento\",\"Tipo\",\"Activo\") values('$nombre','vario','t');";
                     $query = pg_query($dbconn,$sql);
-                    Escribir_Reporte("Se creo un descuento de ".$nombre." de tipo vario.");
+                    #Escribir_Reporte("Se creo un descuento de ".$nombre." de tipo vario.");
                 }
             }
             $sql = "SELECT * FROM \"rel_tEmpleados_tDescuentos\" JOIN \"tEmpleados\" ON \"rel_tEmpleados_tDescuentos\".\"Rut\" = \"tEmpleados\".\"Rut\" JOIN \"tDescuentos\" ON \"rel_tEmpleados_tDescuentos\".\"id_Descuento\" = \"tDescuentos\".\"id_Descuento\" WHERE \"tEmpleados\".\"Rut\" = '$rut'::bpchar;";

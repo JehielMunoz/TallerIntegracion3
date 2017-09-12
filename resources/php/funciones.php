@@ -187,7 +187,7 @@ if(empty($_SESSION))
             $_SESSION['Rut'] =  $_POST["r_Rut"];
             $_SESSION['Datos'] = get_Datos();
             $_SESSION['Nombre'] = trim($_SESSION['Datos']['Nombre']," ");     
-            Escribir_Reporte("Se ha registrado un empleado con Nombre: [ ".$_SESSION['Nombre']." ] y con rut: ".$_POST["r_Rut"]);
+            #Escribir_Reporte("Se ha registrado un empleado con Nombre: [ ".$_SESSION['Nombre']." ] y con rut: ".$_POST["r_Rut"]);
             $_SESSION['Afp'] = get_AFP();
             $_SESSION['Isapre'] = get_ISAPRE();
             $_SESSION['Contrato'] = get_Contrato();
@@ -224,12 +224,12 @@ if(empty($_SESSION))
             $row = pg_fetch_assoc($query);
             if(!empty($row))
          {
-                Escribir_Reporte("Se busco el rut: ".$row['Rut']." de manera exitosa.");
-                Escribir_Reporte("Empleado seleccionado [".trim($row['Nombre']," "). "].");
+                #Escribir_Reporte("Se busco el rut: ".$row['Rut']." de manera exitosa.");
+                #Escribir_Reporte("Empleado seleccionado [".trim($row['Nombre']," "). "].");
             }
             else
             {
-                Escribir_Reporte("Se busco el rut: ".$row['Rut']." , No se encontro el rut.");
+                #Escribir_Reporte("Se busco el rut: ".$row['Rut']." , No se encontro el rut.");
             }
             return $row;
     }

@@ -1,6 +1,6 @@
 <?php
 
-$BaseHtml =  $_SERVER["DOCUMENT_ROOT"]."/PruebaLaravel/resources/";
+$BaseHtml =  $_SERVER["DOCUMENT_ROOT"]."/TallerIntegracion3/resources/";
 include $BaseHtml."php/funciones.php";
 
 $_SESSION['Usuario'] = "admin";
