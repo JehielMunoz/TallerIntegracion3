@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+31<!DOCTYPE html>
 <html lang="es">
 <head>
 	<title>Liquidaciones</title> <!-- arreglar -->
