@@ -21,9 +21,13 @@ Route::get('/recursos-humanos','HomeController@recursos_humanos');
 Route::get('/notas','HomeController@notas');
 Route::get('/formulario_matricula','HomeController@formulario_matricula');
 Route::get('prueba','HomeController@prueba');
-Route::get('autocompletar', ['as' => 'autocompletar', 'uses'=>'Busqueda_personal@Autocompletar']); // BuscarPersonal Autocompletado
+
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
+/*
+    Liquidaciones de sueldo 
+*/
+Route::get('autocompletar', ['as' => 'autocompletar', 'uses'=>'Busqueda_personal@Autocompletar']); // BuscarPersonal Autocompletado
+Route::post('BuscarEmpleado',['as'=> 'BuscarEmpleado', 'uses'=>'Busqueda_personal@CargarEmpleado']);
