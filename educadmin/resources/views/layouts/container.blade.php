@@ -28,14 +28,14 @@
 
 <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="{{ url('/home') }}">EducaAdmin</a>
+      <a class="navbar-brand" href="{{ url('/home') }}">{{ config('app.name', 'Laravel') }}</a>
       <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
+          <li class="nav-item" >
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
@@ -56,7 +56,7 @@
             <li><a href="{{ route('register') }}">Register</a></li>
           @else
             <li class="dropdown">         
-              <a href="#" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user-circle fa-lg" aria-hidden="true"></i>
+              <a href="#" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user-circle fa-lg" aria-hidden="titlerue"></i>
                 {{ Auth::user()->name }} <span class="caret"></span>
               </a>
 
@@ -74,8 +74,8 @@
 
       </div>
     </nav>
-   <div class="anim container-fluid w-75" style="margin-top: 5em;">
-        
+   <div class="anim container-fluid">
+      <div class="row">  
         @yield('navbar')
         @section('panel') 
           <h1>Panel de administración</h1>
@@ -135,7 +135,7 @@
         @show
         @yield('content')
 
-
+      </div>
     </div>
           
           
