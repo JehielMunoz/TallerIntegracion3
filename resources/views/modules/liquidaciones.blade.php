@@ -133,7 +133,7 @@
                             <div class="tab-pane" id="cGratificaciones">
                                 @if(session()->has('Empleado'))
 
-                                    @include('modules/liquidaciones/planilla')
+                                    @include('modules/liquidaciones/gratificaciones')
 
                                 @else
                                     @include('modules/liquidaciones/noEmpleado')
@@ -144,7 +144,7 @@
                             <div class="tab-pane" id="cDescuentos">
                                 @if(session()->has('Empleado'))
 
-                                    @include('modules/liquidaciones/planilla')
+                                    @include('modules/liquidaciones/descuentos')
 
                                 @else
                                     @include('modules/liquidaciones/noEmpleado')
@@ -154,7 +154,7 @@
                             <div class="tab-pane" id="cVistaPrevia">
                                 @if(session()->has('Empleado'))
 
-                                    @include('modules/liquidaciones/planilla')
+                                    @include('modules/liquidaciones/vista_previa')
 
                                 @else
                                     @include('modules/liquidaciones/noEmpleado')

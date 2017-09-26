@@ -47,7 +47,7 @@
         <tr>
             <td>Cotizacion AFP:</td>
             <td><input type="text" disabled name="lname" placeholder="Nombre AFP" value="{{ session('Empleado')->Afp->AFP }}"></td>
-            <td><input type="text" disabled name="lname" placeholder="SIS" value="{{ session('Empleado')->Afp->SIS }}"></td>
+            <td><input type="text" disabled name="lname" placeholder="SIS" value="Calcular Tasa"></td>
             <td><input type="text" disabled placeholder="Tasa" name="lname" value="{{ session('Empleado')->Afp->Tasa }}"></td>
 
             <tr>

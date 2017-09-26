@@ -37,9 +37,9 @@ class Busqueda_personal extends Controller
                 
                 /*$rEmpleado= request()->session()->get('Empleado');
                 */
-                print_r ($Empleado);
+               
                 request()->session()->put('Empleado',$Empleado);
-                //return back();
+                return back();
 
             }else{
                 session()->forget('Empleado');
@@ -47,6 +47,30 @@ class Busqueda_personal extends Controller
                 
             }
         }
-
+    }
+    public static function Gratificaciones(){
+  /*      SELECT \"tEmpleados\".\"Rut\", \"tBonos\".\"Bono\", \"tBonos\".\"Activo\", \"tBonos\".\"id_Bono\", \"tBonos\".\"Imponible\",\"rel_tEmpleados_tBonos\".\"Monto\"
+         FROM \"tBonos\"
+          JOIN \"rel_tEmpleados_tBonos\" ON \"tBonos\".\"id_Bono\" = \"rel_tEmpleados_tBonos\".\"id_Bono\"
+           JOIN \"tEmpleados\" ON \"rel_tEmpleados_tBonos\".\"Rut\" = \"tEmpleados\".\"Rut\" WHERE \"tEmpleados\".\"Rut\" = '$rut'::bpchar;";
+*/
+        if(session()->has('Empleado')){
+            $Rut = session('Empleado')->Datos->Rut;
+            
+            $Gratificaciones= DB::table('tBonos')
+                    ->join('rel_tEmpleados_tBonos','tBonos.id_Bono', '=', 'rel_tEmpleados_tBonos.id_Bono')
+                    ->join('tEmpleados', 'rel_tEmpleados_tBonos.Rut', '=', 'tEmpleados.Rut')
+                    ->where('tEmpleados.Rut','=', $Rut)
+                    ->select('tBonos.Bono','tBonos.Activo','tBonos.id_Bono','tBonos.Imponible','rel_tEmpleados_tBonos.Monto')
+                    ->get();
+            foreach($Gratificaciones as $Gratificacion){
+                echo $Gratificacion->Bono;
+            }
+        }else{
+             echo "Error mistico de la vida(No deberias acceder esta pagina de esta manera (?) ";
+        }
+        
     }
 }
+
+
