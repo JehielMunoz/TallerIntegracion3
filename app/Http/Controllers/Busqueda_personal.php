@@ -1,6 +1,5 @@
 <?php
 namespace App\Http\Controllers;
-header('content-type: application/json; charset=utf-8');
 
 use Illuminate\Http\Request;
 use DB;
@@ -48,29 +47,72 @@ class Busqueda_personal extends Controller
             }
         }
     }
-    public static function Gratificaciones(){
-  /*      SELECT \"tEmpleados\".\"Rut\", \"tBonos\".\"Bono\", \"tBonos\".\"Activo\", \"tBonos\".\"id_Bono\", \"tBonos\".\"Imponible\",\"rel_tEmpleados_tBonos\".\"Monto\"
-         FROM \"tBonos\"
-          JOIN \"rel_tEmpleados_tBonos\" ON \"tBonos\".\"id_Bono\" = \"rel_tEmpleados_tBonos\".\"id_Bono\"
-           JOIN \"tEmpleados\" ON \"rel_tEmpleados_tBonos\".\"Rut\" = \"tEmpleados\".\"Rut\" WHERE \"tEmpleados\".\"Rut\" = '$rut'::bpchar;";
-*/
+
+    public static function CargarGratificaciones(){
+        /*      SELECT \"tEmpleados\".\"Rut\", \"tBonos\".\"Bono\", \"tBonos\".\"Activo\", \"tBonos\".\"id_Bono\", \"tBonos\".\"Imponible\",\"rel_tEmpleados_tBonos\".\"Monto\"
+        FROM \"tBonos\"
+        JOIN \"rel_tEmpleados_tBonos\" ON \"tBonos\".\"id_Bono\" = \"rel_tEmpleados_tBonos\".\"id_Bono\"
+        JOIN \"tEmpleados\" ON \"rel_tEmpleados_tBonos\".\"Rut\" = \"tEmpleados\".\"Rut\" WHERE \"tEmpleados\".\"Rut\" = '$rut'::bpchar;";
+        */
+        $Rut = session('Empleado')->Datos->Rut;
+            $GratificacionesUsuario= DB::table('tBonos')
+            ->join('rel_tEmpleados_tBonos','tBonos.id_Bono', '=', 'rel_tEmpleados_tBonos.id_Bono')
+            ->join('tEmpleados', 'rel_tEmpleados_tBonos.Rut', '=', 'tEmpleados.Rut')
+            ->where('tEmpleados.Rut','=', $Rut)
+            ->select('tBonos.Bono','tBonos.Activo','tBonos.id_Bono','tBonos.Imponible','rel_tEmpleados_tBonos.Monto')
+            ->get();
+            session('Empleado')->Gratificaciones= $GratificacionesUsuario;
+    }
+
+    public static function printGratificacionesUsuario(){
         if(session()->has('Empleado')){
-            $Rut = session('Empleado')->Datos->Rut;
-            
-            $Gratificaciones= DB::table('tBonos')
-                    ->join('rel_tEmpleados_tBonos','tBonos.id_Bono', '=', 'rel_tEmpleados_tBonos.id_Bono')
-                    ->join('tEmpleados', 'rel_tEmpleados_tBonos.Rut', '=', 'tEmpleados.Rut')
-                    ->where('tEmpleados.Rut','=', $Rut)
-                    ->select('tBonos.Bono','tBonos.Activo','tBonos.id_Bono','tBonos.Imponible','rel_tEmpleados_tBonos.Monto')
-                    ->get();
-            foreach($Gratificaciones as $Gratificacion){
-                echo $Gratificacion->Bono;
+            $IdG_Usuario= [];
+            $GratificacionesUsuario = session('Empleado')->Gratificaciones;
+            foreach($GratificacionesUsuario as $Gratificacion){
+                echo "<tr>";
+                echo "<td>$Gratificacion->Bono</td>";
+                echo "<td><input type=\"text\" disabled  placeholder=".$Gratificacion->Monto." ></td>";
+                if($Gratificacion->Imponible=='t'){
+                    echo"<td>Imponible</td>";                    
+                }else{
+                    echo"<td>No Imponible</td>";
+                }
+                echo "<td></td>"; // Boton para borrar, implementarlo 
+                echo "</tr>";
+                array_push($IdG_Usuario,$Gratificacion->id_Bono);
             }
+            session('Empleado')->GratificacionesId = $IdG_Usuario;
         }else{
              echo "Error mistico de la vida(No deberias acceder esta pagina de esta manera (?) ";
         }
-        
     }
+
+    public static function printGratificaciones(){
+        /* "SELECT * 
+            FROM public.\"tBonos\" 
+            WHERE \"tBonos\".\"id_Bono\"  NOT IN 
+            (SELECT \"tBonos\".\"id_Bono\" FROM public.\"rel_tEmpleados_tBonos\", public.\"tEmpleados\", public.\"tBonos\" WHERE \"tEmpleados\".\"Rut\" = \"rel_tEmpleados_tBonos\".\"Rut\" AND \"tBonos\".\"id_Bono\" = \"rel_tEmpleados_tBonos\".\"id_Bono\" AND \"tEmpleados\".\"Rut\" = '$rut');";
+            */
+        $Gratificaciones= DB::table('tBonos')
+        ->whereNotIn('tBonos.id_Bono',session('Empleado')->GratificacionesId)->get();
+
+        foreach($Gratificaciones as $Gratificacion){
+            echo "<tr>";
+            echo "<td>$Gratificacion->Bono</td>";
+            if($Gratificacion->Imponible=='t'){
+                echo "<td>Imponible</td>";
+            }else{
+                echo "<td>No imponible</td>";
+            }
+            echo "<td><input id='bono".$Gratificacion->id_Bono."' type=\"number\" min='0' placeholder='Ingresar monto' ></input></td>";
+            echo "<td></td>";  // Agregar funcionalidad para agregar Gratificaciones; 
+            echo "</tr>";
+        }
+    }   
+
 }
+
+
+
 
 
