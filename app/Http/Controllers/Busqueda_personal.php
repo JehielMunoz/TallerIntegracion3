@@ -110,8 +110,59 @@ class Busqueda_personal extends Controller
         }
     }   
 
-}
+    public static function CargarDescuentos(){
+        /* SELECT * 
+        FROM \"rel_tEmpleados_tDescuentos\"
+         JOIN \"tEmpleados\" ON \"rel_tEmpleados_tDescuentos\".\"Rut\" = \"tEmpleados\".\"Rut\" 
+         JOIN \"tDescuentos\" ON \"rel_tEmpleados_tDescuentos\".\"id_Descuento\" = \"tDescuentos\".\"id_Descuento\"
+         WHERE \"tEmpleados\".\"Rut\" = '$rut'::bpchar;
+         */
+        $Rut = session('Empleado')->Datos->Rut; 
+        $Descuentos= DB::table('rel_tEmpleados_tDescuentos')
+        ->join('tEmpleados','rel_tEmpleados_tDescuentos.Rut', '=','tEmpleados.Rut')
+        ->join('tDescuentos', 'rel_tEmpleados_tDescuentos.id_Descuento', '=', 'tDescuentos.id_Descuento')
+        ->where('tEmpleados.Rut','=', $Rut)
+        ->get();
+        session('Empleado')->Descuentos= $Descuentos;
+    
+    }
+    public static function printDescuentosUsuario(){
+        $Descuentos = session('Empleado')->Descuentos;
+        $IdD_Usuario= [];
+        foreach($Descuentos as $Descuento){
+            echo "<tr>";
+            echo "<td>$Descuento->Descuento</td>";
+            echo "<td><input type=\"text\" disabled  name=\"Mutual\" placeholder=$Descuento->Monto></td>";
+            echo "</tr>";
+            array_push($IdD_Usuario,$Descuento->id_Descuento);
+            
+        }
+        session('Empleado')->DescuentosId = $IdD_Usuario;
+        
+    }
+    public static function printDescuentos(){
+        /* SELECT *FROM public.\"tDescuentos\" 
+        WHERE \"tDescuentos\".\"id_Descuento\"   NOT IN 
+        (SELECT \"tDescuentos\".\"id_Descuento\" FROM public.\"tEmpleados\", public.\"rel_tEmpleados_tDescuentos\", public.\"tDescuentos\" WHERE (\"tEmpleados\".\"Rut\" = \"rel_tEmpleados_tDescuentos\".\"Rut\" AND \"tDescuentos\".\"id_Descuento\" = \"rel_tEmpleados_tDescuentos\".\"id_Descuento\") 
+        AND (\"tEmpleados\".\"Rut\" = '$rut')); 
+            */
+        $Descuentos= DB::table('tDescuentos')
+        ->whereNotIn('tDescuentos.id_Descuento',session('Empleado')->DescuentosId)->get();
 
+        foreach($Descuentos as $Descuento){
+            echo "<tr>";
+            echo "<td>$Descuento->Descuento</td>";
+            if($Descuento->Tipo=='legal'){
+                echo "<td>Legal</td>";
+            }else{
+                echo "<td>Varios</td>";
+            }
+            echo "<td><input id='Descuento".$Descuento->id_Descuento."' type=\"number\" min='0' placeholder='Ingresar monto' ></input></td>";
+            echo "<td></td>";  // Agregar funcionalidad para agregar Gratificaciones; 
+            echo "</tr>";
+        }
+    }   
+}
 
 
 

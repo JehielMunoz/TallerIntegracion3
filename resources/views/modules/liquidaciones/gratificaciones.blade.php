@@ -23,11 +23,6 @@
         </tr>
         <br>
         <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Agregar</th>
-        </tr>
-        <tr>
             <td>
                 <input type="text"  id="Nombre_nueva_gratificacion" name="Nombre_nueva_gratificacion" placeholder='Ingresar el nombre'></input>
             </td>
