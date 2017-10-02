@@ -82,7 +82,7 @@
           <h1>Panel de administración</h1>
 
           <section class="row text-center placeholders">
-          <?php if (Auth::user()->rol == '1'){ ?>
+          @if (Auth::user()->rol == '1')
             
             <div class="col-sm-6">
             <div class="card card-block">
@@ -103,10 +103,10 @@
               <span class="text-muted">Modulo 3</span>
             </div>
             </div>
-            <?php } ?>
+            @endif
 
 
-            <?php if (Auth::user()->rol == '2'){ ?>
+            @if (Auth::user()->rol == '2')
             <div class="col-sm-6">
             <div class="card card-block">
               <a href="{{ url('/matriculas') }}">
@@ -116,9 +116,9 @@
               <span class="text-muted">Modulo 2</span>
             </div>
             </div>
-            <?php } ?>
+            @endif
 
-            <?php if (Auth::user()->rol == '3'){ ?>
+            @if (Auth::user()->rol == '3')
             <div class="col-sm-6">
             <div class="card card-block">
               <a href="{{ url('/notas') }}">  
@@ -128,7 +128,7 @@
               <span class="text-muted">Modulo 4</span>
             </div>
             </div>
-            <?php } ?>
+            @endif
           </section>
         @show
         @yield('content')
