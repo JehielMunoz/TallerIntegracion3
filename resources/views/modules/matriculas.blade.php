@@ -30,7 +30,7 @@
   	<i class="fa fa-address-book fa-5x i_mgn_top" aria-hidden="true"></i>
     <div class="card-block div_mgn_top">
       <h4 class="card-title">Descripción de Matrícula de Alumno.-</h4>
-      <a href="#" class="btn btn-outline-info btn_mgn_top" role="button">Ir a Formulario</a>
+      <a href="{{ url('descripcion_matricula') }}" class="btn btn-outline-info btn_mgn_top" role="button">Ir a Descripción</a>
     </div>
   </div>
   <div class="card text-center">
