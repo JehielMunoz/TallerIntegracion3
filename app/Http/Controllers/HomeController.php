@@ -43,6 +43,9 @@ class HomeController extends Controller
     public function formulario_matricula(){
         return view('contents.formulario_matricula');
     }
+    public function descripcion_matricula(){
+        return view('contents.descripcion_matricula');
+    }
 
     public function prueba(){
         return view('modules.prueba');
