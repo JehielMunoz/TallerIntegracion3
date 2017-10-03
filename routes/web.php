@@ -20,6 +20,7 @@ Route::get('/matriculas','HomeController@matriculas');
 Route::get('/recursos-humanos','HomeController@recursos_humanos');
 Route::get('/notas','HomeController@notas');
 Route::get('/formulario_matricula','HomeController@formulario_matricula');
+Route::get('/descripcion_matricula','HomeController@descripcion_matricula');
 Route::get('prueba','HomeController@prueba');
 
 
