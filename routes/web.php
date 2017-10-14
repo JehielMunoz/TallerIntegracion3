@@ -30,4 +30,7 @@ Route::get('/home', 'HomeController@index')->name('home');
     Liquidaciones de sueldo 
 */
 Route::get('autocompletar', ['as' => 'autocompletar', 'uses'=>'Busqueda_personal@Autocompletar']); // BuscarPersonal Autocompletado
-Route::post('BuscarEmpleado',['as'=> 'BuscarEmpleado', 'uses'=>'Busqueda_personal@CargarEmpleado']);
+Route::post('BuscarEmpleado',['as'=> 'BuscarEmpleado', 'uses'=>'Busqueda_personal@CargarEmpleado']); // Carga datos del empleado cargado
+Route::get('BorrarDato',['as'=> 'BorrarDato', 'uses'=>'Busqueda_personal@BorrarDato']); // Maneja cuando se borra una gratificacion o descuento entre otras cosas
+Route::get('AgregarDato',['as'=> 'AgregarDato', 'uses'=>'Busqueda_personal@AgregarDatoGratificacion']); // Maneja cuando se agrega una gratificacion o descuento entre otras cosas
+

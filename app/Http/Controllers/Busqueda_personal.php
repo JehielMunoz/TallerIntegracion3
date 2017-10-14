@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use DB;
 class Busqueda_personal extends Controller
 {
+    //Autocompletar
     public function Autocompletar()
     {
             $Nombre = request('Nombre_Personal');
@@ -12,6 +13,7 @@ class Busqueda_personal extends Controller
             return response()->json($resultado);
     }
 
+    //Cargar Datos del empleado
     public function CargarEmpleado(){
         if(request()->isMethod('post')){
             if(request()->filled('Rut_Personal')){
@@ -69,6 +71,11 @@ class Busqueda_personal extends Controller
             $IdG_Usuario= [];
             $GratificacionesUsuario = session('Empleado')->Gratificaciones;
             foreach($GratificacionesUsuario as $Gratificacion){
+                
+                echo "<form action='".route('BorrarDato')."' method='get'>";
+                echo "<input hidden id=\"id_Gratificacion\" name=\"id_Gratificacion\" value=$Gratificacion->id_Bono>";
+                echo "<input hidden id=\"id_Borrar\" name=\"id_Borrar\" value=\"1\">";
+                
                 echo "<tr>";
                 echo "<td>$Gratificacion->Bono</td>";
                 echo "<td><input type=\"text\" disabled  placeholder=".$Gratificacion->Monto." ></td>";
@@ -77,7 +84,10 @@ class Busqueda_personal extends Controller
                 }else{
                     echo"<td>No Imponible</td>";
                 }
-                echo "<td></td>"; // Boton para borrar, implementarlo 
+
+                echo "<td><input type=\"submit\" value=\"\"></td>"; // Boton para borrar, implementarlo 
+                echo "</form>";
+                
                 echo "</tr>";
                 array_push($IdG_Usuario,$Gratificacion->id_Bono);
             }
@@ -104,8 +114,13 @@ class Busqueda_personal extends Controller
             }else{
                 echo "<td>No imponible</td>";
             }
-            echo "<td><input id='bono".$Gratificacion->id_Bono."' type=\"number\" min='0' placeholder='Ingresar monto' ></input></td>";
-            echo "<td></td>";  // Agregar funcionalidad para agregar Gratificaciones; 
+            echo "<form action='".route('AgregarDato')."' method='get'>";
+            echo "<input hidden id=\"id_Gratificacion\" name=\"id_Gratificacion\" value=$Gratificacion->id_Bono>";
+            echo "<input hidden id=\"id_Agregar\" name=\"id_Agregar\" value=\"1\">";
+            
+            echo "<td><input id='Monto' name=\"Monto\" type=\"number\" min='0' placeholder='Ingresar monto'></input></td>";
+            echo "<td><input type=\"submit\" value=\"\"></td>"; // Boton para borrar, implementarlo 
+            echo "</form>";
             echo "</tr>";
         }
     }   
@@ -161,8 +176,73 @@ class Busqueda_personal extends Controller
             echo "<td></td>";  // Agregar funcionalidad para agregar Gratificaciones; 
             echo "</tr>";
         }
-    }   
+    }
+
+    //Modificar Datos del empleado
+    public static function BorrarDato(){  // Gratificacion y descuento maybe
+        if(request()->isMethod('get')){
+            if(request()->filled('id_Borrar') && request()->filled('id_Gratificacion')){
+                // Variables usadas en general
+                $Rut =  session('Empleado')->Datos->Rut;
+
+                if(request('id_Borrar')==1){
+                    DB::table('rel_tEmpleados_tBonos')->where([
+                       ['id_Bono','=',request('id_Gratificacion')],
+                       ['Rut','=',$Rut] 
+                    ])->delete();
+                    self::CargarGratificaciones(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
+                    return back();
+                }
+
+            }
+            else{
+                echo "kill your self"; // retroceder y mostrar error, revisar buscar empleado para darle formato al error
+            }
+        }
+    }
+
+    public static function AgregarDatoGratificacion(){
+        if(request()->isMethod('get')){
+            if(request()->filled('id_Agregar')){
+                // Variables usadas en general
+                $Rut =  session('Empleado')->Datos->Rut;
+                // id_Agregar == 1 = agregar gratificacion
+                // id_Agregar == 2 = crear Gratificacion 
+
+                if(request('id_Agregar')==1){
+                    if(request()->filled('Monto') && request()->filled('id_Gratificacion') ){ // si el monto existe inserta la gratificacion 
+                        DB::table('rel_tEmpleados_tBonos')->insert(
+                            ['Rut'=>$Rut,'id_Bono'=>request('id_Gratificacion'),'Monto'=>request('Monto')]
+                            );                        
+                    }
+                    self::CargarGratificaciones(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
+                    return back();
+                }
+                if(request('id_Agregar')==2){
+                    if(request()->filled('nGratificacion') && request()->filled('Tipo')){
+                        if(request('Tipo')=="Imponible"){
+                            DB::table('tBonos')->insert(
+                                ['Bono'=>request('nGratificacion'),'Imponible'=>'t','Activo'=>'t']
+                            );
+                        }else{
+                            DB::table('tBonos')->insert(
+                                ['Bono'=>request('nGratificacion'),'Imponible'=>'f','Activo'=>'t']
+                            );
+                        }
+                    }
+                    self::CargarGratificaciones(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
+                    return back();    
+                }
+
+            }
+            else{
+                echo "kill your self"; // retroceder y mostrar error, revisar buscar empleado para darle formato al error
+            }
+        }
+        
+    }
 }
+
 
 
 
