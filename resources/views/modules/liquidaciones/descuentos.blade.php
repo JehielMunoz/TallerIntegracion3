@@ -1,7 +1,9 @@
 <?php
  use App\Http\Controllers\Busqueda_personal;
 ?>
-   {{Busqueda_personal::CargarDescuentos()}}
+    {{Busqueda_personal::CargarDescuentos()}}
+    {{Busqueda_personal::CargarPrestamos()}}
+
 <div class="table-responsive">
      <table class="table table-striped table-bordered table-condensed ">
         <tr>
@@ -10,6 +12,16 @@
         <br>
         {{Busqueda_personal::printDescuentosUsuario()}}
     </table>
+</div>
+<div class="table-responsive">
+     <table class="table table-striped table-bordered table-condensed ">
+        <tr>
+            <th colspan="4"><h2>Credito y Prestamos del Empleadoo</h2></th>
+        </tr>
+        <br>
+        {{Busqueda_personal::printPrestamos()}}
+    </table>
+</div>
 <div class="table-responsive">
      <table class="table table-striped table-bordered table-condensed ">
         <tr>
@@ -18,6 +30,11 @@
         <br>
         {{Busqueda_personal::printDescuentos()}}
     </table>
+</div>
+
+
+
+
 
 
 <table class="table table-striped table-bordered table-condensed ">
@@ -29,15 +46,23 @@
                 <th>Tipo</th>
                 <th>Agregar</th>
             </tr>
+
             <tr>
-            <td><input type="text" class="entrega-dato" id="Nombre_nuevo_descuento" placeholder='Ingrese el nombre'></input></td>
-            <td><select id="Tipo_nuevo_descuento">
+            <form action= {{route('AgregarDato')}} method="get">
+            <td>
+                <input type="text" class="entrega-dato" id="nDescuento" name="nDescuento" placeholder='Ingrese el nombre'>
+                <input hidden id="id_Agregar" name="id_Agregar" value="4">
+            </td>
+            <td>
+                <select id="tDescuento" name="tDescuento">
                     <option value='Legal'>Legal</option>
                     <option value='Varios'>Varios</option>
-            </select>
+                </select>
             </td>
-            <td></td>
+            <td><input type="submit" value=""></td>
+            
             </tr>
+            </form>
             </table>
             
             <br/>
@@ -50,13 +75,16 @@
                 <th>Fecha Final</th>
                 <th>Agregar</th>
             </tr>
+            <form action= {{route('AgregarDato')}} method="get">
             <tr>
-             <td><input type="text" name="nombre_credito" class="entrega-dato" id="Nombre_nuevo_credito" placeholder='Ingrese el nombre del Credito'></input></td>
-            <td><input type="number" name="monto_credito" class="entrega-dato" id="Monto_nuevo_credito" placeholder='Monto Mensual del Prestamo'></input></td>
-            <td><input type="date" name="inicio_credito" class="entrega-dato" id="Inicio_nuevo_credito" placeholder='Año/Mes/Dia'></input></td>
-            <td><input type="date" name="final_credito" class="entrega-dato" id="Termino_nuevo_credito" placeholder='Año/Mes/Dia'></input></td>
-            <td></td>
+                <input hidden id="id_Agregar" name="id_Agregar" value="5">
+                <td><input type="text" name="nCredito" class="entrega-dato" id="Nombre_nuevo_credito" placeholder='Ingrese el nombre del Credito'></input></td>
+                <td><input type="number" name="mCredito" class="entrega-dato" id="Monto_nuevo_credito" placeholder='Monto Mensual del Prestamo'></input></td>
+                <td><input type="date" name="iCredito" class="entrega-dato" id="Inicio_nuevo_credito" placeholder='Año/Mes/Dia'></input></td>
+                <td><input type="date" name="fCredito" class="entrega-dato" id="Termino_nuevo_credito" placeholder='Año/Mes/Dia'></input></td>
+                <td><input type="submit" value=""></td>
             </tr>
+            </form>
             </table>
             
              
