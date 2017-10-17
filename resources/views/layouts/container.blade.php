@@ -82,7 +82,11 @@
           <h1>Panel de administración</h1>
 
           <section class="row text-center placeholders">
+<<<<<<< Updated upstream
           @if (Auth::user()->id == '1')
+=======
+          @if (Auth::user()->rol == '1')
+>>>>>>> Stashed changes
             
             <div class="col-sm-6">
             <div class="card card-block">
@@ -106,7 +110,11 @@
             @endif
 
 
+<<<<<<< Updated upstream
             @if (Auth::user()->id == '2')
+=======
+            @if (Auth::user()->rol == '2')
+>>>>>>> Stashed changes
             <div class="col-sm-6">
             <div class="card card-block">
               <a href="{{ url('/matriculas') }}">
@@ -118,7 +126,11 @@
             </div>
             @endif
 
+<<<<<<< Updated upstream
             @if (Auth::user()->id == '3')
+=======
+            @if (Auth::user()->rol == '3')
+>>>>>>> Stashed changes
             <div class="col-sm-6">
             <div class="card card-block">
               <a href="{{ url('/notas') }}">  
@@ -149,4 +161,8 @@
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 </body>
+<<<<<<< Updated upstream
 </html>
+=======
+</html>
+>>>>>>> Stashed changes
