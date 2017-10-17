@@ -16,7 +16,7 @@ class Busqueda_personal extends Controller
     //Cargar Datos del empleado
     public function CargarEmpleado(){
         if(request()->isMethod('post')){
-            if(request()->filled('Rut_Personal')){
+            if(request()->filled('Rut_Personal')){ //add &&session('Empleado')->Datos->Rut when 
                 $Nombre =  request('Nombre_Personal'); //Capturamos el nombre 
                 $Rut = request('Rut_Personal'); // Y Rut Del empleado
                 
@@ -35,7 +35,7 @@ class Busqueda_personal extends Controller
                 // Buscamos sus contrato y los agregamos al objeto Empleado
                 $Empleado->Contrato=DB::table('tContratos')->where('id_Contrato', '=',$Empleado->Datos->id_Contrato)->get()[0];
                 
-                
+                //Agregar todo lo que calcula el sueldo & stuff
                 /*$rEmpleado= request()->session()->get('Empleado');
                 */
                
@@ -72,7 +72,7 @@ class Busqueda_personal extends Controller
             $GratificacionesUsuario = session('Empleado')->Gratificaciones;
             foreach($GratificacionesUsuario as $Gratificacion){
                 
-                echo "<form action='".route('BorrarDato')."' method='get'>";
+                echo "<form action='".route('BorrarDatos')."' method='get'>";
                 echo "<input hidden id=\"id_Gratificacion\" name=\"id_Gratificacion\" value=$Gratificacion->id_Bono>";
                 echo "<input hidden id=\"id_Borrar\" name=\"id_Borrar\" value=\"1\">";
                 
@@ -151,7 +151,7 @@ class Busqueda_personal extends Controller
         $Descuentos = session('Empleado')->Descuentos;
         $IdD_Usuario= [];
         foreach($Descuentos as $Descuento){
-            echo "<form action='".route('BorrarDato')."' method='get'>";
+            echo "<form action='".route('BorrarDatos')."' method='get'>";
             echo "<input hidden id=\"id_Descuento\" name=\"id_Descuento\" value=$Descuento->id_Descuento>";
             echo "<input hidden id=\"id_Borrar\" name=\"id_Borrar\" value=\"2\">";
             
@@ -197,15 +197,15 @@ class Busqueda_personal extends Controller
         $IdP_Usuario= [];
         foreach($Prestamos as $Prestamo){
             
-            echo "<form action='".route('BorrarDato')."' method='get'>";
+            echo "<form action='".route('ModificarDatos')."' method='get'>";
             echo "<input hidden id=\"id_Prestamo\" name=\"id_Prestamo\" value=$Prestamo->id_Prestamo>";
-            echo "<input hidden id=\"id_Borrar\" name=\"id_Borrar\" value=\"2\">";
+            echo "<input hidden id=\"id_Modificar\" name=\"id_Modificar\" value=\"3\">";
             
             echo "<tr>";
             echo "<td>$Prestamo->Nombre</td>";
-            echo "<td><input type=\"text\" disabled  name=\"Mutual\" placeholder=$Prestamo->Monto></td>";
-            echo "<td><input type=\"text\" class=\"entrega-dato\" disable name=\"inicio_credito\" placeholder=$Prestamo->F_inicio></td>";
-            echo "<td><input type=\"text\" class=\"entrega-dato\" disable name=\"final_credito\" placeholder=$Prestamo->F_final></td>";
+            echo "<td><input type=\"text\" name=\"mPrestamo\" placeholder=$Prestamo->Monto></td>";
+            echo "<td><input type=\"date\" class=\"entrega-dato\"  name=\"iPrestamo\" value=$Prestamo->F_inicio></td>";
+            echo "<td><input type=\"date\" class=\"entrega-dato\"  name=\"fPrestamo\" value=$Prestamo->F_final></td>";
             echo "<td><input type=\"submit\" value=\"Modificar\"></td>"; // Boton para borrar, implementarlo 
             echo "</tr>";
             echo "</form>";
@@ -217,7 +217,7 @@ class Busqueda_personal extends Controller
 
     }
     //Modificar Datos del empleado
-    public static function BorrarDato(){  // Descuento y descuento maybe
+    public static function BorrarDatos(){  // Descuento y descuento maybe
         if(request()->isMethod('get')){
             if(request()->filled('id_Borrar')){
                 // Variables usadas en general
@@ -260,6 +260,7 @@ class Busqueda_personal extends Controller
                 // id_Agregar == 3 = agregar descuento
                 // id_Agregar == 4 = crear descuento
                 // id_Agregar == 5 = crear/agregar prestamo w/e
+                // id_Agregar == 6 = crear/agregar licencia w/e
 
                 if(request('id_Agregar')==1){
                     if(request()->filled('MontoGratificacion') && request()->filled('id_Gratificacion') ){ // si el monto existe inserta la gratificacion 
@@ -312,6 +313,15 @@ class Busqueda_personal extends Controller
                     self::CargarDescuentos(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
                     return back();
                 }
+                if(request('id_Agregar')==6){                    
+                    if(request()->filled('dLicencia') && request()->filled('tLicencia')&& request()->filled('iLicencia')&& request()->filled('fLicencia')){ 
+                        DB::table('tLicencias')->insert(
+                            ['Rut'=>$Rut,'Descuenta'=>request('tLicencia'),'Dias'=>request('dLicencia'),'F_inicio'=>request('iLicencia'),'F_final'=>request('fLicencia')]
+                            );
+                    }
+                    self::CargarDescuentos(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
+                    return back();
+                }
 
             }
             else{
@@ -320,4 +330,52 @@ class Busqueda_personal extends Controller
         }
         
     }
+
+    public static function ModificarDatos(){
+        if(request()->isMethod('get')){
+            if(request()->filled('id_Modificar')){
+                $Rut = session('Empleado')->Datos->Rut;
+                // id_Modificar == 1 // Modificar datos empleado
+                // id Modificar == 2 // Modificar descuento
+                // id Modificar == 3 // Modificar prestamo
+                if(request('id_Modificar')==2){
+                    if(request()->filled('mDescuento') && request()->filled('id_Descuento')){ // si el monto existe inserta el descuento
+                        DB::talbe('rel_tEmpleados_tDescuentos')
+                        ->where([
+                            ['id_Descuento','=',request('id_Descuento')],
+                            ['Rut','=',$Rut]
+                        ])
+                        ->update(['Monto'=>request('mDescuento')]);
+                    }
+                }
+                if(request('id_Modificar')==3){
+                    if(request()->filled('mPrestamo') && request()->filled('id_Prestamo') && request()->filled('iPrestamo') && request()->filled('fPrestamo')){
+                        DB::table('tPrestamos')->where([
+                            ['id_Prestamo','=',request('id_Prestamo')],
+                            ['Rut','=',$Rut]
+                        ])
+                        ->update([
+                            'F_inicio'=>request('iPrestamo'),
+                            'F_final'=>request('fPrestamo'),
+                            'Monto'=>request('mPrestamo')
+                        ]);
+                        self::CargarDescuentos(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
+                        return back();
+                    }
+                }
+            }
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+

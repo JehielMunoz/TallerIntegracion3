@@ -31,6 +31,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 */
 Route::get('autocompletar', ['as' => 'autocompletar', 'uses'=>'Busqueda_personal@Autocompletar']); // BuscarPersonal Autocompletado
 Route::post('BuscarEmpleado',['as'=> 'BuscarEmpleado', 'uses'=>'Busqueda_personal@CargarEmpleado']); // Carga datos del empleado cargado
-Route::get('BorrarDato',['as'=> 'BorrarDato', 'uses'=>'Busqueda_personal@BorrarDato']); // Maneja cuando se borra una gratificacion o descuento entre otras cosas
+Route::get('BorrarDato',['as'=> 'BorrarDatos', 'uses'=>'Busqueda_personal@BorrarDatos']); // Maneja cuando se borra una gratificacion o descuento entre otras cosas
 Route::get('AgregarDato',['as'=> 'AgregarDato', 'uses'=>'Busqueda_personal@AgregarDatos']); // Maneja cuando se agrega una gratificacion o descuento entre otras cosas
+Route::get('ModificarDato',['as'=> 'ModificarDatos', 'uses'=>'Busqueda_personal@ModificarDatos']); // Maneja cuando se agrega una gratificacion o descuento entre otras cosas
 

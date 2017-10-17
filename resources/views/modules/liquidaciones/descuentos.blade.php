@@ -9,6 +9,13 @@
         <tr>
             <th colspan="4"><h2>Descuentos del empleado</h2></th>
         </tr>
+        <tr>
+                <th>Nombre</th>
+                <!--<th>Tipo</th>-->
+                <th>Monto</th>
+                <th>Eliminar</th>
+            </tr>
+
         <br>
         {{Busqueda_personal::printDescuentosUsuario()}}
     </table>
@@ -17,6 +24,13 @@
      <table class="table table-striped table-bordered table-condensed ">
         <tr>
             <th colspan="4"><h2>Credito y Prestamos del Empleadoo</h2></th>
+        </tr>
+        <tr>
+                <th>Nombre</th>
+                <th>Monto Mensual</th>
+                <th>Fecha de Inicio</th>
+                <th>Fecha Final</th>
+                <th>Modificar</th>
         </tr>
         <br>
         {{Busqueda_personal::printPrestamos()}}
@@ -41,10 +55,10 @@
             <tr>
                 <th colspan="4"><h2>Crear Descuento</h2></th>
             </tr>
-             <tr>
+            <tr>
                 <th>Nombre</th>
                 <th>Tipo</th>
-                <th>Agregar</th>
+                <th>Crear</th>
             </tr>
 
             <tr>
@@ -98,16 +112,21 @@
                 <th>Fecha final</th>
                 <th>Agregar</th>
             </tr>
+            <form action= {{route('AgregarDato')}} method="get">
+        
             <tr>
-            <td><input type="number" name="dias" class="entrega-dato" id="dias" placeholder='Numero de dias de Licencia'></input></td>
+            <input hidden id="id_Agregar" name="id_Agregar" value="6">
+            <td><input type="number" name="dLicencia" class="entrega-dato" id="dias" placeholder='Numero de dias de Licencia'></input></td>
             <td>
-                    Si<input type="checkbox" name="descuenta" value="True" class="entrega-dato" id="descuenta"></input>
-                    No<input type="checkbox" name="descuenta" class="entrega-dato" value="False" id="descuenta"></input>
+                    Si<input type="checkbox" name="tLicencia" value="True" class="entrega-dato" id="tLicencia"></input>
+                    No<input type="checkbox" name="tLicencia" class="entrega-dato" value="False" id="tLicencia"></input>
             </td>
-            <td><input type="date" name="inicio_credito" class="entrega-dato" id="Inicio_Licencia" ></input></td>
-            <td><input type="date" name="final_credito" class="entrega-dato" id="Termino_Licencia" ></input></td>
-            <td></td>
+            <td><input type="date" name="iLicencia" class="entrega-dato" id="Inicio_Licencia" ></input></td>
+            <td><input type="date" name="fLicencia" class="entrega-dato" id="Termino_Licencia" ></input></td>
+            <td><input type="submit" value=""></td>
+
             </tr>
+            </form>
             </table>
 
 </div>
