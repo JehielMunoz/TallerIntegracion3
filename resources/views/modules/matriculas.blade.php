@@ -22,14 +22,14 @@
             var Rut = [];
             var urlAutocompletar = "{{ route('autocompletar_alumno') }}" + "?Nombre_Estudiante=" + $(this).val(); // limitar caracteres, minimo 3 o 2 
 
-            $.getJSON(urlAutocompletar, function (Estudiante) {
+            $.postJSON(urlAutocompletar, function (Estudiante) {
 
                 for (var x = 0; x < Estudiante.length; x++) {
                     Nombres.push(Estudiante[x].Nombre);
-                    Rut.push(Estudiante[x].Rut);
+                    //Rut.push(Estudiante[x].Rut);
                 }
             });
-
+            /*
             $(this).autocomplete({
                 source: Nombres,
                 select: function (event, nombre) {
@@ -37,7 +37,7 @@
                     $('#Rut_Estudiante').val(Rut[index_rut]);
                 }
             });
-
+            */
         });
     });
 </script>
@@ -54,23 +54,9 @@
 @endsection @section('content')
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3 cold-xs-1" id="sidebar">
-            <div class="list-group panel ">
-                <ul class="list-unstyled components">
-                    <li>
-                        <a href="#">Matriculas</a>
-                    </li>
-
-                    <li>
-                        <a href="#">Agregar alumno</a>
-                    </li>
-
-                    <li>
-                        <a href="#">Eliminar alumno</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        
+        @include('modules.matriculas.menu_matriculas')
+        
         <div class="col-md-9 cold-xs-11" id="contenedor_tabs">
             @if(session()->has('Error'))
             <div class="alert alert-danger">{{ session('Error') }}</div>

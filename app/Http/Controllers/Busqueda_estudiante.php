@@ -19,26 +19,25 @@ class Busqueda_estudiante extends Controller
         if(request()->isMethod('post')){
             if(request()->filled('Nombre_Estudiante')){
                 $Nombre =  request('Nombre_Estudiante'); //Capturamos el nombre 
-                $Rut = request('Rut_Estudiante'); // Y Rut Del Alumno
-                
+                //$Rut = request('Rut_Estudiante'); // Y Rut Del Alumno
                 // Objeto Alumno
                 $Alumno = new \stdClass();
                 
                 // Lo buscamos en la base de datos
                 
                 
-                $Alumno->Datos = DB::table('tAlumnos')->where('Rut', '=',$Rut)->get()[0];
-
-                
-                $Alumno->Apoderado = DB::table('tApoderados')
+                $Alumno->Datos = DB::table('tAlumnos')->where('Nombre', '=',$Nombre)->get()[0];
+                $Rut=$Alumno->Datos->Rut;
+                $datosapoderado = DB::table('tApoderados')
                     ->join('rel_tAlumnos_tApoderados','tApoderados.Rut', '=', 'rel_tAlumnos_tApoderados.Rut_apo')
                     ->join('tAlumnos', 'rel_tAlumnos_tApoderados.Rut_alu', '=', 'tAlumnos.Rut')
                     ->where('tAlumnos.Rut','=', $Rut)
                     ->select('tApoderados.Rut','tApoderados.Nombre','tApoderados.Email','tApoderados.Fono','rel_tAlumnos_tApoderados.Relacion')
                     ->get()[0];
                 
+                $Alumno->Apoderado = $datosapoderado;
+                    
                 $Alumno->Salud = DB::table('tSalud')->where('Rut', '=',$Rut)->get()[0];
-                
                 request()->session()->put('Alumno',$Alumno);
                 return back();
 
@@ -47,6 +46,12 @@ class Busqueda_estudiante extends Controller
                 return back()->with('Error',"No se pudo encontrar Alumno.");
                 
             }
+        }
+    }
+    
+    public function agregar_alumno(){
+        if(request()->isMethod('post')){
+            $nombre =  request('nombre');
         }
     }
     

@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::get('/liquidaciones','HomeController@liquidaciones');
 Route::get('/matriculas','HomeController@matriculas');
+Route::get('/matriculas/agregar','HomeController@matriculas_agregar');
 Route::get('/recursos-humanos','HomeController@recursos_humanos');
 Route::get('/notas','HomeController@notas');
 Route::get('/formulario_matricula','HomeController@formulario_matricula');
@@ -36,5 +37,5 @@ Route::get('autocompletar_alumno', ['as' => 'autocompletar_alumno', 'uses'=>'Bus
 Route::post('BuscarAlumno',['as'=> 'BuscarAlumno', 'uses'=>'Busqueda_estudiante@CargarAlumno']);
 
 
-
+Route::post('agregar_alumno',['as'=> 'agregar_alumno', 'uses'=>'Busqueda_estudiante@agregar_alumno']);
 

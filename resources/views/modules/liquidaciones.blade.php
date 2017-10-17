@@ -9,9 +9,9 @@
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-<link rel="stylesheet" href="{{ asset('../public/css/sidebar_liquidacion_gris.css') }}">
+<link rel="stylesheet" href="{{ asset('css/sidebar_liquidacion_gris.css') }}">
 <!-- Azul o negro-->
-<link rel="stylesheet" href="{{ asset('../public/css/tabs_liquidaciones.css') }}">
+<link rel="stylesheet" href="{{ asset('css/tabs_liquidaciones.css') }}">
 <script>
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
@@ -43,7 +43,7 @@
 </script>
 <!--
  
-    <script src="{{ asset('../public/js/liquidacion.js')}}"></script>  NeverMInd
+    <script src="{{ asset('js/liquidacion.js')}}"></script>  NeverMInd
 -->
 
 

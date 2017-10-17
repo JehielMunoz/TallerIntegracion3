@@ -34,6 +34,10 @@ class HomeController extends Controller
     {
         return view('modules.matriculas');
     }
+    public function matriculas_agregar()
+    {
+        return view('modules.matriculas.agregar_alumno');
+    }
     public function recursos_humanos(){
         return view('modules.recursos_humanos');
     }
