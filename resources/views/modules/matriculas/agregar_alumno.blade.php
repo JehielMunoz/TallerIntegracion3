@@ -3,10 +3,52 @@
 <!-- Aqui agregar todo el css y js  adicional que se requiera -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
     crossorigin="anonymous">
+    
+</script>
 
-
-
-
+<script>
+    
+    var hermano_count = 0;
+    
+    $(document).ready(function () {
+        $('#add_hermano').on('click', function () {
+            
+            
+            var s_html = `
+                    <table class="table table-striped table-bordered table-condensed ">
+                        <tr>
+                            <th colspan="2"></th>
+                        </tr>                    
+                        <tr>
+                            <td>Nombre</td>
+                            <td><input type="text" size="65" id="Nombre" name="he_nombre[`+hermano_count.toString()+`]"  placeholder="Nombre" value=""></td>
+                        </tr>
+                        <tr>
+                            <td>Fecha de nacimiento</td>
+                            <td><input type="date"  name="he_f_nacimiento[`+hermano_count.toString()+`]" placeholder="Fecha de nacimiento" value=""></td>
+                        </tr>
+                        <tr>
+                            <td>Ocupacion</td>
+                            <td><input type="text"  name="he_ocupacion[`+hermano_count.toString()+`]" placeholder="Ocupacion" value=""></td>
+                        </tr>
+                        <tr>
+                            <td>Direccion</td>
+                            <td><input type="text"  name="he_direccion[`+hermano_count.toString()+`]" placeholder="Comuna" value=""></td>
+                        </tr>
+                        <tr>
+                            <th colspan="2"></th>
+                        </tr>
+                    </table>
+                    `;
+            
+            
+            //$('#form_agregar_alumno').prepend(s_html);  
+            
+            $(s_html).appendTo("#form_agregar_alumno");
+            //$(s_html).insertAfter( $( "#div_hermanos" ) );
+            hermano_count += 1;
+        });
+    });
 </script>
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -28,6 +70,11 @@
             @if(session()->has('Error'))
             <div class="alert alert-danger">{{ session('Error') }}</div>
             @endif
+            
+            @if(session()->has('succ'))
+            <div class="alert alert-success">{{ session('succ') }}</div>
+            @endif
+            
             <div id="Tabs" class="container-fluid">
                 <div class="card">
                     <div class="card-header">
@@ -51,6 +98,11 @@
                             </li>
                         </ul>
                         <div class="tab-content clearfix">
+                            <div class="tab-pane" id="cAnt_familiares">
+
+                                    @include('modules/matriculas/agregar/ant_familiares')
+
+                            </div>
                             <div class="tab-pane active" id="cDatos_alumno">
                                 
                                 @include('modules/matriculas/agregar/datos_alumno')
@@ -61,11 +113,6 @@
 
                                     @include('modules/matriculas/agregar/apoderado')
                                 
-                            </div>
-                            <div class="tab-pane" id="cAnt_familiares">
-
-                                    @include('modules/matriculas/agregar/ant_familiares')
-
                             </div>
                             <div class="tab-pane" id="cSalud_alumno">
                                 

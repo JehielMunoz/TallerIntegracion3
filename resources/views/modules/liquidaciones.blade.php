@@ -9,9 +9,9 @@
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-<link rel="stylesheet" href="{{ asset('css/sidebar_liquidacion_gris.css') }}">
+<link rel="stylesheet" href="{{ asset('../public/css/sidebar_liquidacion_gris.css') }}">
 <!-- Azul o negro-->
-<link rel="stylesheet" href="{{ asset('css/tabs_liquidaciones.css') }}">
+<link rel="stylesheet" href="{{ asset('../public/css/tabs_liquidaciones.css') }}">
 <script>
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
@@ -43,7 +43,7 @@
 </script>
 <!--
  
-    <script src="{{ asset('js/liquidacion.js')}}"></script>  NeverMInd
+    <script src="{{ asset('../public/js/liquidacion.js')}}"></script>  NeverMInd
 -->
 
 
@@ -58,10 +58,10 @@
             <div class="list-group panel ">
                 <ul class="list-unstyled components">
                     <li>
-                        <a href="#">Planilla de liquidacion</a>
+                        <a href="{{ url('/liquidaciones') }}">Planilla de liquidacion</a>
                     </li>
                     <li>
-                        <a href="#">Agregar Empleado</a>
+                        <a href="{{ url('/liquidaciones/agregar') }}">Agregar Empleado</a>
                     </li>
 
                     <li>
@@ -86,6 +86,9 @@
         <div class="col-md-9 cold-xs-11" id="contenedor_tabs">
             @if(session()->has('Error'))
             <div class="alert alert-danger">{{ session('Error') }}</div>
+            @endif
+            @if(session()->has('succ'))
+            <div class="alert alert-success">{{ session('succ') }}</div>
             @endif
             <div id="Tabs" class="container-fluid">
                 <div class="card">

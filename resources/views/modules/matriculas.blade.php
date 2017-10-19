@@ -22,14 +22,14 @@
             var Rut = [];
             var urlAutocompletar = "{{ route('autocompletar_alumno') }}" + "?Nombre_Estudiante=" + $(this).val(); // limitar caracteres, minimo 3 o 2 
 
-            $.postJSON(urlAutocompletar, function (Estudiante) {
+            $.getJSON(urlAutocompletar, function (Estudiante) {
 
                 for (var x = 0; x < Estudiante.length; x++) {
                     Nombres.push(Estudiante[x].Nombre);
-                    //Rut.push(Estudiante[x].Rut);
+                    Rut.push(Estudiante[x].Rut);
                 }
             });
-            /*
+
             $(this).autocomplete({
                 source: Nombres,
                 select: function (event, nombre) {
@@ -37,7 +37,7 @@
                     $('#Rut_Estudiante').val(Rut[index_rut]);
                 }
             });
-            */
+
         });
     });
 </script>
@@ -61,6 +61,11 @@
             @if(session()->has('Error'))
             <div class="alert alert-danger">{{ session('Error') }}</div>
             @endif
+            
+            @if(session()->has('succ'))
+            <div class="alert alert-success">{{ session('succ') }}</div>
+            @endif
+            
             <div id="Tabs" class="container-fluid">
                 <div class="card">
                     <div class="card-header">

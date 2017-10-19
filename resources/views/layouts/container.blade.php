@@ -38,6 +38,9 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="#">Settings</a>
           </li>
           <li class="nav-item">
@@ -88,16 +91,6 @@
               </a>
               <h4>Liquidaciones</h4>
               <div class="text-muted">Modulo 1</div>
-            </div>
-            </div>
-
-            <div class="col-sm-6">
-            <div class="card card-block">
-              <a href="{{url('/matriculas')}}">
-                <img src="{{ asset('images/matriculas.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Matriculas">
-              </a>
-              <h4>Matrículas</h4>
-              <span class="text-muted">Modulo 2</span>
             </div>
             </div>
 

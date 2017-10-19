@@ -161,9 +161,84 @@ class Busqueda_personal extends Controller
             echo "<td></td>";  // Agregar funcionalidad para agregar Gratificaciones; 
             echo "</tr>";
         }
-    }   
+    } 
+    
+    
+    public function agregar_empleado(){
+        if(request()->isMethod('post')){
+            
+            $rut = request('rut');
+            $empleado = DB::table('tEmpleados')->where('Rut', '=',$rut)->get();
+            
+            if ($empleado->isEmpty()){
+                
+                $nombre =  request('nombre');
+                $f_nacimiento = request('f_nacimiento');
+                $f_ingreso = request('f_ingreso');
+                $id_contrato = request('id_contrato');
+                $sueldo_base = request('sueldo_base');
+                $id_afp = request('id_afp');
+                $id_isapre = request('id_isapre');
+                $horas_trabajo = request('horas_trabajo');
+                $paga_hora = request('paga_hora');
+                $cargas = request('cargas');
+                
+                $fono = request('fono');
+                
+                $id_cargo = request('id_cargo');
+
+                DB::table('tEmpleados')->insert(
+                    ['Rut' => $rut, 
+                     'Nombre' => $nombre, 
+                     'F_nacimiento' => $f_nacimiento, 
+                     'F_ingreso' => $f_ingreso, 
+                     'id_Contrato' => $id_contrato, 
+                     'Sueldo_base' => $sueldo_base, 
+                     'id_AFP' => $id_afp, 
+                     'id_ISAPRE' => $id_isapre, 
+                     'N_horas' => $horas_trabajo, 
+                     'Paga_por_hora' => $paga_hora, 
+                     'Cargas' => $cargas, 
+                     'Activo' => true
+                    ]
+                );
+                
+                for($i = 0; $i < count($fono); ++$i){
+                    DB::table('tEmpleado_Fono')->insert(
+                        ['Rut' => $rut, 
+                         'N_telefono' => $fono[$i]
+                        ]
+                    );
+                }
+                
+                for($i = 0; $i < count($id_cargo); ++$i){
+                    DB::table('rel_tEmpleados_tCargos')->insert(
+                        ['Rut' => $rut, 
+                         'id_Cargo' => $id_cargo[$i]
+                        ]
+                    );
+                }                
+        
+                return back()->with('succ',"Se agrego con exito al alumno");    
+                
+            }else{
+                return back()->with('Error',"Ya hay un alumno con ese rut registrado");  
+            }
+        }
+    }
+    
+    
+    public static function agregar_empleado_cargos(){
+        $cargos = DB::table('tCargos')->get();
+
+        foreach($cargos as $cargo){
+            echo '
+                <option value="'.$cargo->id_Cargo.'">'.$cargo->Cargo.'</option>
+            ';
+        }
+    }
+    
+    
 }
-
-
 
 
