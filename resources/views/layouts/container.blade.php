@@ -106,7 +106,7 @@
             @endif
 
 
-            @if (Auth::user()->rol == '2')
+            @if (Auth::user()->rol == '1')
             <div class="col-sm-6">
             <div class="card card-block">
               <a href="{{ url('/matriculas') }}">
@@ -118,7 +118,7 @@
             </div>
             @endif
 
-            @if (Auth::user()->rol == '3')
+            @if (Auth::user()->rol == '1')
             <div class="col-sm-6">
             <div class="card card-block">
               <a href="{{ url('/notas') }}">  
