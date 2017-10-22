@@ -6,7 +6,7 @@
         </tr>
         <tr>
             <td>Descripcion</td>
-            <td><input type="text" size="70" id="Nombre" name="salud_alergia"  placeholder="Descripcion de la alergia"  value=""></td>
+            <td><input maxlength="500"  type="text" size="70" id="Nombre" name="salud_alergia"  placeholder="Descripcion de la alergia"  value=""></td>
         </tr>
         
         
@@ -15,7 +15,7 @@
         </tr>
         <tr>
             <td>Descripcion</td>
-            <td><input type="text" size="70" id="Nombre" name="salud_otro"  placeholder="Descripcion"  value=""></td>
+            <td><input maxlength="500"  type="text" size="70" id="Nombre" name="salud_otro"  placeholder="Descripcion"  value=""></td>
         </tr>
 
     </table>

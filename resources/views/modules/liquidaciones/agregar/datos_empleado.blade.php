@@ -5,13 +5,13 @@
             <th colspan="2">Datos del empleado</th>
         </tr>
         <tr>
-            <td>Nombre completo</td>
-            <td><input type="text" size="65" id="Nombre" name="nombre"  placeholder="Nombre" 
-                    value=""></td>
+            <td>Nombre completo *</td>
+            <td><input maxlength="70" type="text" size="65" id="Nombre" name="nombre"  placeholder="Nombre" 
+                    value="" required></td>
         </tr>
         <tr>
-            <td>Rut</td>
-            <td><input type="text" placeholder="Rut"  id="Ruta" name="rut" value=""></td>
+            <td>Rut *</td>
+            <td><input class="input_rut" maxlength="12"  type="text" placeholder="Rut"  id="Ruta" name="rut" value="" required></td>
         </tr>
         <tr>
             <td>Fecha de nacimiento</td>
@@ -33,8 +33,8 @@
         </tr>   
         
         <tr>
-            <td>Sueldo base</td>
-            <td><input type="text"  name="sueldo_base" placeholder="Sueldo" value=""></td>
+            <td>Sueldo base *</td>
+            <td><input type="number"  name="sueldo_base" placeholder="Sueldo" value="" required></td>
         </tr>
         
         
@@ -75,18 +75,18 @@
         </tr>
         
         <tr>
-            <td>Horas de trabajo (diario)</td>
-            <td><input type="text"  name="horas_trabajo" placeholder="horas" value=""></td>
+            <td>Horas de trabajo (diario) *</td>
+            <td><input type="number"  name="horas_trabajo" placeholder="horas" value=""></td>
         </tr>
 
         <tr>
-            <td>Paga por hora</td>
-            <td><input type="text" placeholder="Cantidad"  id="Ruta" name="paga_hora" value=""></td>
+            <td>Paga por hora *</td>
+            <td><input type="number" placeholder="Cantidad"  id="Ruta" name="paga_hora" value=""></td>
         </tr>
         
         <tr>
-            <td>Numero de cargas</td>
-            <td><input type="text" placeholder="Cantidad"  id="Ruta" name="cargas" value=""></td>
+            <td>Numero de cargas *</td>
+            <td><input type="number" placeholder="Cantidad"  id="Ruta" name="cargas" value=""></td>
         </tr>
         
     </table>
@@ -112,7 +112,7 @@
         </tr>
         
         <tr>
-            <td><button class="btn btn-outline-secondary my-2 my-sm-0" type="button" id="add_cargo">Añadir un cargo</button></td>
+            <td><button class="btn btn-outline-secondary my-2 my-sm-0" type="button" id="add_cargo">Asignar un cargo</button></td>
         </tr>
         
     </table>

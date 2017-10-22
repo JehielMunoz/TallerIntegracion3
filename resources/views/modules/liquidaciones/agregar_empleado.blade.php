@@ -24,7 +24,7 @@
                     </tr>                    
                     <tr>
                         <td>Numero de telefono</td>
-                        <td><input type="text" size="65" id="Nombre" name="fono[`+fono_count.toString()+`]"  placeholder="Numero" value=""></td>
+                        <td><input class="input_fono" maxlength="18" type="text" size="65" id="Nombre" name="fono[`+fono_count.toString()+`]"  placeholder="Numero" value=""></td>
                     </tr>
                     `;
             
@@ -54,12 +54,23 @@
                     `;
             
             
-            //$('#form_agregar_alumno').prepend(s_html);  
+            
             
             $(s_html).appendTo("#table_empledos_agregar_cargo");
-            //$(s_html).insertAfter( $( "#div_hermanos" ) );
             cargo_count += 1;
         });
+        
+        
+        $(".input_rut").bind("keyup blur",
+            function (){
+                $(this).val( $(this).val().replace(/[^0-9k.-]/,"") );}
+        );
+        
+        $(".input_fono").bind("keyup blur",
+            function (){
+                $(this).val( $(this).val().replace(/[^0-9( )]/,"") );}
+        );
+        
     });
 
 </script>

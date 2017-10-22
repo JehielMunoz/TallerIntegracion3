@@ -164,11 +164,77 @@ class Busqueda_personal extends Controller
     } 
     
     
-    public function agregar_empleado(){
+    
+    public function limpiar_rut($rut){
+        $rut = str_replace('.', '', $rut);
+        $rut = str_replace('-', '', $rut);
+        $rut = str_replace(' ', '', $rut);
+        return $rut;
+    }
+    
+    
+    public function validar_rut($rut){
+        
+        $digs= array();
+        $num=array(2,3,4,5,6,7);
+        $suma=0;
+        $verificador1 = substr($rut,-1);
+        $rut = substr($rut,0,-1);
+        $juicio = false;
+        
+        for($i=0;$i<strlen($rut);++$i){
+            array_push($digs,intval($rut[strlen($rut)-1-$i]));
+        }
+        $i=0;        
+        foreach($digs as $dig){
+            $suma=$suma+($dig*$num[$i]);
+            if($num[$i]==7){
+                $i=0;
+            }
+            else{
+                $i = $i+1;
+            }
+        }
+        $verificador2 = 11-($suma % 11);
+        $verificador2 = strval($verificador2);
+        if($verificador2 == '11'){
+            $verificador2 = '0';
+        }
+        if($verificador2 == '10'){
+            $verificador2 = 'k';
+        }
+        
+        if($verificador1 == $verificador2){
+            $juicio = true;
+        }
+        
+        return $juicio;
+    }
+    
+    
+    public function agregar_empleado(Request $request){
+
+        $this->validate(request(),[
+            'rut' => 'required|max:12',
+            'nombre' => 'required|max:70',
+            'sueldo_base' => 'required',
+            'horas_trabajo' => 'required',
+            'paga_hora' => 'required',
+            'cargas' => 'required'           
+        ]);
+        
         if(request()->isMethod('post')){
             
             $rut = request('rut');
+            
+            $rut = $this->limpiar_rut($rut);
+            $cond = $this->validar_rut($rut);
+            if(!$cond){
+                return back()->with('Error',"El Rut ingresado es invalido ");
+            }
+            
             $empleado = DB::table('tEmpleados')->where('Rut', '=',$rut)->get();
+            
             
             if ($empleado->isEmpty()){
                 
@@ -218,11 +284,11 @@ class Busqueda_personal extends Controller
                         ]
                     );
                 }                
-        
-                return back()->with('succ',"Se agrego con exito al alumno");    
+
+                return back()->with('succ',"Se agrego con exito al empleado");    
                 
             }else{
-                return back()->with('Error',"Ya hay un alumno con ese rut registrado");  
+                return back()->with('Error',"Ya hay un empleado con ese rut registrado");  
             }
         }
     }

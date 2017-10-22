@@ -8,12 +8,12 @@
             <th colspan="2">Padre</th>
         </tr>
         <tr>
-            <td>Nombre del padre</td>
-            <td><input type="text" size="65" id="Nombre" name="pa_nombre" placeholder="Nombre"  value=""></td>
+            <td>Nombre *</td>
+            <td><input maxlength="70"  type="text" size="65" id="Nombre" name="pa_nombre" placeholder="Nombre"  value=""  ></td>
         </tr>
         <tr>
-            <td>Rut</td>
-            <td><input type="text"  placeholder="Rut" id="Ruta" name="pa_rut" value=""></td>
+            <td>Rut *</td>
+            <td><input class="input_rut" maxlength="15"  type="text"  placeholder="Rut" id="Ruta" name="pa_rut" value="" ></td>
         </tr>
         <tr>
             <td>Fecha de nacimiento</td>
@@ -21,11 +21,11 @@
         </tr>
         <tr>
             <td>Numero de telefono</td>
-            <td><input type="text" name="pa_fono" placeholder="Telefono" value=""></td>
+            <td><input class="input_fono" maxlength="15"  type="text" name="pa_fono" placeholder="Telefono" value=""></td>
         </tr>
         <tr>
             <td>Correo electronico</td>
-            <td><input type="text" name="pa_email" placeholder="Email" value=""></td>
+            <td><input maxlength="50"  type="email" name="pa_email" placeholder="Email" value=""></td>
         </tr>
         <tr>
             <td>Vive con el alumno</td>
@@ -33,11 +33,11 @@
         </tr>        
         <tr>
             <td>Estudios alcanzados</td>
-            <td><input type="text" name="pa_estudios" placeholder="Estudios" value=""></td>
+            <td><input maxlength="20"  type="text" name="pa_estudios" placeholder="Estudios" value=""></td>
         </tr>
         <tr>
             <td>Ocupacion</td>
-            <td><input type="text" name="pa_ocupacion" placeholder="Ocupacion" value=""></td>
+            <td><input maxlength="50"  type="text" name="pa_ocupacion" placeholder="Ocupacion" value=""></td>
         </tr>
     
     </table>
@@ -46,12 +46,12 @@
             <th colspan="2">Madre</th>
         </tr>
         <tr>
-            <td>Nombre del padre</td>
-            <td><input type="text" size="65" id="Nombre" name="ma_nombre" placeholder="Nombre"  value=""></td>
+            <td>Nombre *</td>
+            <td><input maxlength="70"  type="text" size="65" id="Nombre" name="ma_nombre" placeholder="Nombre"  value="" ></td>
         </tr>
         <tr>
-            <td>Rut</td>
-            <td><input type="text"  placeholder="Rut" id="Ruta" name="ma_rut" value=""></td>
+            <td>Rut *</td>
+            <td><input class="input_rut" maxlength="15"  type="text"  placeholder="Rut" id="Ruta" name="ma_rut" value="" ></td>
         </tr>
         <tr>
             <td>Fecha de nacimiento</td>
@@ -59,11 +59,11 @@
         </tr>
         <tr>
             <td>Numero de telefono</td>
-            <td><input type="text" name="ma_fono" placeholder="Telefono" value=""></td>
+            <td><input class="input_fono" maxlength="15"  type="text" name="ma_fono" placeholder="Telefono" value=""></td>
         </tr>
         <tr>
             <td>Correo electronico</td>
-            <td><input type="text" name="ma_email" placeholder="Email" value=""></td>
+            <td><input maxlength="50"  type="email" name="ma_email" placeholder="Email" value=""></td>
         </tr>
         <tr>
             <td>Vive con el alumno</td>
@@ -71,11 +71,11 @@
         </tr>        
         <tr>
             <td>Estudios alcanzados</td>
-            <td><input type="text" name="ma_estudios" placeholder="Estudios" value=""></td>
+            <td><input maxlength="20"  type="text" name="ma_estudios" placeholder="Estudios" value=""></td>
         </tr>
         <tr>
             <td>Ocupacion</td>
-            <td><input type="text" name="ma_ocupacion" placeholder="Ocupacion" value=""></td>
+            <td><input maxlength="50"  type="text" name="ma_ocupacion" placeholder="Ocupacion" value=""></td>
         </tr>
         
     </table>

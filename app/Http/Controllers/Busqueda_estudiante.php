@@ -59,13 +59,150 @@ class Busqueda_estudiante extends Controller
     }
     
     
+/*
+    public function messages(){
+        return [
+            'rut.required' => 'El campo Rut del estudiante es obligatorio.',
+            'nombre.required' => 'El campo Nombre del estudiante es obligatorio.',
+            'f_nacimiento.required' => 'El campo Fecha de nacimiento del estudiante es obligatorio.',
+            'direccion.required' => 'El campo Direccion del estudiante es obligatorio.',
+            'curso.required' => 'El campo Curso del estudiante es obligatorio.',
+            'curso_anterior.required' => 'El campo Curso anterior del estudiante es obligatorio.',
+            'est_anterior.required' => 'El campo Establecimento anterior del estudiante es obligatorio.',
+            'ap_rut.required' => 'El campo Rut del apoderado es obligatorio.',
+            'ap_nombre.required' => 'El campo Nombre del apoderado es obligatorio.',
+            'ap_fono.required' => 'El campo Telefono del apoderado es obligatorio.',
+            'pa_rut.required' => 'El campo Rut del padre es obligatorio.',
+            'pa_nombre.required' => 'El campo Nombre del padre es obligatorio.',
+            'ma_rut.required' => 'El campo Rut del madre es obligatorio.',
+            'ma_nombre.required' => 'El campo Nombre de la madre es obligatorio.'
+        ];
+    }
+    
+*/    
+    
+    public function limpiar_rut($rut){
+        $rut = str_replace('.', '', $rut);
+        $rut = str_replace('-', '', $rut);
+        $rut = str_replace(' ', '', $rut);
+        return $rut;
+    }
     
     
+    public function validar_rut($rut){
+        
+        $digs= array();
+        $num=array(2,3,4,5,6,7);
+        $suma=0;
+        $verificador1 = substr($rut,-1);
+        $rut = substr($rut,0,-1);
+        $juicio = false;
+        
+        for($i=0;$i<strlen($rut);++$i){
+            array_push($digs,intval($rut[strlen($rut)-1-$i]));
+        }
+        $i=0;        
+        foreach($digs as $dig){
+            $suma=$suma+($dig*$num[$i]);
+            if($num[$i]==7){
+                $i=0;
+            }
+            else{
+                $i = $i+1;
+            }
+        }
+        $verificador2 = 11-($suma % 11);
+        $verificador2 = strval($verificador2);
+        if($verificador2 == '11'){
+            $verificador2 = '0';
+        }
+        if($verificador2 == '10'){
+            $verificador2 = 'k';
+        }
+        
+        if($verificador1 == $verificador2){
+            $juicio = true;
+        }
+        
+        return $juicio;
+    }
     
     public function agregar_alumno(){
+        
+                
+        $this->validate(request(),[
+            'rut' => 'required|max:15',
+            'nombre' => 'required|max:70',
+            'f_nacimiento' => 'required',
+            'direccion' => 'required|max:100',
+            'comuna' => 'max:40',
+            'curso' => 'required|max:20',
+            'curso_anterior' => 'required|max:20',
+            'est_anterior' => 'required|max:70',
+            
+            'ap_rut' => 'required|max:15',
+            'ap_nombre' => 'required|max:70',
+            'ap_email' => 'max:40',
+            'ap_fono' => 'required|max:20',
+            'rel_apo_alu' => 'max:30',
+            
+            'pa_rut' => 'required|max:15',
+            'pa_nombre' => 'required|max:70',
+            'pa_fono' => 'max:15',
+            'pa_email' => 'max:50',
+            'pa_estudios' => 'max:20',
+            'pa_ocupacion' => 'max:50',
+            
+            'ma_rut' => 'required|max:15',
+            'ma_nombre' => 'required|max:70',
+            'ma_fono' => 'max:15',
+            'ma_email' => 'max:50',
+            'ma_estudios' => 'max:20',
+            'ma_ocupacion' => 'max:50',
+            
+            'he_nombre' => 'max:70',
+            'he_ocupacion' => 'max:50',
+            'he_direccion' => 'max:50',
+            
+            'salud_alergia' => 'max:500',
+            'salud_otro' => 'max:500'            
+        ]);
+        
+        
         if(request()->isMethod('post')){
             
             $alu_rut = request('rut');
+            $apo_rut = request('ap_rut');
+            $pa_rut = request('pa_rut');
+            $ma_rut = request('ma_rut');
+            
+            
+            
+            $alu_rut = $this->limpiar_rut($alu_rut);
+            $cond = $this->validar_rut($alu_rut);
+            if(!$cond){
+                return back()->with('Error',"El Rut del alumno es invalido ");
+            }
+            
+            $apo_rut = $this->limpiar_rut($apo_rut);
+            $cond = $this->validar_rut($apo_rut);
+            if(!$cond){
+                return back()->with('Error',"El Rut del apoderado es invalido ");
+            }
+            
+            $pa_rut = $this->limpiar_rut($pa_rut);
+            $cond = $this->validar_rut($pa_rut);
+            if(!$cond){
+                return back()->with('Error',"El Rut del padre es invalido ");
+            }
+            
+            $ma_rut = $this->limpiar_rut($ma_rut);
+            $cond = $this->validar_rut($ma_rut);
+            if(!$cond){
+                return back()->with('Error',"El Rut de la madre es invalido ");
+            }
+            
+            
             
             $alumno = DB::table('tAlumnos')->where('Rut', '=',$alu_rut)->get();
             
@@ -84,28 +221,34 @@ class Busqueda_estudiante extends Controller
                 //$alu_ingles = request('');
                 //$alu_activo = request('');
 
-                $apo_rut = request('ap_rut');
+                
                 $apo_nombre = request('ap_nombre');
                 $apo_email = request('ap_email');
                 $apo_fono = request('ap_fono');
                 $rel_apo_alu = request('rel_apo_alu');
                 //$apo_activo = request('');
 
-                $pa_rut = request('pa_rut');
+                
                 $pa_nombre = request('pa_nombre');
                 $pa_f_nacimiento = request('pa_f_nacimiento');
                 $pa_fono = request('pa_fono');
                 $pa_email = request('pa_email');
                 $pa_vive = request('pa_vive');
+                if($pa_vive == NULL){
+                    $pa_vive = false;
+                }
                 $pa_estudios = request('pa_estudios');
                 $pa_ocupacion = request('pa_ocupacion');
                 
-                $ma_rut = request('ma_rut');
+                
                 $ma_nombre = request('ma_nombre');
                 $ma_f_nacimiento = request('ma_f_nacimiento');
                 $ma_fono = request('ma_fono');
                 $ma_email = request('ma_email');
                 $ma_vive = request('ma_vive');
+                if($ma_vive == NULL){
+                    $ma_vive = false;
+                }
                 $ma_estudios = request('ma_estudios');
                 $ma_ocupacion = request('ma_ocupacion');
 
@@ -361,26 +504,7 @@ class Busqueda_estudiante extends Controller
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     
     

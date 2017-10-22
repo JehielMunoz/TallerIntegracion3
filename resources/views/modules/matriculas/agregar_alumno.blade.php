@@ -21,7 +21,7 @@
                         </tr>                    
                         <tr>
                             <td>Nombre</td>
-                            <td><input type="text" size="65" id="Nombre" name="he_nombre[`+hermano_count.toString()+`]"  placeholder="Nombre" value=""></td>
+                            <td><input  maxlength="70"  type="text" size="65" id="Nombre" name="he_nombre[`+hermano_count.toString()+`]"  placeholder="Nombre" value=""></td>
                         </tr>
                         <tr>
                             <td>Fecha de nacimiento</td>
@@ -29,11 +29,11 @@
                         </tr>
                         <tr>
                             <td>Ocupacion</td>
-                            <td><input type="text"  name="he_ocupacion[`+hermano_count.toString()+`]" placeholder="Ocupacion" value=""></td>
+                            <td><input maxlength="50"  type="text"  name="he_ocupacion[`+hermano_count.toString()+`]" placeholder="Ocupacion" value=""></td>
                         </tr>
                         <tr>
                             <td>Direccion</td>
-                            <td><input type="text"  name="he_direccion[`+hermano_count.toString()+`]" placeholder="Comuna" value=""></td>
+                            <td><input maxlength="50"  type="text"  name="he_direccion[`+hermano_count.toString()+`]" placeholder="Comuna" value=""></td>
                         </tr>
                         <tr>
                             <th colspan="2"></th>
@@ -48,6 +48,17 @@
             //$(s_html).insertAfter( $( "#div_hermanos" ) );
             hermano_count += 1;
         });
+        
+        $(".input_rut").bind("keyup blur",
+            function (){
+                $(this).val( $(this).val().replace(/[^0-9k.-]/,"") );}
+        );
+        
+        $(".input_fono").bind("keyup blur",
+            function (){
+                $(this).val( $(this).val().replace(/[^0-9( )]/,"") );}
+        );
+        
     });
 </script>
 
@@ -67,12 +78,21 @@
         @include('modules.matriculas.menu_matriculas')
         
         <div class="col-md-9 cold-xs-11" id="contenedor_tabs">
+            
+            @if(count($errors))
+                <div class="alert alert-danger">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </div>
+            @endif    
+            
             @if(session()->has('Error'))
-            <div class="alert alert-danger">{{ session('Error') }}</div>
+                <div class="alert alert-danger">{{ session('Error') }}</div>
             @endif
             
             @if(session()->has('succ'))
-            <div class="alert alert-success">{{ session('succ') }}</div>
+                <div class="alert alert-success">{{ session('succ') }}</div>
             @endif
             
             <div id="Tabs" class="container-fluid">
