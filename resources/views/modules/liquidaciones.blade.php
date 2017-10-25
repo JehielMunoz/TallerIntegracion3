@@ -25,9 +25,9 @@
             $("#mPlanilla").toggle();
             $("#m_Planilla").toggle();
             $("#VolverPlanilla").toggle();
+          
         });
-            
-
+    
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
         });
@@ -51,9 +51,9 @@
                     $('#Rut_Personal').val(Rut[index_rut]);
                 }
             });
-
         });
-    });
+    });  
+    
 </script>
 <!--
  

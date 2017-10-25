@@ -1,4 +1,9 @@
+<?php
+ use App\Http\Controllers\Busqueda_personal;
+?>
 @if (session()->has('Empleado'))
+
+
 <div id="Planilla">
     <table class="table table-striped table-bordered table-condensed ">
         <tr>
@@ -93,7 +98,7 @@
         <tr>
             <td><button style="display:none" class="boton_toggle" id="VolverPlanilla">Volver</button></td>
         </tr>
-        <form action="{{route('ModificarDatos')}}" method="get">
+        <form id="fModificar" action="{{route('ModificarDatos')}}" method="get">
             <input hidden value="4" name="id_Modificar">
 
         <tr>
@@ -106,22 +111,23 @@
         </tr> -->
         <tr>
             <td>Sueldo base</td>
-            <td><input type="text"  name="mSueldo" placeholder="Sueldo base" placeholder="{{ session('Empleado')->Datos->Sueldo_base }}"></td>
+            <td><input type="text"  name="mSueldo"  placeholder="{{ session('Empleado')->Datos->Sueldo_base }}"></td>
         </tr>
       
         <tr>
             <td>Horas de trabajo</td>
-            <td><input type="text"  name="mHTrabajo" placeholder="Total horas" placeholder="{{ session('Empleado')->Datos->N_horas }}"></td>
+            <td><input type="text"  name="mHTrabajo"  placeholder="{{ session('Empleado')->Datos->N_horas }}"></td>
         </tr>
         <tr>
             <td>Valor hora</td>
-            <td><input type="text"  name="mvHora" placeholder="Valor" placeholder="{{ session('Empleado')->Datos->Paga_por_hora }}"></td>
+            <td><input type="text"  name="mvHora"  placeholder="{{ session('Empleado')->Datos->Paga_por_hora }}"></td>
         </tr>
         <tr>
                 <td>Tipo de contrato</td>
                 <td>
                     <select name="mContrato">
-                                         
+                         {{Busqueda_personal::printContratoModificar()}}
+        
                     </select>
                 </td>
         </tr>
@@ -129,7 +135,7 @@
                 <td>Cotizacion AFP:</td>
                 <td>
                     <select name="mAFP">
-                              conseguir datos             
+                      {{Busqueda_personal::printAFPModificar()}}
                                                     </select>
                 </td>
             </tr>
@@ -138,7 +144,7 @@
 
                     <td>
                         <select name="mIPS">
-                        conseguir datos
+                      {{Busqueda_personal::printIPSModificar()}}
                                          
                                                     </select>
                     </td>

@@ -242,6 +242,43 @@ class Busqueda_personal extends Controller
         
 
     }
+
+    
+    public static function printAFPModificar(){ #Agregar valicadion or something lika that
+        $AFPs = DB::table('tAFP')->get();
+        foreach($AFPs as $AFP){
+            if($AFP->id_AFP==(session('Empleado')->Datos->id_AFP)){
+                echo "<option selected value=$AFP->id_AFP>$AFP->AFP</option>";
+            }else{
+                echo "<option value=$AFP->id_AFP>$AFP->AFP</option>";
+                
+            }
+        }
+    
+    }
+    public static function printIPSModificar(){ #Agregar valicadion or something lika that
+        $ISAPREs = DB::table('tISAPRE')->get();
+        foreach($ISAPREs as $ISAPRE){
+            if($ISAPRE->id_ISAPRE==(session('Empleado')->Datos->id_ISAPRE)){
+                echo "<option selected value=$ISAPRE->id_ISAPRE>$ISAPRE->ISAPRE</option>";
+            }else{
+                echo "<option value=$ISAPRE->id_ISAPRE>$ISAPRE->ISAPRE</option>";
+                
+            }
+        }
+    
+    }
+    public static function printContratoModificar(){ #Agregar valicadion or something lika that
+        $Contratos = DB::table('tContratos')->get();
+        foreach($Contratos as $Contrato){
+            if($Contrato->id_Contrato==(session('Empleado')->Datos->id_Contrato)){
+                echo "<option selected value=$Contrato->id_Contrato>$Contrato->Contrato</option>";
+            }else{
+                echo "<option value=$Contrato->id_Contrato>$Contrato->Contrato</option>";
+            }
+        }
+    
+    }
     //Modificar Datos del empleado
     public static function BorrarDatos(){  // Descuento y descuento maybe
         if(request()->isMethod('get')){
@@ -391,7 +428,7 @@ class Busqueda_personal extends Controller
                     }
                 }
                 if(request('id_Modificar')==4){
-                    if(request()->filled('mNombre') && request()->filled('mSueldo') && request()->filled('mHTrabajo') && request()->filled('mvHora')){
+                    if(request()->filled('mNombre') && request()->filled('mSueldo') && request()->filled('mHTrabajo') && request()->filled('mvHora') && request()->filled('mContrato') && request()->filled('mAFP') && request()->filled('mIPS')){
                         DB::table('tEmpleados')->where([
                             ['Rut','=',$Rut]
                         ])
@@ -400,7 +437,9 @@ class Busqueda_personal extends Controller
                             'Sueldo_base'=>request('mSueldo'),
                             'N_horas'=>request('mHTrabajo'),
                             'Paga_por_hora'=>request('mvHora'),
-
+                            'id_Contrato'=>request('mContrato'),
+                            'id_AFP'=>request('mAFP'),
+                            'id_ISAPRE'=>request('mIPS')
                         ]);
                         self::CargarEmpleado(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
                         return back();
