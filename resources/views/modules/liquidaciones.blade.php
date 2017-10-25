@@ -14,6 +14,20 @@
 <link rel="stylesheet" href="{{ asset('../public/css/tabs_liquidaciones.css') }}">
 <script>
     $(document).ready(function () {
+        $("#mPlanilla").click(function(){
+            $("#Planilla").toggle();
+            $("#mPlanilla").toggle();
+            $("#m_Planilla").toggle();
+            $("#VolverPlanilla").toggle();
+        });
+        $("#VolverPlanilla").click(function(){
+            $("#Planilla").toggle();
+            $("#mPlanilla").toggle();
+            $("#m_Planilla").toggle();
+            $("#VolverPlanilla").toggle();
+          
+        });
+    
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
         });
@@ -37,9 +51,9 @@
                     $('#Rut_Personal').val(Rut[index_rut]);
                 }
             });
-
         });
-    });
+    });  
+    
 </script>
 <!--
  
