@@ -10,10 +10,27 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <link rel="stylesheet" href="{{ asset('css/sidebar_liquidacion_gris.css') }}">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- Azul o negro-->
 <link rel="stylesheet" href="{{ asset('css/tabs_liquidaciones.css') }}">
 <script>
     $(document).ready(function () {
+
+
+        $("#mAlumno").click(function(){
+            $("#Alumno").toggle();
+            $("#mAlumno").toggle();
+            $("#m_Alumno").toggle();
+            $("#VolverAlumno").toggle();
+        });
+        $("#VolverAlumno").click(function(){
+            $("#Alumno").toggle();
+            $("#mAlumno").toggle();
+            $("#m_Alumno").toggle();
+            $("#VolverAlumno").toggle();
+          
+        });
+
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
         });
@@ -22,14 +39,14 @@
             var Rut = [];
             var urlAutocompletar = "{{ route('autocompletar_alumno') }}" + "?Nombre_Estudiante=" + $(this).val(); // limitar caracteres, minimo 3 o 2 
 
-            $.postJSON(urlAutocompletar, function (Estudiante) {
+            $.getJSON(urlAutocompletar, function (Estudiante) {
 
                 for (var x = 0; x < Estudiante.length; x++) {
                     Nombres.push(Estudiante[x].Nombre);
-                    //Rut.push(Estudiante[x].Rut);
+                    Rut.push(Estudiante[x].Rut);
                 }
             });
-            /*
+
             $(this).autocomplete({
                 source: Nombres,
                 select: function (event, nombre) {
@@ -37,13 +54,48 @@
                     $('#Rut_Estudiante').val(Rut[index_rut]);
                 }
             });
-            */
+
         });
     });
 </script>
+@if(session()->has('Alumno'))
+<script>
+    $(document).ready(function(){
+      $("#rm_alumno").click(function(){
+        swal({
+        title: "¿Estas seguro que desea eliminar este alumno?",
+        text: "Una vez eliminado no podra recuperar el registro!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          $.ajax({
+            url: "{{ route('eliminar_alumno') }}",
+            type: "GET",
+            data: {nRut: "{{ session('Alumno')->Datos->Rut}}"},
+            success: function (res) {
+              if (res.msg=='ok') {
+                swal("El alumno fue eliminado con exito!", {
+                  icon: "success",
+                });
+                window.setTimeout(function(){ } ,3000);
+                location.reload();
+              }
+            }
+          });
+        } else {
+          swal("Eliminación cancelada!");
+        }
+      });
+      });
+    });
+</script>
+@endif
 <!--
  
-    <script src="{{ asset('../public/js/mstriculas.js')}}"></script>  NeverMInd
+    <script src="{{ asset('js/mstriculas.js')}}"></script>  NeverMInd
 -->
 
 
@@ -61,12 +113,19 @@
             @if(session()->has('Error'))
             <div class="alert alert-danger">{{ session('Error') }}</div>
             @endif
+            
+            @if(session()->has('succ'))
+            <div class="alert alert-success">{{ session('succ') }}</div>
+            @endif
+            
             <div id="Tabs" class="container-fluid">
                 <div class="card">
-                    <div class="card-header">
-                        <h2 class="page-header">
-                            @if(session()->has('Alumno')) [{{ session('Alumno')->Datos->Nombre}}] @endif
+                    <div class="card-header row">
+                        <h2 class="page-header col-10">
+                            @if(session()->has('Alumno')) [{{ session('Alumno')->Datos->Nombre}}] 
                         </h2>
+                        <button id="rm_alumno" type="button" class="btn btn-outline-danger col-2">Eliminar</button>
+                        @endif
                     </div>
                     <div class="card-body">
                         <ul class="nav nav-pills">
