@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/liquidaciones','HomeController@liquidaciones');
+Route::get('/liquidaciones/agregar','HomeController@liquidaciones_agregar');
 Route::get('/matriculas','HomeController@matriculas');
 Route::get('/matriculas/agregar','HomeController@matriculas_agregar');
 Route::get('/recursos-humanos','HomeController@recursos_humanos');
@@ -32,10 +33,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 */
 Route::get('autocompletar', ['as' => 'autocompletar', 'uses'=>'Busqueda_personal@Autocompletar']); // BuscarPersonal Autocompletado
 Route::post('BuscarEmpleado',['as'=> 'BuscarEmpleado', 'uses'=>'Busqueda_personal@CargarEmpleado']);
+Route::post('agregar_empleado',['as'=> 'agregar_empleado', 'uses'=>'Busqueda_personal@agregar_empleado']);
+
 
 Route::get('autocompletar_alumno', ['as' => 'autocompletar_alumno', 'uses'=>'Busqueda_estudiante@Autocompletar']); 
 Route::post('BuscarAlumno',['as'=> 'BuscarAlumno', 'uses'=>'Busqueda_estudiante@CargarAlumno']);
-
-
 Route::post('agregar_alumno',['as'=> 'agregar_alumno', 'uses'=>'Busqueda_estudiante@agregar_alumno']);
 

@@ -12,8 +12,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Styles -->
-    <link href="{{ asset('css/container.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('../public/css/container.css') }}" rel="stylesheet">
+    <link href="{{ asset('../public/css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     @yield('Header')
     
@@ -84,7 +84,7 @@
             <div class="col-sm-6">
             <div class="card card-block">
               <a href="{{ url('/liquidaciones') }}">
-                <img src="{{ asset('images/liquidaciones.png') }}" width="224" height="200" class="img-fluid rounded-circle" alt="Liquidaciones de sueldo">
+                <img src="{{ asset('../public/images/liquidaciones.png') }}" width="224" height="200" class="img-fluid rounded-circle" alt="Liquidaciones de sueldo">
               </a>
               <h4>Liquidaciones</h4>
               <div class="text-muted">Modulo 1</div>
@@ -94,7 +94,7 @@
             <div class="col-sm-6">
             <div class="card card-block">
               <a href="{{url('/matriculas')}}">
-                <img src="{{ asset('images/matriculas.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Matriculas">
+                <img src="{{ asset('../public/images/matriculas.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Matriculas">
               </a>
               <h4>Matrículas</h4>
               <span class="text-muted">Modulo 2</span>
@@ -104,7 +104,7 @@
             <div class="col-sm-6">
             <div class="card card-block">
               <a href="{{url('recursos-humanos')}}">
-                <img src="{{ asset('images/rrhh.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración de recursos humanos">
+                <img src="{{ asset('../public/images/rrhh.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración de recursos humanos">
               </a>
               <h4>RR.HH</h4>
               <span class="text-muted">Modulo 3</span>
@@ -117,7 +117,7 @@
             <div class="col-sm-6">
             <div class="card card-block">
               <a href="{{ url('/matriculas') }}">
-                <img src="{{ asset('images/matriculas.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración de matrículas">
+                <img src="{{ asset('../public/images/matriculas.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración de matrículas">
               </a>
               <h4>Matrículas</h4>
               <span class="text-muted">Modulo 2</span>
@@ -129,7 +129,7 @@
             <div class="col-sm-6">
             <div class="card card-block">
               <a href="{{ url('/notas') }}">  
-                <img src="{{ asset('images/notas.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración notas alumnado">
+                <img src="{{ asset('../public/images/notas.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración notas alumnado">
               </a>
               <h4>Notas</h4>
               <span class="text-muted">Modulo 4</span>
@@ -153,7 +153,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../../../public/js/jquery.min.js"><\/script>')</script>-->
     
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('../public/js/popper.min.js') }}"></script>
+    <script src="{{ asset('../public/js/bootstrap.min.js') }}"></script>
 </body>
 </html>

@@ -30,6 +30,10 @@ class HomeController extends Controller
     {
         return view('modules.liquidaciones');
     }
+    public function liquidaciones_agregar()
+    {
+        return view('modules.liquidaciones.agregar_empleado');
+    }
     public function matriculas()
     {
         return view('modules.matriculas');
