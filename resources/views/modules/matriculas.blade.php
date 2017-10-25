@@ -14,6 +14,22 @@
 <link rel="stylesheet" href="{{ asset('../public/css/tabs_liquidaciones.css') }}">
 <script>
     $(document).ready(function () {
+
+
+        $("#mAlumno").click(function(){
+            $("#Alumno").toggle();
+            $("#mAlumno").toggle();
+            $("#m_Alumno").toggle();
+            $("#VolverAlumno").toggle();
+        });
+        $("#VolverAlumno").click(function(){
+            $("#Alumno").toggle();
+            $("#mAlumno").toggle();
+            $("#m_Alumno").toggle();
+            $("#VolverAlumno").toggle();
+          
+        });
+
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
         });

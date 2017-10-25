@@ -23,7 +23,7 @@ class Busqueda_estudiante extends Controller
     
     
     
-    public function CargarAlumno(){
+    public static function CargarAlumno(){
         if(request()->isMethod('post')){
             if(request()->filled('Nombre_Estudiante')){
                 $Nombre =  request('Nombre_Estudiante'); //Capturamos el nombre 
@@ -55,9 +55,62 @@ class Busqueda_estudiante extends Controller
                 return back()->with('Error',"No se pudo encontrar Alumno.");
                 
             }
+        }else{
+            //$Nombre =  request('Nombre_Estudiante'); //Capturamos el nombre 
+            $Rut = session('Alumno')->Datos->Rut; // Y Rut Del Alumno
+            
+            // Objeto Alumno
+            $Alumno = new \stdClass();
+            
+            // Lo buscamos en la base de datos
+            
+            
+            $Alumno->Datos = DB::table('tAlumnos')->where('Rut', '=',$Rut)->get()[0];
+            
+            $datosapoderado = DB::table('tApoderados')
+                ->join('rel_tAlumnos_tApoderados','tApoderados.Rut', '=', 'rel_tAlumnos_tApoderados.Rut_apo')
+                ->join('tAlumnos', 'rel_tAlumnos_tApoderados.Rut_alu', '=', 'tAlumnos.Rut')
+                ->where('tAlumnos.Rut','=', $Rut)
+                ->select('tApoderados.Rut','tApoderados.Nombre','tApoderados.Email','tApoderados.Fono','rel_tAlumnos_tApoderados.Relacion')
+                ->get()[0];
+            
+            $Alumno->Apoderado = $datosapoderado;
+                
+            $Alumno->Salud = DB::table('tSalud')->where('Rut', '=',$Rut)->get()[0];
+            request()->session()->put('Alumno',$Alumno);
+            return back();
+
         }
     }
     
+    public static function ModificarDatos(){
+        if(request()->isMethod('get')){
+            if(request()->filled('id_Modificar')){
+                $Rut = session('Alumno')->Datos->Rut;
+                // id_Modificar == 1 // Modificar datos alumno
+                if(request('id_Modificar')==1){
+                    if(request()->filled('mNombre') && request()->filled('mDomicilio') && request()->filled('mComuna') && request()->filled('mCurso') && request()->filled('mCursoAnterior') && request()->filled('mEstablecimiento') && request()->filled('mRepitente') && request()->filled('mIngles')){
+                        DB::table('tAlumnos')->where([
+                            ['Rut','=',$Rut]
+                        ])
+                        ->update([
+                            'Nombre'=>request('mNombre'),
+                            'Direccion'=>request('mDomicilio'),
+                            'Comuna'=>request('mComuna'),
+                            'Curso'=>request('mCurso'),
+                            'Curso_anterior'=>request('mCursoAnterior'),
+                            'Establecimiento_ant'=>request('mEstablecimiento'),
+                            'Repitente'=>request('mRepitente'),
+                            'Ingles'=>request('mIngles')
+                        ]);
+                        self::CargarAlumno(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
+                        return back();
+                    }
+                }
+            }
+        }
+    }
+
     
 /*
     public function messages(){

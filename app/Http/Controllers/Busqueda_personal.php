@@ -448,9 +448,7 @@ class Busqueda_personal extends Controller
             }
         }
     }
-}
-    } 
-    
+ 
     
     
     public function limpiar_rut($rut){
