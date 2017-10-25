@@ -14,7 +14,7 @@ class Busqueda_personal extends Controller
     }
 
     //Cargar Datos del empleado
-    public function CargarEmpleado(){
+    public static function CargarEmpleado(){
         if(request()->isMethod('post')){
             if(request()->filled('Rut_Personal')){ //add &&session('Empleado')->Datos->Rut when 
                 $Nombre =  request('Nombre_Personal'); //Capturamos el nombre 
@@ -47,6 +47,32 @@ class Busqueda_personal extends Controller
                 return back()->with('Error',"No se pudo encontrar Empleado :^)");
                 
             }
+        }else{
+            $Nombre = session('Empleado')->Datos->Nombre;
+            $Rut = session('Empleado')->Datos->Rut;
+
+            // Objeto empleado
+            $Empleado = new \stdClass();
+            
+            // Lo buscamos en la base de datos
+            $Empleado->Datos = DB::table('tEmpleados')->where('Rut', '=',$Rut)->get()[0];
+            
+            // Buscamos sus datos de AFP y los agregamos al objeto Empleado
+            $Empleado->Afp=DB::table('tAFP')->where('id_AFP', '=',$Empleado->Datos->id_AFP)->get()[0];
+            
+            // Buscamos sus datos de Fonasa y los agregamos al objeto Empleado
+            $Empleado->Isapre=DB::table('tISAPRE')->where('id_ISAPRE', '=',$Empleado->Datos->id_ISAPRE)->get()[0];
+            
+            // Buscamos sus contrato y los agregamos al objeto Empleado
+            $Empleado->Contrato=DB::table('tContratos')->where('id_Contrato', '=',$Empleado->Datos->id_Contrato)->get()[0];
+            
+            //Agregar todo lo que calcula el sueldo & stuff
+            /*$rEmpleado= request()->session()->get('Empleado');
+            */
+           
+            request()->session()->put('Empleado',$Empleado);
+            return back();
+
         }
     }
 
@@ -338,6 +364,7 @@ class Busqueda_personal extends Controller
                 // id_Modificar == 1 // Modificar datos empleado
                 // id Modificar == 2 // Modificar descuento
                 // id Modificar == 3 // Modificar prestamo
+                // id Modificar == 4 // Modificar Empleado
                 if(request('id_Modificar')==2){
                     if(request()->filled('mDescuento') && request()->filled('id_Descuento')){ // si el monto existe inserta el descuento
                         DB::talbe('rel_tEmpleados_tDescuentos')
@@ -360,6 +387,22 @@ class Busqueda_personal extends Controller
                             'Monto'=>request('mPrestamo')
                         ]);
                         self::CargarDescuentos(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
+                        return back();
+                    }
+                }
+                if(request('id_Modificar')==4){
+                    if(request()->filled('mNombre') && request()->filled('mSueldo') && request()->filled('mHTrabajo') && request()->filled('mvHora')){
+                        DB::table('tEmpleados')->where([
+                            ['Rut','=',$Rut]
+                        ])
+                        ->update([
+                            'Nombre'=>request('mNombre'),
+                            'Sueldo_base'=>request('mSueldo'),
+                            'N_horas'=>request('mHTrabajo'),
+                            'Paga_por_hora'=>request('mvHora'),
+
+                        ]);
+                        self::CargarEmpleado(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
                         return back();
                     }
                 }

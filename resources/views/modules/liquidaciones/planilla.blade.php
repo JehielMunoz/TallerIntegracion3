@@ -1,6 +1,5 @@
 @if (session()->has('Empleado'))
-
-<form>
+<div id="Planilla">
     <table class="table table-striped table-bordered table-condensed ">
         <tr>
             <th colspan="2">Datos del empleado</th>
@@ -79,73 +78,78 @@
             </tr>
             <tr>
                 <td colspan=2>
-                    <button lass="boton_toggle" id="ModificarPlanilla">Modificar Planilla</button>
+                    <button class="boton_toggle" id="mPlanilla">Modificar Planilla</button>
                 </td>
             </tr>
     </table>
-</form>
+</div>
 <div id="m_Planilla" style="display:none">
     <!--  Modificar Empleado -->
     <h1>Modificar informacion empleado </h1>
-    <form action="../resources//Modificar_Datos." method="post">
-        <table>
-            <tr>
-                <th colspan="2">Datos empleado</th>
-            </tr>
-            <tr>
-                <td>Nombre</td>
-                <td style="text-align:left;"><input type="text" size="61" id="Nombre" name="mNombre" placeholder="Nombre empleado" value="<? Nombre();?>"></td>
-            </tr>
-            <tr>
-                <td>Rut</td>
-                <td><input type="text" placeholder="Rut" disabled id="Ruta" name="mRut" value="<? mRut();?>"></td>
-                <input type="text" placeholder="Rut" hidden id="Ruta" name="mRut" value="<? mRut();?>">
-            </tr>
-            <tr>
-                <td>Sueldo base</td>
-                <td><input type="text" name="mSueldo" placeholder="Sueldo base" value="<? mSueldo_Base();?>"></td>
-            </tr>
-            <tr>
-                <td>Horas de trabajo</td>
-                <td><input type="text" name="mHTrabajo" placeholder="Total horas" value="<? Hora();?>"></td>
-            </tr>
-            <tr>
-                <td>Valor hora</td>
-                <td><input type="text" name="mValorHora" placeholder="Valor" value="<? mValor_Hora()?>"></td>
-            </tr>
-            <tr>
+        <table class="table table-striped table-bordered table-condensed ">
+        <tr>
+            <th colspan="2">Datos del empleado</th>
+        </tr>
+        <tr>
+            <td><button style="display:none" class="boton_toggle" id="VolverPlanilla">Volver</button></td>
+        </tr>
+        <form action="{{route('ModificarDatos')}}" method="get">
+            <input hidden value="4" name="id_Modificar">
+
+        <tr>
+            <td>Nombre</td>
+            <td><input type="text" size="65" id="Nombre" name="mNombre" placeholder="{{ session('Empleado')->Datos->Nombre }}"></td>
+        </tr>
+       <!-- <tr>
+            <td>Rut</td>
+            <td><input type="text" placeholder="Rut"  id="Ruta" name="mRut" placeholder="{{ session('Empleado')->Datos->Rut }}"></td>
+        </tr> -->
+        <tr>
+            <td>Sueldo base</td>
+            <td><input type="text"  name="mSueldo" placeholder="Sueldo base" placeholder="{{ session('Empleado')->Datos->Sueldo_base }}"></td>
+        </tr>
+      
+        <tr>
+            <td>Horas de trabajo</td>
+            <td><input type="text"  name="mHTrabajo" placeholder="Total horas" placeholder="{{ session('Empleado')->Datos->N_horas }}"></td>
+        </tr>
+        <tr>
+            <td>Valor hora</td>
+            <td><input type="text"  name="mvHora" placeholder="Valor" placeholder="{{ session('Empleado')->Datos->Paga_por_hora }}"></td>
+        </tr>
+        <tr>
                 <td>Tipo de contrato</td>
                 <td>
                     <select name="mContrato">
                                          
-                                                    </select>
+                    </select>
                 </td>
-            </tr>
-            <!--<tr>
-                                                <td>N° de cargas</td>
-                                                <td><input type="text" name="nCargas" placeholder="Cargas" value="></td>
-                                            </tr>    QUE NO SE UTILIZA  -->
-            <tr>
+        </tr>
+         <tr>
                 <td>Cotizacion AFP:</td>
                 <td>
                     <select name="mAFP">
-                                           
+                              conseguir datos             
                                                     </select>
                 </td>
+            </tr>
                 <tr>
                     <td>Cotizacion de Salud:</td>
 
                     <td>
                         <select name="mIPS">
+                        conseguir datos
                                          
                                                     </select>
                     </td>
                 </tr>
                 <tr>
+                    <td>                
                     <button type="submit" id="ModificarPlanilla">Modificar Planilla</button>
+                    </td>
                 </tr>
-        </table>
-    </form>
+    </table>
+    </form>		
 </div>
 
 
