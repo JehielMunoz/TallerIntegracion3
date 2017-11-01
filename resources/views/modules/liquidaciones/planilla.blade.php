@@ -1,5 +1,7 @@
 <?php
- use App\Http\Controllers\Busqueda_personal;
+
+use App\Http\Controllers\Busqueda_personal;
+
 ?>
 @if (session()->has('Empleado'))
 
@@ -22,9 +24,10 @@
             <td>Sueldo base</td>
             <td><input type="text" disabled name="lname" placeholder="Sueldo base" value="{{ session('Empleado')->Datos->Sueldo_base }}"></td>
         </tr>
-        <tr>
+        <tr>{{Busqueda_personal::cal_Total_Imponible()}}
+         
             <td>Sueldo bruto</td>
-            <td><input type="text" disabled name="lname" placeholder="Sueldo bruto" value="{{ session('Empleado')->Datos->Sueldo_base }}"></td>
+            <td><input type="text" disabled name="lname" placeholder="Sueldo bruto" value="{{session('Empleado')->Datos->Total_Haberes}}"></td>
         </tr>
         <tr>
             <td>Sueldo líquido</td>
@@ -58,7 +61,7 @@
                 <td>Cotizacion de Salud:</td>
 
                 <td><input type="text" disabled name="lname" placeholder="Nombre ISAPRE" value="{{ session('Empleado')->Isapre->ISAPRE }}"></td>
-                <td><input type="text" disabled placeholder="Valor" name="lname" value="Calcuclar Valor con la tasa"></td>
+                <td><input type="text" disabled placeholder="Valor" name="lname" value="Calcular Valor con la tasa"></td>
                 <td><input type="text" disabled name="lname" placeholder="%" value="{{ session('Empleado')->Isapre->Tasa }}"></td>
             </tr>
             <tr>
@@ -126,7 +129,7 @@
                 <td>Tipo de contrato</td>
                 <td>
                     <select name="mContrato">
-                         {{Busqueda_personal::printContratoModificar()}}
+                         {{ Busqueda_personal::printContratoModificar() }}
         
                     </select>
                 </td>

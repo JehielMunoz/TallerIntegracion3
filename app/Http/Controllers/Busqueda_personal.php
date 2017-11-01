@@ -588,7 +588,41 @@ class Busqueda_personal extends Controller
                 <option value="'.$cargo->id_Cargo.'">'.$cargo->Cargo.'</option>
             ';
         }
+        
     }
+
+    public static function cal_Total_Imponible(){
+      session('Empleado')->Datos->Gratificaciones_Imponible = 0;
+      session('Empleado')->Datos->Gratificaciones_no_Imponible = 0;
+      session('Empleado')->Datos->Asignacion_Familiar = 0;
+
+      $sql = DB::table('tBonos')
+      ->join('rel_tEmpleados_tBonos','tBonos.id_Bono', '=', 'rel_tEmpleados_tBonos.id_Bono')
+      ->join('tEmpleados', 'rel_tEmpleados_tBonos.Rut', '=', 'tEmpleados.Rut')
+      ->where('tEmpleados.Rut','=',session('Empleado')->Datos->Rut)
+      ->get();
+
+        foreach ($sql as $row) {
+            if($row->Imponible == true){
+                session('Empleado')->Datos->Gratificaciones_Imponible  += $row->Monto;   
+            }else{
+                if($row->id_Bono == 26){
+                    session('Empleado')->Datos->Datos->Asignacion_Familiar = $row->Monto;
+                }else{
+                    session('Empleado')->Datos->Gratificaciones_no_Imponible += $row->Monto;
+
+                }
+            }
+            
+        }
+
+        session('Empleado')->Datos->Total_Imponible = session('Empleado')->Datos->Sueldo_base + 
+                                               session('Empleado')->Datos->Gratificaciones_Imponible;
+        session('Empleado')->Datos->Total_Haberes = session('Empleado')->Datos->Sueldo_base + session('Empleado')->Datos->Gratificaciones_Imponible + session('Empleado')->Datos->Gratificaciones_no_Imponible;
+        session('Empleado')->Datos->Total_Bonos = session('Empleado')->Datos->Gratificaciones_Imponible + 
+                                               session('Empleado')->Datos->Gratificaciones_no_Imponible;
+    }
+
     
     
 }
