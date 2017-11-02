@@ -29,9 +29,9 @@ use App\Http\Controllers\Busqueda_personal;
             <td>Sueldo bruto</td>
             <td><input type="text" disabled name="lname" placeholder="Sueldo bruto" value="{{session('Empleado')->Datos->Total_Haberes}}"></td>
         </tr>
-        <tr>
+        <tr>{{Busqueda_personal::cal_Total_Descuentos()}}{{Busqueda_personal::Liquido_Pagar()}}
             <td>Sueldo líquido</td>
-            <td><input type="text" disabled name="lname" placeholder="Sueldo líquido" value="{{ session('Empleado')->Datos-> Sueldo_base }}"></td>
+            <td><input type="text" disabled name="lname" placeholder="Sueldo líquido" value="{{ session('Empleado')->Datos->Liquido_Pagar }}"></td>
         </tr>
         <tr>
             <td>Horas de trabajo</td>
@@ -66,22 +66,22 @@ use App\Http\Controllers\Busqueda_personal;
             </tr>
             <tr>
                 <td>Total Bonos:</td>
-                <td><input type="text" disabled name="lname" value="Calcular"></td>
+                <td><input type="text" disabled name="lname" value="{{session('Empleado')->Datos->Total_Bonos}}"></td>
                 <td colspan=2></td>
             </tr>
             <tr>
                 <td>Total Descuentos:</td>
-                <td><input type="text" disabled name="lname" value="Calcular"></td>
+                <td><input type="text" disabled name="lname" value="{{session('Empleado')->Datos->Total_Descuentos}}"></td>
                 <td colspan=2></td>
             </tr>
             <tr>
                 <td>Total Asignaciones:</td>
-                <td><input type="text" disabled name="lname" value="Calcalar"></td>
+                <td><input type="text" disabled name="lname" value="{{session('Empleado')->Datos->Asignacion_Familiar}}"></td>
                 <td colspan=2></td>
             </tr>
             <tr>
                 <td>Total Seguros:</td>
-                <td><input type="text" disabled name="lname" value="Calcular"></td>
+                <td><input type="text" disabled name="lname" value="{{session('Empleado')->Datos->Total_Seguro}}"></td>
                 <td colspan=2></td>
             </tr>
             <tr>

@@ -592,6 +592,10 @@ class Busqueda_personal extends Controller
     }
 
     public static function cal_Total_Imponible(){
+        /*
+         " SELECT \"tEmpleados\".\"Rut\", \"tBonos\".\"Bono\", \"tBonos\".\"Activo\", \"tBonos\".\"id_Bono\", \"tBonos\".\"Imponible\",\"rel_tEmpleados_tBonos\".\"Monto\" FROM \"tBonos\" JOIN \"rel_tEmpleados_tBonos\" ON \"tBonos\".\"id_Bono\" = \"rel_tEmpleados_tBonos\".\"id_Bono\" JOIN \"tEmpleados\" ON \"rel_tEmpleados_tBonos\".\"Rut\" = \"tEmpleados\".\"Rut\" WHERE \"tEmpleados\".\"Rut\" = '".$_SESSION['Rut']."'::bpchar;";
+
+        */
       session('Empleado')->Datos->Gratificaciones_Imponible = 0;
       session('Empleado')->Datos->Gratificaciones_no_Imponible = 0;
       session('Empleado')->Datos->Asignacion_Familiar = 0;
@@ -616,15 +620,143 @@ class Busqueda_personal extends Controller
             
         }
 
-        session('Empleado')->Datos->Total_Imponible = session('Empleado')->Datos->Sueldo_base + 
-                                               session('Empleado')->Datos->Gratificaciones_Imponible;
-        session('Empleado')->Datos->Total_Haberes = session('Empleado')->Datos->Sueldo_base + session('Empleado')->Datos->Gratificaciones_Imponible + session('Empleado')->Datos->Gratificaciones_no_Imponible;
-        session('Empleado')->Datos->Total_Bonos = session('Empleado')->Datos->Gratificaciones_Imponible + 
-                                               session('Empleado')->Datos->Gratificaciones_no_Imponible;
+        session('Empleado')->Datos->Total_Imponible = 
+        session('Empleado')->Datos->Sueldo_base + 
+        session('Empleado')->Datos->Gratificaciones_Imponible;
+        
+        session('Empleado')->Datos->Total_Haberes = 
+        session('Empleado')->Datos->Sueldo_base + 
+        session('Empleado')->Datos->Gratificaciones_Imponible + 
+        session('Empleado')->Datos->Gratificaciones_no_Imponible;
+        
+        session('Empleado')->Datos->Total_Bonos = 
+        session('Empleado')->Datos->Gratificaciones_Imponible +
+        session('Empleado')->Datos->Gratificaciones_no_Imponible;
     }
 
+
+    public static function cal_Total_Descuentos(){
+        /*
+        "SELECT \"* FROM \"rel_tEmpleados_tDescuentos\" JOIN \"tEmpleados\" ON \"rel_tEmpleados_tDescuentos\".\"Rut\" = \"tEmpleados\".\"Rut\" JOIN \"tDescuentos\" ON \"rel_tEmpleados_tDescuentos\".\"id_Descuento\" = \"tDescuentos\".\"id_Descuento\" WHERE \"tEmpleados\".\"Rut\" = '$rut'::bpchar;";
+
+
+        */
+        $Rut = session('Empleado')->Datos->Rut;
+        session('Empleado')->Datos->Descuentos_Legal = 0 ;
+        session('Empleado')->Datos->Descuentos_Otros = 0;
+
+        $Descuentos= DB::table('rel_tEmpleados_tDescuentos')
+        ->join('tEmpleados','rel_tEmpleados_tDescuentos.Rut', '=','tEmpleados.Rut')
+        ->join('tDescuentos', 'rel_tEmpleados_tDescuentos.id_Descuento', '=', 'tDescuentos.id_Descuento')
+        ->where('tEmpleados.Rut','=', $Rut)
+        ->get();
+        
+        foreach($Descuentos as $Descuento){
+            if($Descuento->Tipo == 'legal'){
+                //print $Descuento->Tipo;
+                if($Descuento->id_Descuento <> 2){
+                    session('Empleado')->Datos->Descuentos_Legal += $Descuento->Monto;
+                }
+            }else{
+                session('Empleado')->Datos->Descuentos_Otros += $Descuento->Monto;
+            }
+        }
+        self::Total_AFP();
+        self::Total_Isapre();
+        self::Total_Seguro();
+
+        session('Empleado')->Datos->Total_Tributable = session('Empleado')->Datos->Total_Imponible - session('Empleado')->Datos->Total_Seguro - session('Empleado')->Datos->Total_Isapre - session('Empleado')->Datos->Total_AFP;
+        self::cal_Descuentos_Varios();
+        session('Empleado')->Datos->Total_Descuentos = session('Empleado')->Datos->Descuentos_Otros + session('Empleado')->Datos->Descuentos_Legal;
+        if(session('Empleado')->Datos->Total_Descuentos == 0){session('Empleado')->Datos->Total_Descuentos = "$0";}
     
+    }
+
+
+
+    public static function  Liquido_Pagar(){
+        if(session('Empleado')->Datos->Total_Haberes - 
+           session('Empleado')->Datos->Descuentos_Legal - 
+           session('Empleado')->Datos->Descuentos_Otros > 0){
+
+            session('Empleado')->Datos->Liquido_Pagar = 
+            (session('Empleado')->Datos->Total_Haberes +
+            session('Empleado')->Datos->Asignacion_Familiar) - 
+            session('Empleado')->Datos->Descuentos_Legal - 
+            session('Empleado')->Datos->Descuentos_Otros;
+        }else{
+            session('Empleado')->Datos->Liquido_Pagar = 0;
+        }
+
+        //echo print_r(session('Empleado')->Datos);
+    }
+
+    public static function Liquido_Alcansado(){
+        session('Datos')->Datos->Liquido_Alcansado = session('Empleado')->Liquido_Pagar + session('Empleado')->Descuentos_Otros;
+   }
+
+   public static function cal_Descuentos_Varios(){
+    $sql = DB::table('tPrestamos')
+            ->select('Monto')
+            ->where('Rut','=', session('Empleado')->Datos->id_AFP,' AND ',
+                        'Activo','=',true)
+            ->get();
+
+    foreach($sql as $row){
+        session('Empleado')->Datos->Descuentos_Otros += $row->Monto;
+    }
     
+    //session('Empleado')->Datos->Descuentos_Otros += session('Empleado')->Datos->Descuentos_Licencias;
+    
+   }
+
+
+   public static function Total_AFP(){
+    $sql = DB::table('tAFP')
+            ->select('Tasa')
+            ->where('id_AFP','=', session('Empleado')->Datos->id_AFP)
+            ->get();
+    $tasa = 0;
+    foreach($sql as $row){
+        $tasa = $row->Tasa;
+    }
+    session('Empleado')->Datos->Total_AFP = round(($tasa*session('Empleado')->Datos->Total_Imponible)/100,0);
+    session('Empleado')->Datos->Descuentos_Legal += session('Empleado')->Datos->Total_AFP;
+
+   }
+
+
+   public static function Total_Isapre(){
+        $sql = DB::table('tISAPRE')
+                ->select('Tasa')
+                ->where('id_ISAPRE','=', session('Empleado')->Datos->id_ISAPRE)
+                ->get();
+       
+        $tasa = 0;
+        foreach($sql as $row){
+            $tasa = $row->Tasa;
+        }
+        session('Empleado')->Datos->Total_Isapre = round(($tasa*session('Empleado')->Datos->Total_Imponible)/100,0);
+        session('Empleado')->Datos->Descuentos_Legal += session('Empleado')->Datos->Total_Isapre;
+    }
+
+    public static function Total_Seguro(){
+        $sql = DB::table('tContratos')
+                ->select('Tasa_seguro_cesantia')
+                ->where('id_Contrato','=', session('Empleado')->Datos->id_Contrato)
+                ->get();
+       
+        $tasa = 0;
+        foreach($sql as $row){
+            $tasa = $row->Tasa_seguro_cesantia;
+        }
+        
+        session('Empleado')->Datos->Total_Seguro = round(($tasa*session('Empleado')->Datos->Total_Imponible)/100,0);
+        session('Empleado')->Datos->Descuentos_Legal += session('Empleado')->Datos->Total_Seguro;
+
+    }
+
+
 }
 
 
