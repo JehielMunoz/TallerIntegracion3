@@ -79,7 +79,7 @@
                     </li>
 
                     <li>
-                        <a href="#">Licencias</a>
+                        <a href={{route('licencias')}}>Licencias</a>
                     </li>
 
                     <li>

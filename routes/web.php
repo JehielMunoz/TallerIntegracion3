@@ -16,6 +16,14 @@ Route::get('/', function () {
 });
 
 Route::get('/liquidaciones','HomeController@liquidaciones');
+Route::get('liquidaciones/licencias', ['as' => 'liquidaciones/licencias', 'uses'=>'HomeController@liquidaciones_licencias']); // BuscarPersonal Autocompletado
+Route::get('liquidaciones/afp', ['as' => 'liquidaciones/afp', 'uses'=>'HomeController@liquidaciones_afp']); // BuscarPersonal Autocompletado
+Route::get('liquidaciones/ips', ['as' => 'liquidaciones/ips', 'uses'=>'HomeController@liquidaciones_ips']); // BuscarPersonal Autocompletado
+Route::get('liquidaciones/contacto', ['as' => 'liquidaciones/contacto', 'uses'=>'HomeController@liquidaciones_contacto']); // BuscarPersonal Autocompletado
+
+
+
+
 Route::get('/matriculas','HomeController@matriculas');
 Route::get('/recursos-humanos','HomeController@recursos_humanos');
 Route::get('/notas','HomeController@notas');

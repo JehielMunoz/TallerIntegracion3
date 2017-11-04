@@ -30,6 +30,22 @@ class HomeController extends Controller
     {
         return view('modules.liquidaciones');
     }
+    public function liquidaciones_licencias()
+    {
+        return view('modules.liquidaciones.licencias');
+    }
+    public function liquidaciones_afp()
+    {
+        return view('modules.liquidaciones.afp');
+    }
+    public function liquidaciones_ips()
+    {
+        return view('modules.liquidaciones.ips');
+    }
+    public function liquidaciones_contacto()
+    {
+        return view('modules.liquidaciones.contacto');
+    }
     public function matriculas()
     {
         return view('modules.matriculas');
