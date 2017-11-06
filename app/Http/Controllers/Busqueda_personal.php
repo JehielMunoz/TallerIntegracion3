@@ -448,6 +448,27 @@ class Busqueda_personal extends Controller
             }
         }
     }
+
+    public static function MostrarIPS(){
+        $IPS = DB::table('tISAPRE')->get();
+        foreach($IPS as $Ips){
+            echo "<tr>";
+            echo "<td>$Ips->ISAPRE</td>";
+            echo "<td>$Ips->Tasa%</td>";
+            echo "</tr>";
+        }   
+        
+    }
+    public static function MostrarAFP(){
+        $AFP = DB::table('tAFP')->get();
+        foreach($AFP as $Afp){
+            echo "<tr>";
+            echo "<td>$Afp->AFP</td>";
+            echo "<td>$Afp->Tasa%</td>";
+            echo "</tr>";
+        }   
+        
+    }
 }
 
 

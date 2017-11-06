@@ -79,14 +79,14 @@
                     </li>
 
                     <li>
-                        <a href={{route('licencias')}}>Licencias</a>
+                        <a href={{route('liquidaciones/licencias')}}>Licencias</a>
                     </li>
 
                     <li>
-                        <a href="#">AFP</a>
+                        <a href="{{route('liquidaciones/afp')}}">AFP</a>
                     </li>
                     <li>
-                        <a href="#">IPS</a>
+                        <a href="{{route('liquidaciones/ips')}}">IPS</a>
                     </li>
                     <li>
                         <a href="#">Contacto</a>

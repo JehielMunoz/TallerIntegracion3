@@ -1,5 +1,7 @@
 <?php
+
     session_start();
+
     if(empty($_SESSION['Usuario']))
     {
         echo "Para ver esta pagina Necesita estar Logeado....";    
