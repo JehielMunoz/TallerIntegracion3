@@ -210,7 +210,7 @@ class Busqueda_personal extends Controller
             echo "<tr>";
             echo "<td>$Descuento->Descuento</td>";
             echo "<td>$Descuento->Tipo</td>";
-            
+
             echo "<td><input id='MontoDescuento' name=\"MontoDescuento\" type=\"number\" min='0' placeholder='Ingresar monto' ></input></td>";
             echo "<td><input type=\"submit\" value=\"\"></td>"; // Boton para borrar, implementarlo 
             echo "</tr>";
@@ -469,7 +469,50 @@ class Busqueda_personal extends Controller
         }   
         
     }
+
+    public static function MostrarContacto()
+    {   
+        
+        
+        if(!empty($_POST['c_Buscar']))
+        {
+            $query ="Select \"tEmpleados\".\"Rut\",\"tEmpleados\".\"Nombre\", \"tEmpleado_Fono\".\"N_telefono\" 
+                      From \"tEmpleados\" Inner Join \"tEmpleado_Fono\" ON \"tEmpleados\".\"Rut\" = \"tEmpleado_Fono\".\"Rut\"
+                      Where \"tEmpleados\".\"Nombre\" = '".$_POST['c_Buscar']."'
+                      order by \"tEmpleados\".\"Rut\"";
+        }
+        else
+        {
+            $query = "Select \"tEmpleados\".\"Rut\",\"tEmpleados\".\"Nombre\", \"tEmpleado_Fono\".\"N_telefono\" 
+                      From \"tEmpleados\" Inner Join \"tEmpleado_Fono\" ON \"tEmpleados\".\"Rut\" = \"tEmpleado_Fono\".\"Rut\"
+                      order by \"tEmpleados\".\"Rut\"";
+        }
+
+        if(request()->filled("c_Buscar")){
+            $Nombre = request("c_Buscar");
+            $Empleados= DB::table('tEmpleados')
+            ->join('tEmpleado_Fono','tEmpleados.Rut', '=', 'tEmpleado_Fono.Rut')
+            ->where('tEmpleados.Nombre','=', $Nombre)
+            ->select('tEmpleados.Rut','tEmpleados.Nombre','tEmpleado_Fono.N_telefono')
+            ->get();
+        }else{
+            $Empleados= DB::table('tEmpleados')
+            ->join('tEmpleado_Fono','tEmpleados.Rut', '=', 'tEmpleado_Fono.Rut')
+            ->select('tEmpleados.Rut','tEmpleados.Nombre','tEmpleado_Fono.N_telefono')
+            ->get();
+        }
+    
+        foreach($Empleados as $Empleado){
+            echo "<tr>";
+            echo "<td>$Empleado->Rut</td>";    
+            echo "<td>$Empleado->Nombre</td>";   
+            echo "<td>$Empleado->N_telefono</td>";
+            echo "</tr>";
+        }
+        
+    }
 }
+
 
 
 

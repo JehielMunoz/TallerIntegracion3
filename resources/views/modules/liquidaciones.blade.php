@@ -89,7 +89,7 @@
                         <a href="{{route('liquidaciones/ips')}}">IPS</a>
                     </li>
                     <li>
-                        <a href="#">Contacto</a>
+                        <a href="{{route('liquidaciones/contacto')}}">Contacto</a>
                     </li>
                     <li>
                         <a href="#">Impuesto a la renta</a>

@@ -119,9 +119,8 @@
                     <?php Mostrar_Contacto();?>
                 </table>
             </div>
+        </div>    
     </div>
-        
-        </div>
     <?php
         include("footer.php");
     ?>

@@ -1,9 +1,6 @@
 <?php 
      use App\Http\Controllers\Busqueda_personal;
-?>
-
-@extends('layouts.container')
-
+?> @extends('layouts.container')
 <!--  -->
 @section('Header')
 <!--  -->
@@ -49,7 +46,7 @@
                         <a href="{{route('liquidaciones/ips')}}">IPS</a>
                     </li>
                     <li>
-                        <a href="#">Contacto</a>
+                        <a href="{{route('liquidaciones/contacto')}}">Contacto</a>
                     </li>
                     <li>
                         <a href="#">Impuesto a la renta</a>
@@ -62,22 +59,42 @@
             <div class="alert alert-danger">{{ session('Error') }}</div>
             @endif
             <div id="Tabs" class="container-fluid">
-                <div id="Tabs" class="container-fluid">
-                    <div class="jumbotron jumbotron-fluid">
+                <div class="jumbotron jumbotron-fluid">
                         <div class="container-fluid">
                             <table class="table table-striped table-bordered table-condensed">
-                                <h3 id="tCso">Instituto de Previsión Social (IPS).</h3>	
-                                <th>Nombre AFP</th>
-                                <th>Tasa AFP</th>
-                                {{Busqueda_personal::MostrarAFP()}}
+                                <tr>
+                                        <form action="{{route('liquidaciones/contacto')}}" method="get">
+                                            <td><input type="text" id="Rut" name="c_Buscar" required placeholder="Buscar personal por Nombre..."></td>
+                                            <td><input type="submit" id="btn" formmethod="get" value="Buscar Persona"></td>
+                                        </form>
+                                    
+                                        <form action="{{route('liquidaciones/contacto')}}" method="get">
+                                            <td><input type="submit" value="Mostrar Todos."></td>
+                                        </form>
+                                    
+                                </tr>
+                            </table>   
+                            <table class="table table-striped table-bordered table-condensed">
+                                <h3 id="tCso">Contacto funcionarios</h3>
+                                
+                                
+                                <th>Rut</th>
+                                <th>Nombre</th>
+                                <th>Telefono</th>
+                                {{Busqueda_personal::MostrarContacto()}}
                             </table>
                         </div>
 
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
+
+</div>
+</div>
+</div>
 </div>
 
 @endsection
