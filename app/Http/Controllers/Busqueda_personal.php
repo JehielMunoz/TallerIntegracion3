@@ -511,6 +511,53 @@ class Busqueda_personal extends Controller
         }
         
     }
+
+    public static function MostrarLicencias(){
+
+        $Licencias = DB::table('tLicencias')->where("Activo",'=','t')->get();
+        foreach($Licencias as $Licencia){
+            echo "<tr>";
+            echo "<td>$$Licencia->Rut</td>";
+            if($Licencia->Descuenta){
+                echo "<td>Si</td>";
+            }else{
+                echo "<td>No</td>";
+            }
+
+            echo "<form method=\"post\" action=".route('ModificarDatos').">";
+            echo "<input name=\"id_modificar\" hidden type=text value=\"".$Licencia->id_Licencia."\">";
+            echo "<td><input name=\"dias\" type=text readonly value=\"".$Licencia->Dias."\"></td>";
+            echo "<td>".$Licencia->F_inicio."</td>";
+            echo "<td>".$Licencia->F_final."</td>";
+            echo "<td><button type=\"submit\">Modficar Dias</button></td></form>";
+            echo "</form>";
+            echo "</tr>";
+        }
+        while($row = pg_fetch_assoc($query))
+        {
+            echo "<tr>
+            <td>".Formato_Rut($row['Rut'])."</td>";
+            if($row['Descuenta'])
+            {
+                echo "<td>Si.</td>";
+            }
+            else
+            {
+                echo "<td>No.</td>";
+            }
+            // PUEDES BUSCAR LOS READONLY DE EL FORM cuando se activa el submit.
+            echo "
+            <form method=\"post\" action=\"../php/Desactivar_licencias.php\"> 
+            <input name=\"id_modificar\" hidden type=text value=\"".$row['id_Licencia']."\">
+            <td><input name=\"dias\" type=text readonly value=\"".$row['Dias']."\"></td>
+            <td>".$row['F_inicio']."</td>
+            <td>".$row['F_final']."</td>
+            <td><button type=\"submit\">Modficar Dias</button></td></form>
+            <td><a href=\"../php/Desactivar_licencias.php?id_licencia=".$row['id_Licencia']."\"><button>Desactivar</button></a></td>
+            
+            
+            </tr>";
+    }
 }
 
 

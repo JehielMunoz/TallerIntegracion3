@@ -57,7 +57,20 @@
             <div class="alert alert-danger">{{ session('Error') }}</div>
             @endif
             <div id="Tabs" class="container-fluid">
-                
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container-fluid">
+                        <table class="table table-striped table-bordered table-condensed">
+                            <h3 id="tCso">Licencias</h3>	
+                            <th>Rut del Empleado</th>
+                            <th>Descuenta</th>
+                            <th>Duración</th>
+                            <th>Fecha de Inicio de licencia</th>
+                            <th>Fecha de Termino de licencia</th>
+                            {{Busqueda_personal::MostrarLicencias()}}
+                        </table>
+                    </div>
+
+		        </div>
             </div>
         </div>
     </div>
