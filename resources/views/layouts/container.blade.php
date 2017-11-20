@@ -30,7 +30,7 @@
 
 <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="{{ url('/home') }}">EducaAdmin</a>
+      <a class="navbar-brand" href="{{ url('/home') }}">EducAdmin</a>
       <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -38,24 +38,24 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{{ url('/liquidaciones') }}">Liquidaciones</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Settings</a>
+            <a class="nav-link" href="{{ url('/matriculas') }}">Matriculas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
+            <a class="nav-link" href="#">Notas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Help</a>
+            <a class="nav-link" href="#">Inventario</a>
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
 
             <!-- Authentication Links -->
           @guest
-            <li><a href="{{ route('login') }}">Login</a></li>
-            <li><a href="{{ route('register') }}">Register</a></li>
+            <li><a href="{{ route('login') }}">Ingresar</a></li>
+            <li><a href="{{ route('register') }}">Registrarse</a></li>
           @else
             <li class="dropdown">         
               <a href="#" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user-circle fa-lg" aria-hidden="true"></i>
@@ -64,7 +64,7 @@
 
               <ul class="dropdown-menu" role="menu">
                 <li>
-                  <a class='dropdown-item' href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                  <a class='dropdown-item' href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Salir</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                       {{ csrf_field() }}
                     </form>
@@ -96,6 +96,16 @@
 
             <div class="col-sm-6">
             <div class="card card-block">
+              <a href="{{url('/matriculas')}}">
+                <img src="{{ asset('images/matriculas.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Matriculas">
+              </a>
+              <h4>Matrículas</h4>
+              <span class="text-muted">Modulo 2</span>
+            </div>
+            </div>
+
+            <div class="col-sm-6">
+            <div class="card card-block">
               <a href="{{url('recursos-humanos')}}">
                 <img src="{{ asset('images/rrhh.png') }}" width="200" height="200" class="img-fluid rounded-circle" alt="Administración de recursos humanos">
               </a>
@@ -106,7 +116,7 @@
             @endif
 
 
-            @if (Auth::user()->rol == '1')
+            @if (Auth::user()->rol == '2')
             <div class="col-sm-6">
             <div class="card card-block">
               <a href="{{ url('/matriculas') }}">
@@ -118,7 +128,7 @@
             </div>
             @endif
 
-            @if (Auth::user()->rol == '1')
+            @if (Auth::user()->rol == '3')
             <div class="col-sm-6">
             <div class="card card-block">
               <a href="{{ url('/notas') }}">  

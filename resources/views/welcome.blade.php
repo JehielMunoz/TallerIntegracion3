@@ -14,11 +14,20 @@
         <style>
             html, body {
                 background-color: #fff;
-                color: #636b6f;
+                color: #434b3f;
                 font-family: 'Raleway', sans-serif;
                 font-weight: 100;
                 height: 100vh;
                 margin: 0;
+            }
+            img {
+                position:absolute;
+                max-width: 100%;
+                height: auto;
+                width: auto;
+                opacity:0.15;
+                filter: blur(13px);
+                overflow: hidden;
             }
 
             .full-height {
@@ -71,8 +80,8 @@
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
+                        <a href="{{ route('login') }}">Ingresar</a>
+                        <a href="{{ route('register') }}">Registrarse</a>
                     @endauth
                 </div>
             @endif
@@ -83,11 +92,9 @@
                 </div>
 
                 <div class="links">
+                    <!--
                     <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    -->
                 </div>
             </div>
         </div>
