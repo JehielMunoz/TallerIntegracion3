@@ -27,7 +27,12 @@
             $("#VolverPlanilla").toggle();
           
         });
-    
+
+   
+        $('#rut_Licencia').focus(function(e) {
+            $(this).blur();
+        });
+
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
         });

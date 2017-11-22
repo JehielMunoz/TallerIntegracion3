@@ -402,6 +402,8 @@ class Busqueda_personal extends Controller
                 // id Modificar == 2 // Modificar descuento
                 // id Modificar == 3 // Modificar prestamo
                 // id Modificar == 4 // Modificar Empleado
+                // id Modificar == 5 // Modificar dias licencia
+                // id Modificar == 6 // Desactivar Licencia
                 if(request('id_Modificar')==2){
                     if(request()->filled('mDescuento') && request()->filled('id_Descuento')){ // si el monto existe inserta el descuento
                         DB::talbe('rel_tEmpleados_tDescuentos')
@@ -444,7 +446,43 @@ class Busqueda_personal extends Controller
                         self::CargarEmpleado(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
                         return back();
                     }
+                
                 }
+                if(request('id_Modificar')=='x'){
+                    if(request()->filled('mNombre') && request()->filled('mSueldo') && request()->filled('mHTrabajo') && request()->filled('mvHora') && request()->filled('mContrato') && request()->filled('mAFP') && request()->filled('mIPS')){
+                        DB::table('tEmpleados')->where([
+                            ['Rut','=',$Rut]
+                        ])
+                        ->update([
+                            'Nombre'=>request('mNombre'),
+                            'Sueldo_base'=>request('mSueldo'),
+                            'N_horas'=>request('mHTrabajo'),
+                            'Paga_por_hora'=>request('mvHora'),
+                            'id_Contrato'=>request('mContrato'),
+                            'id_AFP'=>request('mAFP'),
+                            'id_ISAPRE'=>request('mIPS')
+                        ]);
+                        self::CargarEmpleado(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
+                        return back();
+                    }
+                }
+                if(request('id_Modificar')==6){
+                    if(request()->filled('id_Licencia') && request()->filled('rut_Licencia')){
+                        echo "zz";
+                        DB::table('tLicencias')->where([
+                            ['Rut','=',request('rut_Licencia')],
+                            ['id_Licencia','=',request('id_Licencia')]
+                        ])
+                        ->update([
+                            'Activo'=> false
+                        ]);
+                        self::CargarEmpleado(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
+                        return back();
+                    }
+                }
+                
+                
+
             }
         }
     }
@@ -517,49 +555,34 @@ class Busqueda_personal extends Controller
         $Licencias = DB::table('tLicencias')->where("Activo",'=','t')->get();
         foreach($Licencias as $Licencia){
             echo "<tr>";
-            echo "<td>$$Licencia->Rut</td>";
+            echo "<form method=\"get\" action=".route('ModificarDatos').">";
+            echo "<td><input id=\"rut_Licencia\" name=\"rut_Licencia\" class=\"form-control\" value=\"$Licencia->Rut\"></td>";
             if($Licencia->Descuenta){
                 echo "<td>Si</td>";
             }else{
                 echo "<td>No</td>";
             }
 
-            echo "<form method=\"post\" action=".route('ModificarDatos').">";
-            echo "<input name=\"id_modificar\" hidden type=text value=\"".$Licencia->id_Licencia."\">";
+            echo "<input name=\"id_Licencia\" hidden type=text value=\"".$Licencia->id_Licencia."\">";
+            echo "<input hidden id=\"id_Modificar\" name=\"id_Modificar\" value=\"\">";
             echo "<td><input name=\"dias\" type=text readonly value=\"".$Licencia->Dias."\"></td>";
             echo "<td>".$Licencia->F_inicio."</td>";
             echo "<td>".$Licencia->F_final."</td>";
-            echo "<td><button type=\"submit\">Modficar Dias</button></td></form>";
+            echo "<td><button type=\"submit\">Modificar Dias</button></td></form>";
+            echo "</form>";
+            echo "<form method=\"get\" action=".route('ModificarDatos').">";
+            echo "<input hidden id=\"rut_Licencia\" name=\"rut_Licencia\" value=\"$Licencia->Rut\">";            
+            echo "<input hidden id=\"id_Modificar\" name=\"id_Modificar\" value=\"6\">";
+            echo "<input name=\"id_Licencia\" hidden type=text value=\"".$Licencia->id_Licencia."\">";
+            echo "<td><button type=\"submit\">Desactivar Licencia</button></td>";
             echo "</form>";
             echo "</tr>";
         }
-        while($row = pg_fetch_assoc($query))
-        {
-            echo "<tr>
-            <td>".Formato_Rut($row['Rut'])."</td>";
-            if($row['Descuenta'])
-            {
-                echo "<td>Si.</td>";
-            }
-            else
-            {
-                echo "<td>No.</td>";
-            }
-            // PUEDES BUSCAR LOS READONLY DE EL FORM cuando se activa el submit.
-            echo "
-            <form method=\"post\" action=\"../php/Desactivar_licencias.php\"> 
-            <input name=\"id_modificar\" hidden type=text value=\"".$row['id_Licencia']."\">
-            <td><input name=\"dias\" type=text readonly value=\"".$row['Dias']."\"></td>
-            <td>".$row['F_inicio']."</td>
-            <td>".$row['F_final']."</td>
-            <td><button type=\"submit\">Modficar Dias</button></td></form>
-            <td><a href=\"../php/Desactivar_licencias.php?id_licencia=".$row['id_Licencia']."\"><button>Desactivar</button></a></td>
-            
-            
-            </tr>";
-    }
+        
+        
+      
 }
-
+}
 
 
 
