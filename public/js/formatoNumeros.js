@@ -5,9 +5,12 @@ function Principal(){
 	formatearDinero();
 	formatearRut();
 <<<<<<< HEAD
+<<<<<<< HEAD
     //formatearDineroV();
     formatearRutV();
     //console.log($("#formatoDinerov").attr('value')[0]);
+=======
+>>>>>>> 0636651b8425d00814f07e848defbfd3ec0acc69
 =======
 >>>>>>> 0636651b8425d00814f07e848defbfd3ec0acc69
 }
@@ -23,6 +26,7 @@ function formatearDinero(){
         }
     }
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 function formatearDineroV(){ //para vista previa
@@ -41,6 +45,8 @@ function formatearDineroV(){ //para vista previa
 
 =======
 >>>>>>> 0636651b8425d00814f07e848defbfd3ec0acc69
+=======
+>>>>>>> 0636651b8425d00814f07e848defbfd3ec0acc69
 function formatearRut() {
     rut = $("#Ruta");
     //console.log(rut[0].value.length);
@@ -54,6 +60,7 @@ function formatearRut() {
     rut[0].value = rut[0].value.split('').reverse().join('').replace(/^[\.]/,'') + "-"+ dv;   
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 function formatearRutV(){
     arut = $("[id='Rutv']");
@@ -72,5 +79,7 @@ function formatearRutV(){
     }
 
 }
+=======
+>>>>>>> 0636651b8425d00814f07e848defbfd3ec0acc69
 =======
 >>>>>>> 0636651b8425d00814f07e848defbfd3ec0acc69
