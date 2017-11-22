@@ -26,6 +26,8 @@ Route::get('liquidaciones/contacto', ['as' => 'liquidaciones/contacto', 'uses'=>
 
 Route::get('/inventario','HomeController@inventario');
 Route::get('/inventario/agregar','HomeController@inventario_agregar');
+Route::get('/inventario/modificar','HomeController@inventario_modificar');
+
 Route::get('/matriculas','HomeController@matriculas');
 Route::get('/recursos-humanos','HomeController@recursos_humanos');
 Route::get('/notas','HomeController@notas');
@@ -46,3 +48,4 @@ Route::get('AgregarDato',['as'=> 'AgregarDato', 'uses'=>'Busqueda_personal@Agreg
 Route::get('ModificarDato',['as'=> 'ModificarDatos', 'uses'=>'Busqueda_personal@ModificarDatos']); // Maneja cuando se agrega una gratificacion o descuento entre otras cosas
 
 Route::post('agregar_item',['as'=> 'agregar_item', 'uses'=>'controller_inventario@agregar_item']);
+Route::post('modificar_item',['as'=> 'modificar_item', 'uses'=>'controller_inventario@modificar_item']);

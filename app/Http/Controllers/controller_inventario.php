@@ -21,6 +21,48 @@ class controller_inventario extends Controller
         return $ntablas;
     }
     
+
+    public static function cargar_modificar($Serial){
+        $item= DB::table('tInventario')->where("Serial",'=',$Serial)->get()[0];
+                echo '
+                    <table id="tabla_item" class="table table-bordered">
+        
+                      <thead>
+                        <tr>
+                          
+                          <th scope="col">Serial</th>
+                          <th scope="col">Sector</th>
+                          <th scope="col">Descripcion</th>
+                          <th scope="col">Estado</th>
+                          <th scope="col">Modificar</th>
+                          
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                ';
+                
+            
+            
+            echo '
+                    <tr>
+                    <form method="post" action="'.route('modificar_item').'">
+                      <td><input readonly tipe="text" value="'.$item->Serial.'"></td>
+                      <td><input type="text" value="'.$item->Sector.'"></td>
+                      <td><input type="text" value="'.$item->Descripcion.'"></td>
+                      <td><input type="text" value="'.$item->Estado.'"></td>
+                      <td><input type="submit" value="Actualizar"></td>
+                      
+            
+                    </tr>    
+                        </tbody>
+                    </table>';
+                
+            
+          
+    }
+
+
     public static function cargar_inventario(){
         $item = new \stdClass(); 
         $items= DB::table('tInventario')->get();
@@ -49,6 +91,8 @@ class controller_inventario extends Controller
                           <th scope="col">Rut Proveedor</th>
                           <th scope="col">Descripcion</th>
                           <th scope="col">Estado</th>
+                          <th scope="col">Modificar</th>
+                          
                         </tr>
                       </thead>
 
@@ -70,6 +114,7 @@ class controller_inventario extends Controller
                       <td>',$item->Rut_Proveedor,'</td>
                       <td>',$item->Descripcion,'</td>
                       <td>',$item->Estado,'</td>
+                      <td><a href='.url('/inventario/modificar?Serial='.$item->Serial.'').'>Modificar</a></td>
                     </tr>
             ';
             
@@ -133,6 +178,27 @@ class controller_inventario extends Controller
             
         }
     }
+
+    public static function modificar_item(){
+        if(request()->isMethod('get')){
+            if(request()->filled('id_Modificar')){
+                // id_Modificar == 1 // Modificar item            
+                if(request('id_Modificar')==1){
+                    if(request()->filled('Serial') && request()->filled('id_Descuento')){ // si el monto existe inserta el descuento
+                        DB::talbe('tInventario')
+                        ->where([
+                            ['Serial','=',request('Serial')],
+                            ['Rut','=',$Rut]
+                        ])
+                        ->update(['Monto'=>request('mDescuento')]);
+                    }
+                }            
+                
+
+            }
+        }
+    }
+
     
 }
 
