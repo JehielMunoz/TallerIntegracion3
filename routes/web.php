@@ -45,3 +45,4 @@ Route::get('BorrarDato',['as'=> 'BorrarDatos', 'uses'=>'Busqueda_personal@Borrar
 Route::get('AgregarDato',['as'=> 'AgregarDato', 'uses'=>'Busqueda_personal@AgregarDatos']); // Maneja cuando se agrega una gratificacion o descuento entre otras cosas
 Route::get('ModificarDato',['as'=> 'ModificarDatos', 'uses'=>'Busqueda_personal@ModificarDatos']); // Maneja cuando se agrega una gratificacion o descuento entre otras cosas
 
+Route::post('agregar_item',['as'=> 'agregar_item', 'uses'=>'controller_inventario@agregar_item']);

@@ -87,7 +87,52 @@ class controller_inventario extends Controller
         });
     }
     
-    
+    public function agregar_item(Request $request){
+
+        $this->validate(request(),[
+            'tipo' => 'required|max:50',
+            'serial' => 'required|max:20',
+            'sector' => 'max:60',
+            'subvencion' => 'required|max:50',
+            'n_boleta' => 'required|max:70',
+            'f_factura' => 'required',
+            'proveedor' => 'max:70',
+            'rut_proveedor' => 'max:20',
+            'descripcion' => 'max:200',
+            'estado' => 'required|max:50'         
+        ]);
+        
+        if(request()->isMethod('post')){
+            
+            $tipo =  request('tipo');
+            $serial =  request('serial');
+            $sector =  request('sector');
+            $subvencion =  request('subvencion');
+            $n_boleta =  request('n_boleta');
+            $f_factura =  request('f_factura');
+            $proveedor =  request('proveedor');
+            $rut_proveedor =  request('rut_proveedor');
+            $descripcion =  request('descripcion');
+            $estado =  request('estado');
+
+            DB::table('tInventario')->insert(
+                ['Tipo' => $tipo, 
+                 'Serial' => $serial, 
+                 'Sector' => $sector, 
+                 'Subvencion' => $subvencion, 
+                 'N_Boleta' => $n_boleta, 
+                 'F_factura' => $f_factura, 
+                 'Proveedor' => $proveedor, 
+                 'Rut_Proveedor' => $rut_proveedor, 
+                 'Descripcion' => $descripcion, 
+                 'Estado' => $estado
+                ]
+            );                
+
+            return back()->with('succ',"Se agrego el item con exito");    
+            
+        }
+    }
     
 }
 
