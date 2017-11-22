@@ -6,12 +6,12 @@
 <!-- Aqui agregar todo el css y js  adicional que se requiera -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
     crossorigin="anonymous"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-<link rel="stylesheet" href="{{ asset('../public/css/sidebar_liquidacion_gris.css') }}">
+<link rel="stylesheet" href="{{ asset('css/sidebar_liquidacion_gris.css') }}">
 <!-- Azul o negro-->
-<link rel="stylesheet" href="{{ asset('../public/css/tabs_liquidaciones.css') }}">
+<link rel="stylesheet" href="{{ asset('css/tabs_liquidaciones.css') }}">
 <script>
     $(document).ready(function () {
 
@@ -26,8 +26,7 @@
             $("#Alumno").toggle();
             $("#mAlumno").toggle();
             $("#m_Alumno").toggle();
-            $("#VolverAlumno").toggle();
-          
+            $("#VolverAlumno").toggle();          
         });
 
         $('#sidebarCollapse').on('click', function () {
@@ -57,9 +56,42 @@
         });
     });
 </script>
+@if(session()->has('Alumno'))
+<script>
+    $(document).ready(function(){
+      $("#rm_alumno").click(function(){
+        swal({
+        title: "¿Estas seguro que desea eliminar este alumno?",
+        text: "Una vez eliminado no podra recuperar el registro!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          $.ajax({
+            url: "{{ route('eliminar_alumno') }}",
+            type: "GET",
+            data: {nRut: "{{ session('Alumno')->Datos->Rut}}"},
+            success: function (res) {
+                swal("El alumno fue eliminado con exito!", {
+                  icon: "success",
+                });
+                window.setTimeout(function(){ } ,5000);
+                location.reload();
+            }
+          });
+        } else {
+          swal("Eliminación cancelada!");
+        }
+      });
+      });
+    });
+</script>
+@endif
 <!--
  
-    <script src="{{ asset('../public/js/mstriculas.js')}}"></script>  NeverMInd
+    <script src="{{ asset('js/mstriculas.js')}}"></script>  NeverMInd
 -->
 
 
@@ -84,12 +116,13 @@
             
             <div id="Tabs" class="container-fluid">
                 <div class="card">
-                    <div class="card-header">
-                        <h2 class="page-header">
-                            @if(session()->has('Alumno')) [{{ session('Alumno')->Datos->Nombre}}] @endif
+                    <div class="card-header row">
+                        <h2 class="page-header col-10">
+                            @if(session()->has('Alumno')) [{{ session('Alumno')->Datos->Nombre}}] 
                         </h2>
-                    </div>
-                    <div class="card-body">
+                        <button id="rm_alumno" type="button" class="btn btn-outline-danger col-2">Eliminar</button>
+                        @endif
+                    </div>                    <div class="card-body">
                         <ul class="nav nav-pills">
                             <li class="nav-item">
                                 <a href="#cDatos_alumno" data-toggle="tab" class="nav-link  active">Datos Alumno</a>
@@ -102,10 +135,6 @@
                             </li>
                             <li class="nav-item">
                                 <a href="#cSalud_alumno" data-toggle="tab" class="nav-link">Salud Alumno</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#cVistaPrevia" data-toggle="tab" class="nav-link">Vista Previa</a>
-                            </li>
                             <li class="nav-item ml-auto  justify-content-end">
                                 <form class="form-inline" method="POST" action="{{ route('BuscarAlumno') }}">
                                     {{ csrf_field() }}
@@ -152,16 +181,6 @@
                                 @if(session()->has('Alumno'))
 
                                     @include('modules/matriculas/salud_alumno')
-
-                                @else
-                                    @include('modules/matriculas/noAlumno')
-                                
-                                @endif
-                            </div>
-                            <div class="tab-pane" id="cVistaPrevia">
-                                @if(session()->has('Alumno'))
-
-                                    @include('modules/matriculas/vista_previa')
 
                                 @else
                                     @include('modules/matriculas/noAlumno')

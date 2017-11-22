@@ -7,11 +7,16 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
     crossorigin="anonymous"></script>
 
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script type="text/javascript" src="{{ asset('js/formatoNumeros.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/NumeroALetras.js') }}"></script>
 
-<link rel="stylesheet" href="{{ asset('../public/css/sidebar_liquidacion_gris.css') }}">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="{{ asset('css/font-awesome/css/font-awesome.min.css')}}">
+<link rel="stylesheet" href="{{ asset('css/sidebar_liquidacion_gris.css') }}">
+<link rel="stylesheet" href="{{ asset('css/estilo_tabla.css') }}">
+<link rel="stylesheet" href="{{ asset('css/imprimir.css') }}">
 <!-- Azul o negro-->
-<link rel="stylesheet" href="{{ asset('../public/css/tabs_liquidaciones.css') }}">
+<link rel="stylesheet" href="{{ asset('css/tabs_liquidaciones.css') }}">
 <script>
     $(document).ready(function () {
         $("#mPlanilla").click(function(){
@@ -57,7 +62,7 @@
 </script>
 <!--
  
-    <script src="{{ asset('../public/js/liquidacion.js')}}"></script>  NeverMInd
+    <script src="{{ asset('js/liquidacion.js')}}"></script>  NeverMInd
 -->
 
 
@@ -70,29 +75,26 @@
     <div class="row">
         <div class="col-md-3 cold-xs-1" id="sidebar">
             <div class="list-group panel ">
-                <ul class="list-unstyled components">
+		<ul class="list-unstyled components">
                     <li>
                         <a href="{{ url('/liquidaciones') }}">Planilla de liquidacion</a>
                     </li>
                     <li>
-                        <a href="{{ url('/liquidaciones/agregar') }}">Agregar Empleado</a>
+                        <a href="{{ url('/liquidaciones/agregar')}}">Agregar Empleado</a>
                     </li>
 
                     <li>
-                        <a href="#">Licencias</a>
+                        <a href="{{route('liquidaciones/licencias')}}">Licencias</a>
                     </li>
 
                     <li>
-                        <a href="#">AFP</a>
+                        <a href="{{route('liquidaciones/afp')}}">AFP</a>
                     </li>
                     <li>
-                        <a href="#">IPS</a>
+                        <a href="{{route('liquidaciones/ips')}}">IPS</a>
                     </li>
                     <li>
-                        <a href="#">Contacto</a>
-                    </li>
-                    <li>
-                        <a href="#">Impuesto a la renta</a>
+                        <a href="{{route('liquidaciones/contacto')}}">Contacto</a>
                     </li>
                 </ul>
             </div>
@@ -104,7 +106,7 @@
             @if(session()->has('succ'))
             <div class="alert alert-success">{{ session('succ') }}</div>
             @endif
-            <div id="Tabs" class="container-fluid">
+            <div id="Tabs" class="container-fluid" >
                 <div class="card">
                     <div class="card-header">
                         <h2 class="page-header">
@@ -158,20 +160,20 @@
                                 @endif
                                 
                             </div>
-                            <div class="tab-pane" id="cDescuentos">
+			    <div class="tab-pane" id="cVistaPrevia">
                                 @if(session()->has('Empleado'))
 
-                                    @include('modules/liquidaciones/descuentos')
+                                    @include('modules/liquidaciones/vista_previa')
 
                                 @else
                                     @include('modules/liquidaciones/noEmpleado')
                                 
                                 @endif
                             </div>
-                            <div class="tab-pane" id="cVistaPrevia">
+                            <div class="tab-pane" id="cDescuentos">
                                 @if(session()->has('Empleado'))
 
-                                    @include('modules/liquidaciones/vista_previa')
+                                    @include('modules/liquidaciones/descuentos')
 
                                 @else
                                     @include('modules/liquidaciones/noEmpleado')

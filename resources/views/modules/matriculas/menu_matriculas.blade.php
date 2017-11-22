@@ -8,10 +8,6 @@
                     <li>
                         <a href="{{ url('/matriculas/agregar') }}">Agregar alumno</a>
                     </li>
-
-                    <li>
-                        <a href="#">Eliminar alumno</a>
-                    </li>
                 </ul>
             </div>
         </div>

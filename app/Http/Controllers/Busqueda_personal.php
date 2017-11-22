@@ -26,6 +26,7 @@ class Busqueda_personal extends Controller
                 // Lo buscamos en la base de datos
                 $Empleado->Datos = DB::table('tEmpleados')->where('Rut', '=',$Rut)->get()[0];
                 
+                
                 // Buscamos sus datos de AFP y los agregamos al objeto Empleado
                 $Empleado->Afp=DB::table('tAFP')->where('id_AFP', '=',$Empleado->Datos->id_AFP)->get()[0];
                 
@@ -388,7 +389,7 @@ class Busqueda_personal extends Controller
 
             }
             else{
-                echo "kill your self"; // retroceder y mostrar error, revisar buscar empleado para darle formato al error
+                echo "Error"; // retroceder y mostrar error, revisar buscar empleado para darle formato al error
             }
         }
         
@@ -402,6 +403,8 @@ class Busqueda_personal extends Controller
                 // id Modificar == 2 // Modificar descuento
                 // id Modificar == 3 // Modificar prestamo
                 // id Modificar == 4 // Modificar Empleado
+                // id Modificar == 5 // Modificar dias licencia
+                // id Modificar == 6 // Desactivar Licencia
                 if(request('id_Modificar')==2){
                     if(request()->filled('mDescuento') && request()->filled('id_Descuento')){ // si el monto existe inserta el descuento
                         DB::talbe('rel_tEmpleados_tDescuentos')
@@ -445,6 +448,38 @@ class Busqueda_personal extends Controller
                         return back();
                     }
                 }
+
+                if(request('id_Modificar')=='5'){
+                    if(request()->filled('id_Licencia') && request()->filled('rut_Licencia') && request()->filled('Fecha_Inicio') && request()->filled('Fecha_Final')){
+                        $Fecha_Inicio = date_create(request('Fecha_Inicio'));
+                        $Fecha_Final = date_create(request('Fecha_Final'));
+                        $Diferencia_Dias = date_diff($Fecha_Inicio,$Fecha_Final);
+                        DB::table('tLicencias')->where([
+                            ['Rut','=',request('rut_Licencia')],
+                            ['id_Licencia','=',request('id_Licencia')]
+                         ])
+                        ->update([
+                            'F_final'=> request('Fecha_Final'),
+                            'Dias' => $Diferencia_Dias->format("%a")
+                        ]);
+                        
+                        self::CargarEmpleado(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
+                        return back();
+                    }
+                }
+                if(request('id_Modificar')==6){
+                    if(request()->filled('id_Licencia') && request()->filled('rut_Licencia')){
+                        DB::table('tLicencias')->where([
+                            ['Rut','=',request('rut_Licencia')],
+                            ['id_Licencia','=',request('id_Licencia')]
+                        ])
+                        ->update([
+                            'Activo'=> false
+                        ]);
+                        self::CargarEmpleado(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
+                        return back();
+                    }
+                }   
             }
         }
     }
@@ -673,7 +708,9 @@ class Busqueda_personal extends Controller
     }
 
 
-
+    public static function cal_sub_total(){
+        session('Empleado')->Datos->sub_Total = session('Empleado')->Datos->Total_Haberes - session('Empleado')->Datos->Descuentos_Legal - session('Empleado')->Datos->Descuentos_Otros;
+    }
     public static function  Liquido_Pagar(){
         if(session('Empleado')->Datos->Total_Haberes - 
            session('Empleado')->Datos->Descuentos_Legal - 
@@ -692,7 +729,7 @@ class Busqueda_personal extends Controller
     }
 
     public static function Liquido_Alcansado(){
-        session('Datos')->Datos->Liquido_Alcansado = session('Empleado')->Liquido_Pagar + session('Empleado')->Descuentos_Otros;
+    session('Empleado')->Datos->Liquido_Alcansado = session('Empleado')->Datos->Liquido_Pagar + session('Empleado')->Datos->Descuentos_Otros;
    }
 
    public static function cal_Descuentos_Varios(){
@@ -705,10 +742,31 @@ class Busqueda_personal extends Controller
     foreach($sql as $row){
         session('Empleado')->Datos->Descuentos_Otros += $row->Monto;
     }
+    }
+
+    public static function Gastos_Extras(){
+        $sql = DB::table('rel_tEmpleados_tGastos_extra')
+               ->where('rel_tEmpleados_tGastos_extra.Rut','=',session('Empleado')->Datos->Rut)
+               ->get();
+
+        foreach($sql as $row){
+            if($row->id_Gasto == 4){
+                session('Empleado')->Datos->Gastos_extras_Seguro_cesantia = $row->Monto;
+            }
+            if($row->id_Gasto == 5){
+                session('Empleado')->Datos->Gastos_extras_Mutual = $row->Monto;
+
+            }
+            if($row->id_Gasto == 1){
+                session('Empleado')->Datos->Gastos_extras_SIS = $row->Monto;
+
+            }
+
+        }
+    }
     
     //session('Empleado')->Datos->Descuentos_Otros += session('Empleado')->Datos->Descuentos_Licencias;
     
-   }
 
 
    public static function Total_AFP(){
@@ -756,15 +814,138 @@ class Busqueda_personal extends Controller
 
     }
 
+    public static function Sobre_Giro(){
+        if(session('Empleado')->Datos->Total_Haberes - session('Empleado')->Datos->Descuentos_Legal - session('Empleado')->Datos->Descuentos_Otros < 0){
+            session('Empleado')->Datos->Sobre_Giro = session('Empleado')->Datos->Total_Haberes - session('Empleado')->Datos->Descuentos_Legal - session('Empleado')->Datos->Descuentos_Otros;
+        }else{
+            session('Empleado')->Datos->Sobre_Giro = 0;
+        }
+    }
 
-}
+    public static function get_cargos(){
 
+        $sql = DB::table('tEmpleados')
+            ->join('rel_tEmpleados_tCargos','tEmpleados.Rut',"=",'rel_tEmpleados_tCargos.Rut')
+            ->join('tCargos','rel_tEmpleados_tCargos.id_Cargo',"=",'tCargos.id_Cargo') 
+            //->where('tEmpleados.Rut','=', 'rel_tEmpleados_tCargos.Rut')
+            //->where('rel_tEmpleados_tCargos.id_Cargo','=','"tCargos.id_Cargo')
+            ->where('tEmpleados.Rut','=',session('Empleado')->Datos->Rut)
+            ->get();
 
+        $c = 0;
+        session('Empleado')->Datos->Cargos = " ";
+        foreach($sql as $row){
+            if($c==0){
+                session('Empleado')->Datos->Cargos = session('Empleado')->Datos->Cargos.$row->Cargo;
+                $c += 1;
+            }else{
+                session('Empleado')->Datos->Cargos = session('Empleado')->Datos->Cargos." - ".$row->Cargo;
+            }
+            
+        }
 
+    }
 
+    public static function get_fecha_php(){
+        setlocale(LC_ALL,"es_ES");
+        date_default_timezone_set('America/Santiago');
+        # si el servidor es incompatible con setlocale
+        $dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        
+        echo $dias[date('w')]." ".date('d')." de ".$meses[date('n')-1]. " del ".date('Y') ;
+        #echo strftime("%A %d de %B del %Y");
 
+    }
 
+    public static function MostrarLicencias(){
+        $Licencias = DB::table('tLicencias')->where("Activo",'=','t')->get();
+        foreach($Licencias as $Licencia){
+            echo "<tr>\n";
+            echo "<form method=\"get\" action=".route('ModificarDatos').">\n";
+            echo "<td><input id=\"rut_Licencia\" name=\"rut_Licencia\"  readonly value=\"$Licencia->Rut\"></td>\n";
+            if($Licencia->Descuenta){
+                echo "<td>Si</td>\n";
+            }else{
+                echo "<td>No</td>\n";
+            }
+            echo "<input name=\"id_Licencia\" hidden type=text value=\"".$Licencia->id_Licencia."\">\n";
+            echo "<input hidden id=\"id_Modificar\" name=\"id_Modificar\" value=\"5\">\n";
+            echo "<td><input name=\"motivo\" type=text readonly value=\"".$Licencia->Motivo."\"></td>\n";
+            echo "<td><input name=\"dias\" type=text readonly value=\"".$Licencia->Dias."\"></td>\n";
+            echo "<td><input type=\"date\" name=\"Fecha_Inicio\" value=\"$Licencia->F_inicio\" readonly></td>\n";
+            echo "<td><input type=\"date\" name=\"Fecha_Final\" value=\"$Licencia->F_final\"></td>\n";
+            echo "<td><button type=\"submit\">Modificar</button></td>\n";
+            echo "</form>\n";
+            #form de desactvar
+            echo "<form method=\"get\" action=".route('ModificarDatos').">\n";
+            echo "<input hidden id=\"rut_Licencia\" name=\"rut_Licencia\" value=\"$Licencia->Rut\">\n";            
+            echo "<input hidden id=\"id_Modificar\" name=\"id_Modificar\" value=\"6\">\n";
+            echo "<input name=\"id_Licencia\" hidden type=text value=\"".$Licencia->id_Licencia."\">\n";
+            echo "<td><button type=\"submit\">Desactivar Licencia</button></td>\n";
+            echo "</form>\n";
+            echo "</tr>\n";
+        }
+    }
+    public static function MostrarContacto()
+    {   
+        
+        
+        if(!empty($_POST['c_Buscar']))
+        {
+            $query ="Select \"tEmpleados\".\"Rut\",\"tEmpleados\".\"Nombre\", \"tEmpleado_Fono\".\"N_telefono\" 
+                      From \"tEmpleados\" Inner Join \"tEmpleado_Fono\" ON \"tEmpleados\".\"Rut\" = \"tEmpleado_Fono\".\"Rut\"
+                      Where \"tEmpleados\".\"Nombre\" = '".$_POST['c_Buscar']."'
+                      order by \"tEmpleados\".\"Rut\"";
+        }
+        else
+        {
+            $query = "Select \"tEmpleados\".\"Rut\",\"tEmpleados\".\"Nombre\", \"tEmpleado_Fono\".\"N_telefono\" 
+                      From \"tEmpleados\" Inner Join \"tEmpleado_Fono\" ON \"tEmpleados\".\"Rut\" = \"tEmpleado_Fono\".\"Rut\"
+                      order by \"tEmpleados\".\"Rut\"";
+        }
+        if(request()->filled("c_Buscar")){
+            $Nombre = request("c_Buscar");
+            $Empleados= DB::table('tEmpleados')
+            ->join('tEmpleado_Fono','tEmpleados.Rut', '=', 'tEmpleado_Fono.Rut')
+            ->where('tEmpleados.Nombre','=', $Nombre)
+            ->select('tEmpleados.Rut','tEmpleados.Nombre','tEmpleado_Fono.N_telefono')
+            ->get();
+        }else{
+            $Empleados= DB::table('tEmpleados')
+            ->join('tEmpleado_Fono','tEmpleados.Rut', '=', 'tEmpleado_Fono.Rut')
+            ->select('tEmpleados.Rut','tEmpleados.Nombre','tEmpleado_Fono.N_telefono')
+            ->get();
+        }
+    
+        foreach($Empleados as $Empleado){
+            echo "<tr>\n";
+            echo "<td>$Empleado->Rut</td>\n";    
+            echo "<td>$Empleado->Nombre</td>\n";   
+            echo "<td>$Empleado->N_telefono</td>\n";
+            echo "</tr>\n";
+        }    
+    }
 
+    public static function MostrarIPS(){
+        $IPS = DB::table('tISAPRE')->get();
+        foreach($IPS as $Ips){
+            echo "<tr>\n";
+            echo "<td>$Ips->ISAPRE</td>\n";
+            echo "<td>$Ips->Tasa%</td>\n";
+            echo "</tr>\n";
+        }   
+        
+    }
+    public static function MostrarAFP(){
+        $AFP = DB::table('tAFP')->get();
+        foreach($AFP as $Afp){
+            echo "<tr>\n";
+            echo "<td>$Afp->AFP</td>\n";
+            echo "<td>$Afp->Tasa%</td>\n";
+            echo "</tr>\n";
+        }   
+        
+    }
 
-
-
+}      

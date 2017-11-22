@@ -1,9 +1,11 @@
 <?php
-
 use App\Http\Controllers\Busqueda_personal;
-
+Busqueda_personal::cal_Total_Imponible();
+Busqueda_personal::cal_Total_Descuentos();
+Busqueda_personal::Liquido_Pagar()
 ?>
 @if (session()->has('Empleado'))
+
 
 
 <div id="Planilla">
@@ -22,16 +24,16 @@ use App\Http\Controllers\Busqueda_personal;
         </tr>
         <tr>
             <td>Sueldo base</td>
-            <td><input type="text" disabled name="lname" placeholder="Sueldo base" value="{{ session('Empleado')->Datos->Sueldo_base }}"></td>
+            <td><input type="text" disabled name="lname" id="formatoDinero" placeholder="Sueldo base" value="{{ session('Empleado')->Datos->Sueldo_base }}"></td>
         </tr>
-        <tr>{{Busqueda_personal::cal_Total_Imponible()}}
+        <tr>
          
             <td>Sueldo bruto</td>
-            <td><input type="text" disabled name="lname" placeholder="Sueldo bruto" value="{{session('Empleado')->Datos->Total_Haberes}}"></td>
+            <td><input type="text" disabled id="formatoDinero" name="lname" placeholder="Sueldo bruto" value="{{session('Empleado')->Datos->Total_Haberes}}"></td>
         </tr>
-        <tr>{{Busqueda_personal::cal_Total_Descuentos()}}{{Busqueda_personal::Liquido_Pagar()}}
+        <tr>
             <td>Sueldo líquido</td>
-            <td><input type="text" disabled name="lname" placeholder="Sueldo líquido" value="{{ session('Empleado')->Datos->Liquido_Pagar }}"></td>
+            <td><input type="text" disabled id="formatoDinero" name="lname" placeholder="Sueldo líquido" value="{{ session('Empleado')->Datos->Liquido_Pagar }}"></td>
         </tr>
         <tr>
             <td>Horas de trabajo</td>
@@ -39,7 +41,7 @@ use App\Http\Controllers\Busqueda_personal;
         </tr>
         <tr>
             <td>Valor hora</td>
-            <td><input type="text" disabled name="vHora" placeholder="Valor" value="{{ session('Empleado')->Datos->Paga_por_hora }}"></td>
+            <td><input type="text" disabled id="formatoDinero" name="vHora" placeholder="Valor" value="{{ session('Empleado')->Datos->Paga_por_hora }}"></td>
         </tr>
         <tr>
             <td>Tipo de contrato</td>
@@ -54,34 +56,34 @@ use App\Http\Controllers\Busqueda_personal;
         <tr>
             <td>Cotizacion AFP:</td>
             <td><input type="text" disabled name="lname" placeholder="Nombre AFP" value="{{ session('Empleado')->Afp->AFP }}"></td>
-            <td><input type="text" disabled name="lname" placeholder="SIS" value="Calcular Tasa"></td>
-            <td><input type="text" disabled placeholder="Tasa" name="lname" value="{{ session('Empleado')->Afp->Tasa }}"></td>
+            <td><input type="text" disabled id="formatoDinero" name="lname" placeholder="SIS" value="{{session('Empleado')->Datos->Total_AFP }}"></td>
+            <td><input type="text" disabled id="formatoPorcentaje" placeholder="Tasa" name="lname" value="{{ session('Empleado')->Afp->Tasa }}"></td>
 
             <tr>
                 <td>Cotizacion de Salud:</td>
 
                 <td><input type="text" disabled name="lname" placeholder="Nombre ISAPRE" value="{{ session('Empleado')->Isapre->ISAPRE }}"></td>
-                <td><input type="text" disabled placeholder="Valor" name="lname" value="Calcular Valor con la tasa"></td>
-                <td><input type="text" disabled name="lname" placeholder="%" value="{{ session('Empleado')->Isapre->Tasa }}"></td>
+                <td><input type="text" disabled id="formatoDinero" placeholder="Valor" name="lname" value="{{ session('Empleado')->Datos->Total_Isapre }}"></td>
+                <td><input type="text" disabled id="formatoPorcentaje" name="lname" placeholder="%" value="{{ session('Empleado')->Isapre->Tasa }}"></td>
             </tr>
             <tr>
                 <td>Total Bonos:</td>
-                <td><input type="text" disabled name="lname" value="{{session('Empleado')->Datos->Total_Bonos}}"></td>
+                <td><input type="text" disabled id="formatoDinero" name="lname" value="{{session('Empleado')->Datos->Total_Bonos}}"></td>
                 <td colspan=2></td>
             </tr>
             <tr>
                 <td>Total Descuentos:</td>
-                <td><input type="text" disabled name="lname" value="{{session('Empleado')->Datos->Total_Descuentos}}"></td>
+                <td><input type="text" disabled id="formatoDinero" name="lname" value="{{session('Empleado')->Datos->Total_Descuentos}}"></td>
                 <td colspan=2></td>
             </tr>
             <tr>
                 <td>Total Asignaciones:</td>
-                <td><input type="text" disabled name="lname" value="{{session('Empleado')->Datos->Asignacion_Familiar}}"></td>
+                <td><input type="text" disabled id="formatoDinero" name="lname" value="{{session('Empleado')->Datos->Asignacion_Familiar}}"></td>
                 <td colspan=2></td>
             </tr>
             <tr>
                 <td>Total Seguros:</td>
-                <td><input type="text" disabled name="lname" value="{{session('Empleado')->Datos->Total_Seguro}}"></td>
+                <td><input type="text" disabled id="formatoDinero" name="lname" value="{{session('Empleado')->Datos->Total_Seguro}}"></td>
                 <td colspan=2></td>
             </tr>
             <tr>

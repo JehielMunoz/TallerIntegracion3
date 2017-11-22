@@ -7,7 +7,29 @@ use DB;
 use Log;
 class Busqueda_estudiante extends Controller
 {
-    
+    public function ListarAlumno()
+    {
+        $code=$_GET['c'];
+        $lvl= $_GET['t'];
+        $dato=DB::table('tAlumnos')
+        ->select('tAlumnos.Rut','tAlumnos.Nombre')
+        ->join('rel_alumno_curso','tAlumnos.Rut','=','rel_alumno_curso.rut')
+        ->where([['tAlumnos.Curso','=',$lvl],['rel_alumno_curso.curso','=',$code]])
+        ->get();
+        $n=DB::table('tNotas')
+        ->select('tNotas.rut_alu','tNotas.nota')
+        ->where('tNotas.code_curso','=',$code)
+        ->get();
+        return array('dato' => $dato,'nota' =>$n);
+    }
+
+    public function ListarAlumno2()
+    {
+        $code=$_GET['r'];
+        $dato=DB::table('rel_tEmpleados_tAsignatura')->where('rut', '=', ''.$code.'')->get();
+        return $dato;
+    }
+
     
     
     
@@ -25,7 +47,7 @@ class Busqueda_estudiante extends Controller
     
     public static function CargarAlumno(){
         if(request()->isMethod('post')){
-            if(request()->filled('Nombre_Estudiante')){
+            if(request()->filled('Rut_Estudiante')){
                 $Nombre =  request('Nombre_Estudiante'); //Capturamos el nombre 
                 $Rut = request('Rut_Estudiante'); // Y Rut Del Alumno
                 
@@ -83,6 +105,80 @@ class Busqueda_estudiante extends Controller
         }
     }
     
+    public function eliminar_alumno()
+    {
+      $nRut=$_GET['nRut'];
+      if ($nRut<>null) {
+        try{            
+          $rm_apo=DB::table('tApoderados')
+          ->join('rel_tAlumnos_tApoderados','tApoderados.Rut', '=', 'rel_tAlumnos_tApoderados.Rut_apo')
+          ->join('tAlumnos', 'rel_tAlumnos_tApoderados.Rut_alu', '=', 'tAlumnos.Rut')
+          ->where('tAlumnos.Rut','=', $nRut)
+          ->delete();
+          DB::commit();
+        } catch (\Exception $e) {
+          DB::rollback();
+        }
+        try{
+          $rm_pad=DB::table('tPadres')
+          ->join('rel_tAlumnos_tPadres','tPadres.Rut', '=', 'rel_tAlumnos_tPadres.Rut_padre')
+          ->join('tAlumnos', 'rel_tAlumnos_tPadres.Rut_alu', '=', 'tAlumnos.Rut')
+          ->where('tAlumnos.Rut','=', $nRut)
+          ->delete();
+        } catch (\Exception $e) {
+          DB::rollback();
+        }
+        try{
+          $rm_her=DB::table('tHermanos')
+          ->join('rel_tAlumnos_tHermanos','tHermanos.id_Hermano', '=', 'rel_tAlumnos_tHermanos.id_Hermano')
+          ->join('tAlumnos', 'rel_tAlumnos_tHermanos.Rut', '=', 'tAlumnos.Rut')
+          ->where('tAlumnos.Rut','=', $nRut)
+          ->delete();
+        } catch (\Exception $e) {
+          DB::rollback();
+        }
+        try{
+          $rm_rh=DB::table('rel_tAlumnos_tHermanos')
+          ->where('rel_tAlumnos_tHermanos.Rut','=',$nRut)
+          ->delete();
+          DB::commit();
+        } catch (\Exception $e) {
+          DB::rollback();
+        }
+        try{
+          $rm_sal=DB::table('tSalud')
+          ->where('tSalud.Rut','=',$nRut)
+          ->delete();
+        } catch (\Exception $e) {
+          DB::rollback();
+        }
+        try{
+          $rm_rp=DB::table('rel_tAlumnos_tPadres')
+          ->where('rel_tAlumnos_tPadres.Rut_alu','=',$nRut)
+          ->delete();
+        } catch (\Exception $e) {
+          DB::rollback();
+        }
+        try{
+          $rm_ra=DB::table('rel_tAlumnos_tApoderados')
+          ->where('rel_tAlumnos_tApoderados.Rut_alu','=',$nRut)
+          ->delete();
+        } catch (\Exception $e) {
+          DB::rollback();
+        }
+        try{
+          $rm_alu=DB::table('tAlumnos')
+          ->where('tAlumnos.Rut','=',$nRut)
+          ->delete();
+          DB::commit();
+        } catch (\Exception $e) {
+          DB::rollback();
+        }
+	session()->forget('Alumno');
+        return back()->with('ok');
+      }      
+    } 
+
     public static function ModificarDatos(){
         if(request()->isMethod('get')){
             if(request()->filled('id_Modificar')){
