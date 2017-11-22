@@ -98,23 +98,23 @@ class Busqueda_personal extends Controller
             $GratificacionesUsuario = session('Empleado')->Gratificaciones;
             foreach($GratificacionesUsuario as $Gratificacion){
                 
-                echo "<form action='".route('BorrarDatos')."' method='get'>";
-                echo "<input hidden id=\"id_Gratificacion\" name=\"id_Gratificacion\" value=$Gratificacion->id_Bono>";
-                echo "<input hidden id=\"id_Borrar\" name=\"id_Borrar\" value=\"1\">";
+                echo "<form action='".route('BorrarDatos')."' method='get'>\n";
+                echo "<input hidden id=\"id_Gratificacion\" name=\"id_Gratificacion\" value=$Gratificacion->id_Bono>\n";
+                echo "<input hidden id=\"id_Borrar\" name=\"id_Borrar\" value=\"1\">\n";
                 
-                echo "<tr>";
-                echo "<td>$Gratificacion->Bono</td>";
-                echo "<td><input type=\"text\" disabled  placeholder=".$Gratificacion->Monto." ></td>";
+                echo "<tr>\n";
+                echo "<td>$Gratificacion->Bono</td>\n";
+                echo "<td><input type=\"text\" disabled  placeholder=".$Gratificacion->Monto." ></td>\n";
                 if($Gratificacion->Imponible=='t'){
-                    echo"<td>Imponible</td>";                    
+                    echo"<td>Imponible</td>\n";                    
                 }else{
-                    echo"<td>No Imponible</td>";
+                    echo"<td>No Imponible</td>\n";
                 }
 
-                echo "<td><input type=\"submit\" value=\"\"></td>"; // Boton para borrar, implementarlo 
-                echo "</form>";
+                echo "<td><input type=\"submit\" value=\"\"></td>\n"; // Boton para borrar, implementarlo 
+                echo "</form>\n";
                 
-                echo "</tr>";
+                echo "</tr>\n";
                 array_push($IdG_Usuario,$Gratificacion->id_Bono);
             }
             session('Empleado')->GratificacionesId = $IdG_Usuario;
@@ -133,21 +133,21 @@ class Busqueda_personal extends Controller
         ->whereNotIn('tBonos.id_Bono',session('Empleado')->GratificacionesId)->get();
 
         foreach($Gratificaciones as $Gratificacion){
-            echo "<tr>";
-            echo "<td>$Gratificacion->Bono</td>";
+            echo "<tr>\n";
+            echo "<td>$Gratificacion->Bono</td>\n";
             if($Gratificacion->Imponible=='t'){
-                echo "<td>Imponible</td>";
+                echo "<td>Imponible</td>\n";
             }else{
-                echo "<td>No imponible</td>";
+                echo "<td>No imponible</td>\n";
             }
-            echo "<form action='".route('AgregarDato')."' method='get'>";
-            echo "<input hidden id=\"id_Gratificacion\" name=\"id_Gratificacion\" value=$Gratificacion->id_Bono>";
-            echo "<input hidden id=\"id_Agregar\" name=\"id_Agregar\" value=\"1\">";
+            echo "<form action='".route('AgregarDato')."' method='get'>\n";
+            echo "<input hidden id=\"id_Gratificacion\" name=\"id_Gratificacion\" value=$Gratificacion->id_Bono>\n";
+            echo "<input hidden id=\"id_Agregar\" name=\"id_Agregar\" value=\"1\">\n";
             
-            echo "<td><input id='MontoGratificacion' name=\"MontoGratificacion\" type=\"number\" min='0' placeholder='Ingresar monto'></input></td>";
-            echo "<td><input type=\"submit\" value=\"\"></td>"; // Boton para borrar, implementarlo 
-            echo "</form>";
-            echo "</tr>";
+            echo "<td><input id='MontoGratificacion' name=\"MontoGratificacion\" type=\"number\" min='0' placeholder='Ingresar monto'></input></td>\n";
+            echo "<td><input type=\"submit\" value=\"\"></td>\n"; // Boton para borrar, implementarlo 
+            echo "</form>\n";
+            echo "</tr>\n";
         }
     }   
 
@@ -177,16 +177,16 @@ class Busqueda_personal extends Controller
         $Descuentos = session('Empleado')->Descuentos;
         $IdD_Usuario= [];
         foreach($Descuentos as $Descuento){
-            echo "<form action='".route('BorrarDatos')."' method='get'>";
-            echo "<input hidden id=\"id_Descuento\" name=\"id_Descuento\" value=$Descuento->id_Descuento>";
-            echo "<input hidden id=\"id_Borrar\" name=\"id_Borrar\" value=\"2\">";
+            echo "<form action='".route('BorrarDatos')."' method='get'>\n";
+            echo "<input hidden id=\"id_Descuento\" name=\"id_Descuento\" value=$Descuento->id_Descuento>\n";
+            echo "<input hidden id=\"id_Borrar\" name=\"id_Borrar\" value=\"2\">\n";
             
-            echo "<tr>";
-            echo "<td>$Descuento->Descuento</td>";
-            echo "<td><input type=\"text\" disabled  name=\"Mutual\" placeholder=$Descuento->Monto></td>";
-            echo "<td><input type=\"submit\" value=\"\"></td>"; // Boton para borrar, implementarlo 
-            echo "</tr>";
-            echo "</form>";
+            echo "<tr>\n";
+            echo "<td>$Descuento->Descuento</td>\n";
+            echo "<td><input type=\"text\" disabled  name=\"Mutual\" placeholder=$Descuento->Monto></td>\n";
+            echo "<td><input type=\"submit\" value=\"\"></td>\n"; // Boton para borrar, implementarlo 
+            echo "</tr>\n";
+            echo "</form>\n";
             array_push($IdD_Usuario,$Descuento->id_Descuento);
             
         }
@@ -203,18 +203,18 @@ class Busqueda_personal extends Controller
         ->whereNotIn('tDescuentos.id_Descuento',session('Empleado')->DescuentosId)->get();
 
         foreach($Descuentos as $Descuento){
-            echo "<form action='".route('AgregarDato')."' method='get'>";
-            echo "<input hidden id=\"id_Descuento\" name=\"id_Descuento\" value=$Descuento->id_Descuento>";
-            echo "<input hidden id=\"id_Agregar\" name=\"id_Agregar\" value=\"3\">";
+            echo "<form action='".route('AgregarDato')."' method='get'>\n";
+            echo "<input hidden id=\"id_Descuento\" name=\"id_Descuento\" value=$Descuento->id_Descuento>\n";
+            echo "<input hidden id=\"id_Agregar\" name=\"id_Agregar\" value=\"3\">\n";
             
-            echo "<tr>";
-            echo "<td>$Descuento->Descuento</td>";
-            echo "<td>$Descuento->Tipo</td>";
+            echo "<tr>\n";
+            echo "<td>$Descuento->Descuento</td>\n";
+            echo "<td>$Descuento->Tipo</td>\n";
 
-            echo "<td><input id='MontoDescuento' name=\"MontoDescuento\" type=\"number\" min='0' placeholder='Ingresar monto' ></input></td>";
-            echo "<td><input type=\"submit\" value=\"\"></td>"; // Boton para borrar, implementarlo 
-            echo "</tr>";
-            echo "</form>";
+            echo "<td><input id='MontoDescuento' name=\"MontoDescuento\" type=\"number\" min='0' placeholder='Ingresar monto' ></input></td>\n";
+            echo "<td><input type=\"submit\" value=\"\"></td>\n"; // Boton para borrar, implementarlo 
+            echo "</tr>\n";
+            echo "</form>\n";
         }
     }
 
@@ -223,18 +223,18 @@ class Busqueda_personal extends Controller
         $IdP_Usuario= [];
         foreach($Prestamos as $Prestamo){
             
-            echo "<form action='".route('ModificarDatos')."' method='get'>";
-            echo "<input hidden id=\"id_Prestamo\" name=\"id_Prestamo\" value=$Prestamo->id_Prestamo>";
-            echo "<input hidden id=\"id_Modificar\" name=\"id_Modificar\" value=\"3\">";
+            echo "<form action='".route('ModificarDatos')."' method='get'>\n";
+            echo "<input hidden id=\"id_Prestamo\" name=\"id_Prestamo\" value=$Prestamo->id_Prestamo>\n";
+            echo "<input hidden id=\"id_Modificar\" name=\"id_Modificar\" value=\"3\">\n";
             
-            echo "<tr>";
-            echo "<td>$Prestamo->Nombre</td>";
-            echo "<td><input type=\"text\" name=\"mPrestamo\" placeholder=$Prestamo->Monto></td>";
-            echo "<td><input type=\"date\" class=\"entrega-dato\"  name=\"iPrestamo\" value=$Prestamo->F_inicio></td>";
-            echo "<td><input type=\"date\" class=\"entrega-dato\"  name=\"fPrestamo\" value=$Prestamo->F_final></td>";
-            echo "<td><input type=\"submit\" value=\"Modificar\"></td>"; // Boton para borrar, implementarlo 
-            echo "</tr>";
-            echo "</form>";
+            echo "<tr>\n";
+            echo "<td>$Prestamo->Nombre</td>\n";
+            echo "<td><input type=\"text\" name=\"mPrestamo\" placeholder=$Prestamo->Monto></td>\n";
+            echo "<td><input type=\"date\" class=\"entrega-dato\"  name=\"iPrestamo\" value=$Prestamo->F_inicio></td>\n";
+            echo "<td><input type=\"date\" class=\"entrega-dato\"  name=\"fPrestamo\" value=$Prestamo->F_final></td>\n";
+            echo "<td><input type=\"submit\" value=\"Modificar\"></td>\n"; // Boton para borrar, implementarlo 
+            echo "</tr>\n";
+            echo "</form>\n";
             array_push($IdP_Usuario,$Prestamo->id_Prestamo);
             
         }
@@ -248,9 +248,9 @@ class Busqueda_personal extends Controller
         $AFPs = DB::table('tAFP')->get();
         foreach($AFPs as $AFP){
             if($AFP->id_AFP==(session('Empleado')->Datos->id_AFP)){
-                echo "<option selected value=$AFP->id_AFP>$AFP->AFP</option>";
+                echo "<option selected value=$AFP->id_AFP>$AFP->AFP</option>\n";
             }else{
-                echo "<option value=$AFP->id_AFP>$AFP->AFP</option>";
+                echo "<option value=$AFP->id_AFP>$AFP->AFP</option>\n";
                 
             }
         }
@@ -260,9 +260,9 @@ class Busqueda_personal extends Controller
         $ISAPREs = DB::table('tISAPRE')->get();
         foreach($ISAPREs as $ISAPRE){
             if($ISAPRE->id_ISAPRE==(session('Empleado')->Datos->id_ISAPRE)){
-                echo "<option selected value=$ISAPRE->id_ISAPRE>$ISAPRE->ISAPRE</option>";
+                echo "<option selected value=$ISAPRE->id_ISAPRE>$ISAPRE->ISAPRE</option>\n";
             }else{
-                echo "<option value=$ISAPRE->id_ISAPRE>$ISAPRE->ISAPRE</option>";
+                echo "<option value=$ISAPRE->id_ISAPRE>$ISAPRE->ISAPRE</option>\n";
                 
             }
         }
@@ -272,9 +272,9 @@ class Busqueda_personal extends Controller
         $Contratos = DB::table('tContratos')->get();
         foreach($Contratos as $Contrato){
             if($Contrato->id_Contrato==(session('Empleado')->Datos->id_Contrato)){
-                echo "<option selected value=$Contrato->id_Contrato>$Contrato->Contrato</option>";
+                echo "<option selected value=$Contrato->id_Contrato>$Contrato->Contrato</option>\n";
             }else{
-                echo "<option value=$Contrato->id_Contrato>$Contrato->Contrato</option>";
+                echo "<option value=$Contrato->id_Contrato>$Contrato->Contrato</option>\n";
             }
         }
     
@@ -377,9 +377,14 @@ class Busqueda_personal extends Controller
                     return back();
                 }
                 if(request('id_Agregar')==6){                    
-                    if(request()->filled('dLicencia') && request()->filled('tLicencia')&& request()->filled('iLicencia')&& request()->filled('fLicencia')){ 
+                    if(request()->filled('Motivo') && request()->filled('tLicencia')&& request()->filled('iLicencia')&& request()->filled('fLicencia')){ 
+                        $Fecha_Inicio = date_create(request('iLicencia'));
+                        $Fecha_Final = date_create(request('fLicencia'));
+                        $Diferencia_Dias = date_diff($Fecha_Inicio,$Fecha_Final);
+                       # $Diferencia_Dias->format("%a"); # Calculamos la diferencia de dias
+                    
                         DB::table('tLicencias')->insert(
-                            ['Rut'=>$Rut,'Descuenta'=>request('tLicencia'),'Dias'=>request('dLicencia'),'F_inicio'=>request('iLicencia'),'F_final'=>request('fLicencia')]
+                            ['Rut'=>$Rut,'Descuenta'=>request('tLicencia'),'Dias'=>$Diferencia_Dias->format("%a"),'F_inicio'=>request('iLicencia'),'F_final'=>request('fLicencia'),'Motivo'=>request('Motivo')]
                             );
                     }
                     self::CargarDescuentos(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
@@ -448,27 +453,27 @@ class Busqueda_personal extends Controller
                     }
                 
                 }
-                if(request('id_Modificar')=='x'){
-                    if(request()->filled('mNombre') && request()->filled('mSueldo') && request()->filled('mHTrabajo') && request()->filled('mvHora') && request()->filled('mContrato') && request()->filled('mAFP') && request()->filled('mIPS')){
-                        DB::table('tEmpleados')->where([
-                            ['Rut','=',$Rut]
-                        ])
+                if(request('id_Modificar')=='5'){
+                    if(request()->filled('id_Licencia') && request()->filled('rut_Licencia') && request()->filled('Fecha_Inicio') && request()->filled('Fecha_Final')){
+                        $Fecha_Inicio = date_create(request('Fecha_Inicio'));
+                        $Fecha_Final = date_create(request('Fecha_Final'));
+                        $Diferencia_Dias = date_diff($Fecha_Inicio,$Fecha_Final);
+                        DB::table('tLicencias')->where([
+                            ['Rut','=',request('rut_Licencia')],
+                            ['id_Licencia','=',request('id_Licencia')]
+                         ])
                         ->update([
-                            'Nombre'=>request('mNombre'),
-                            'Sueldo_base'=>request('mSueldo'),
-                            'N_horas'=>request('mHTrabajo'),
-                            'Paga_por_hora'=>request('mvHora'),
-                            'id_Contrato'=>request('mContrato'),
-                            'id_AFP'=>request('mAFP'),
-                            'id_ISAPRE'=>request('mIPS')
+                            'F_final'=> request('Fecha_Final'),
+                            'Dias' => $Diferencia_Dias->format("%a")
+
                         ]);
+                        
                         self::CargarEmpleado(); //self hace referencia a la misma clase, necesito estudiar clases JAJAJAJA :^) 
                         return back();
                     }
                 }
                 if(request('id_Modificar')==6){
                     if(request()->filled('id_Licencia') && request()->filled('rut_Licencia')){
-                        echo "zz";
                         DB::table('tLicencias')->where([
                             ['Rut','=',request('rut_Licencia')],
                             ['id_Licencia','=',request('id_Licencia')]
@@ -490,20 +495,20 @@ class Busqueda_personal extends Controller
     public static function MostrarIPS(){
         $IPS = DB::table('tISAPRE')->get();
         foreach($IPS as $Ips){
-            echo "<tr>";
-            echo "<td>$Ips->ISAPRE</td>";
-            echo "<td>$Ips->Tasa%</td>";
-            echo "</tr>";
+            echo "<tr>\n";
+            echo "<td>$Ips->ISAPRE</td>\n";
+            echo "<td>$Ips->Tasa%</td>\n";
+            echo "</tr>\n";
         }   
         
     }
     public static function MostrarAFP(){
         $AFP = DB::table('tAFP')->get();
         foreach($AFP as $Afp){
-            echo "<tr>";
-            echo "<td>$Afp->AFP</td>";
-            echo "<td>$Afp->Tasa%</td>";
-            echo "</tr>";
+            echo "<tr>\n";
+            echo "<td>$Afp->AFP</td>\n";
+            echo "<td>$Afp->Tasa%</td>\n";
+            echo "</tr>\n";
         }   
         
     }
@@ -541,42 +546,43 @@ class Busqueda_personal extends Controller
         }
     
         foreach($Empleados as $Empleado){
-            echo "<tr>";
-            echo "<td>$Empleado->Rut</td>";    
-            echo "<td>$Empleado->Nombre</td>";   
-            echo "<td>$Empleado->N_telefono</td>";
-            echo "</tr>";
-        }
-        
+            echo "<tr>\n";
+            echo "<td>$Empleado->Rut</td>\n";    
+            echo "<td>$Empleado->Nombre</td>\n";   
+            echo "<td>$Empleado->N_telefono</td>\n";
+            echo "</tr>\n";
+        }    
     }
 
     public static function MostrarLicencias(){
 
         $Licencias = DB::table('tLicencias')->where("Activo",'=','t')->get();
         foreach($Licencias as $Licencia){
-            echo "<tr>";
-            echo "<form method=\"get\" action=".route('ModificarDatos').">";
-            echo "<td><input id=\"rut_Licencia\" name=\"rut_Licencia\" class=\"form-control\" value=\"$Licencia->Rut\"></td>";
+            echo "<tr>\n";
+            echo "<form method=\"get\" action=".route('ModificarDatos').">\n";
+            echo "<td><input id=\"rut_Licencia\" name=\"rut_Licencia\"  readonly value=\"$Licencia->Rut\"></td>\n";
             if($Licencia->Descuenta){
-                echo "<td>Si</td>";
+                echo "<td>Si</td>\n";
             }else{
-                echo "<td>No</td>";
+                echo "<td>No</td>\n";
             }
 
-            echo "<input name=\"id_Licencia\" hidden type=text value=\"".$Licencia->id_Licencia."\">";
-            echo "<input hidden id=\"id_Modificar\" name=\"id_Modificar\" value=\"\">";
-            echo "<td><input name=\"dias\" type=text readonly value=\"".$Licencia->Dias."\"></td>";
-            echo "<td>".$Licencia->F_inicio."</td>";
-            echo "<td>".$Licencia->F_final."</td>";
-            echo "<td><button type=\"submit\">Modificar Dias</button></td></form>";
-            echo "</form>";
-            echo "<form method=\"get\" action=".route('ModificarDatos').">";
-            echo "<input hidden id=\"rut_Licencia\" name=\"rut_Licencia\" value=\"$Licencia->Rut\">";            
-            echo "<input hidden id=\"id_Modificar\" name=\"id_Modificar\" value=\"6\">";
-            echo "<input name=\"id_Licencia\" hidden type=text value=\"".$Licencia->id_Licencia."\">";
-            echo "<td><button type=\"submit\">Desactivar Licencia</button></td>";
-            echo "</form>";
-            echo "</tr>";
+            echo "<input name=\"id_Licencia\" hidden type=text value=\"".$Licencia->id_Licencia."\">\n";
+            echo "<input hidden id=\"id_Modificar\" name=\"id_Modificar\" value=\"5\">\n";
+            echo "<td><input name=\"motivo\" type=text readonly value=\"".$Licencia->Motivo."\"></td>\n";
+            echo "<td><input name=\"dias\" type=text readonly value=\"".$Licencia->Dias."\"></td>\n";
+            echo "<td><input type=\"date\" name=\"Fecha_Inicio\" value=\"$Licencia->F_inicio\" readonly></td>\n";
+            echo "<td><input type=\"date\" name=\"Fecha_Final\" value=\"$Licencia->F_final\"></td>\n";
+            echo "<td><button type=\"submit\">Modificar Dias</button></td>\n";
+            echo "</form>\n";
+            #form de desactvar
+            echo "<form method=\"get\" action=".route('ModificarDatos').">\n";
+            echo "<input hidden id=\"rut_Licencia\" name=\"rut_Licencia\" value=\"$Licencia->Rut\">\n";            
+            echo "<input hidden id=\"id_Modificar\" name=\"id_Modificar\" value=\"6\">\n";
+            echo "<input name=\"id_Licencia\" hidden type=text value=\"".$Licencia->id_Licencia."\">\n";
+            echo "<td><button type=\"submit\">Desactivar Licencia</button></td>\n";
+            echo "</form>\n";
+            echo "</tr>\n";
         }
         
         

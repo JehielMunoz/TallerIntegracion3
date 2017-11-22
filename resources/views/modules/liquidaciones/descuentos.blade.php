@@ -106,7 +106,7 @@
             <h2>Agregar Licencias </h2>
             <table class="table table-striped table-bordered table-condensed ">
             <tr>
-                <th>Dias de licencia</th>
+                <th>Motivos</th>
                 <th>Descuenta</th>
                 <th>Fecha Inicial</th>
                 <th>Fecha final</th>
@@ -116,7 +116,7 @@
         
             <tr>
             <input hidden id="id_Agregar" name="id_Agregar" value="6">
-            <td><input type="number" name="dLicencia" class="entrega-dato" id="dias" placeholder='Numero de dias de Licencia'></input></td>
+            <td><input type="text" name="Motivo" class="entrega-dato" id="Motivo" placeholder='Motivo'></input></td>
             <td>
                     Si<input type="checkbox" name="tLicencia" value="True" class="entrega-dato" id="tLicencia"></input>
                     No<input type="checkbox" name="tLicencia" class="entrega-dato" value="False" id="tLicencia"></input>
