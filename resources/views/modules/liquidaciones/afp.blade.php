@@ -32,14 +32,14 @@
             <div class="list-group panel ">
                 <ul class="list-unstyled components">
                     <li>
-                        <a href="#">Planilla de liquidacion</a>
+                        <a href="{{route('liquidaciones')}">Planilla de liquidacion</a>
                     </li>
                     <li>
                         <a href="#">Agregar Empleado</a>
                     </li>
 
                     <li>
-                        <a href="{{route('liquidaciones/licencias')}}">Licencias</a>
+                        <a href={{route('liquidaciones/licencias')}}>Licencias</a>
                     </li>
 
                     <li>
@@ -49,7 +49,7 @@
                         <a href="{{route('liquidaciones/ips')}}">IPS</a>
                     </li>
                     <li>
-                        <a href="#">Contacto</a>
+                        <a href="{{route('liquidaciones/contacto')}}">Contacto</a>
                     </li>
                     <li>
                         <a href="#">Impuesto a la renta</a>
