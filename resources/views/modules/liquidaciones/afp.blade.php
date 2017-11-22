@@ -32,7 +32,7 @@
             <div class="list-group panel ">
                 <ul class="list-unstyled components">
                     <li>
-                        <a href="{{route('liquidaciones')}">Planilla de liquidacion</a>
+                        <a href="{{ url('/liquidaciones') }}">Planilla de liquidacion</a>
                     </li>
                     <li>
                         <a href="#">Agregar Empleado</a>
