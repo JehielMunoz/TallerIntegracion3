@@ -48,4 +48,4 @@ Route::get('AgregarDato',['as'=> 'AgregarDato', 'uses'=>'Busqueda_personal@Agreg
 Route::get('ModificarDato',['as'=> 'ModificarDatos', 'uses'=>'Busqueda_personal@ModificarDatos']); // Maneja cuando se agrega una gratificacion o descuento entre otras cosas
 
 Route::post('agregar_item',['as'=> 'agregar_item', 'uses'=>'controller_inventario@agregar_item']);
-Route::post('modificar_item',['as'=> 'modificar_item', 'uses'=>'controller_inventario@modificar_item']);
+Route::get('modificar_item',['as'=> 'modificar_item', 'uses'=>'controller_inventario@modificar_item']);

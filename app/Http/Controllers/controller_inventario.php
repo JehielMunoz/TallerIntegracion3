@@ -46,13 +46,13 @@ class controller_inventario extends Controller
             
             echo '
                     <tr>
-                    <form method="post" action="'.route('modificar_item').'">
-                      <td><input readonly tipe="text" value="'.$item->Serial.'"></td>
-                      <td><input type="text" value="'.$item->Sector.'"></td>
-                      <td><input type="text" value="'.$item->Descripcion.'"></td>
-                      <td><input type="text" value="'.$item->Estado.'"></td>
+                    <form method="get" action="'.route('modificar_item').'">
+                      <td><input id="Serial" name="Serial" readonly type="text" value="'.$item->Serial.'"></td>
+                      <td><input id="Sector" name="Sector" type="text" value="'.$item->Sector.'"></td>
+                      <td><input id="Descripcion" name="Descripcion" type="text" value="'.$item->Descripcion.'"></td>
+                      <td><input id="Estado" type="text" name="Estado" value="'.$item->Estado.'"></td>
                       <td><input type="submit" value="Actualizar"></td>
-                      
+                    </form>
             
                     </tr>    
                         </tbody>
@@ -173,29 +173,30 @@ class controller_inventario extends Controller
                  'Estado' => $estado
                 ]
             );                
-
-            return back()->with('succ',"Se agrego el item con exito");    
-            
+            return back()->with('succ',"Se agrego el item con exito");
         }
     }
 
     public static function modificar_item(){
         if(request()->isMethod('get')){
-                    if(request()->filled('Serial')){ // si el monto existe inserta el descuento
+        
+                    if(request()->filled('Serial') && request()->filled('Sector') && request()->filled('Descripcion')&& request()->filled('Estado')){ // si el monto existe inserta el descuento
                         DB::table('tInventario')
                         ->where([
                             ['Serial','=',request('Serial')],
-                            ['Rut','=',$Rut]
                         ])
-                        ->update(['Monto'=>request('mDescuento')]);
+                        ->update([
+                            'Sector'=>request('Sector'),
+                            'Descripcion'=>request('Descripcion'),
+                            'Estado'=> request('Estado')
+                        ]);
+        
                     }
                 }            
-                
-
+            return back();
+            
             }
-        }
-    }
-
+        
     
 }
 
