@@ -181,11 +181,8 @@ class controller_inventario extends Controller
 
     public static function modificar_item(){
         if(request()->isMethod('get')){
-            if(request()->filled('id_Modificar')){
-                // id_Modificar == 1 // Modificar item            
-                if(request('id_Modificar')==1){
-                    if(request()->filled('Serial') && request()->filled('id_Descuento')){ // si el monto existe inserta el descuento
-                        DB::talbe('tInventario')
+                    if(request()->filled('Serial')){ // si el monto existe inserta el descuento
+                        DB::table('tInventario')
                         ->where([
                             ['Serial','=',request('Serial')],
                             ['Rut','=',$Rut]
