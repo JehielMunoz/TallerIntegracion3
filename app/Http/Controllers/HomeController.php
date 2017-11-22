@@ -46,6 +46,14 @@ class HomeController extends Controller
     {
         return view('modules.liquidaciones.contacto');
     }
+        public function inventario()
+    {
+        return view('modules.inventario');
+    }
+    public function inventario_agregar()
+    {
+        return view('modules.inventario.agregar_item');
+    }
     public function matriculas()
     {
         return view('modules.matriculas');

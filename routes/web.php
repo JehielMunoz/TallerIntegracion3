@@ -24,6 +24,8 @@ Route::get('liquidaciones/contacto', ['as' => 'liquidaciones/contacto', 'uses'=>
 
 
 
+Route::get('/inventario','HomeController@inventario');
+Route::get('/inventario/agregar','HomeController@inventario_agregar');
 Route::get('/matriculas','HomeController@matriculas');
 Route::get('/recursos-humanos','HomeController@recursos_humanos');
 Route::get('/notas','HomeController@notas');
